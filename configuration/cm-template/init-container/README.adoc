@@ -1,0 +1,15 @@
+### Init Image
+
+The init container is used to process a set of configuration templates with values coming a `ConfigMap`.
+The processed templates are written out into a directory.
+The Docker build in link:init-container[init-container] is based on `k8spatterns:gomplate` and has the following input parameters:
+
+* Templates are taken from the link:in[/in] directory. At the moment only `standalone.xml` is parameterised to tune the log output format.
+* Values to be filled in for the templates are taken from the `/params`. This is the place where a config map is volume mounted. Each file is this directory is taken as a gomplate `--datasource` with the name being the basename of the file.
+* The output is written to `/out` which should be a shared volume mounted both from the init container and the Wildfly server container
+
+To summarize: This image contains the templates in its `/in` directory and the template processor 
+https://github.com/hairyhenderson/gomplate[gomplate] which takes parameters from `/params` and writes the processed templates to `/out`. 
+The content of the latter two directories must be provided from the outside, in a Kubernetes environment these are Pod volumes.
+
+You can recreate the image with the script `build.sh` but we already pushed the latest image to Docker Hub so you don't have to do this.

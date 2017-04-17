@@ -1,0 +1,1 @@
+logFormat: "%K{red}PRODUCTION%K{clear}: %K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"

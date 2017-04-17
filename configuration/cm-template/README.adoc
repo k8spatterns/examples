@@ -1,0 +1,105 @@
+## Wildfly configured with templates and configmaps
+
+This example demonstrates how a vanilla Wildlfy server can be configured with a `standalone.xml` template which is filled with values from a `ConfigMap` before the server starts. 
+This has the advantage that you don't have to install the large configuration files in a config map which makes it easier to maintain.
+In order to focus on the configuration technique the customization is very moderate: 
+The log format is adapted so that each log line is prefixed with the environment it is running (`prod` or `dev`). Therefore `standalone.xml` is parameterized with a link:init-container/in/standalone.xml#L122[single line]:
+
+[source, xml]
+----
+<formatter name="COLOR-PATTERN">
+   <pattern-formatter pattern="{{ (datasource "config").logFormat }}"/>
+</formatter>
+----
+
+As a template processor https://github.com/hairyhenderson/gomplate[gomplate] is used which has the notion of "datasources". The syntax for the template is that of https://gohugo.io/templates/go-templates/[Go Templates].
+
+The init container which is used for processing the templates is defined in link:init-container[init-container].
+
+### Installation
+
+First you need to install a config map name `wildfly-parameters` which contains a key `config.yml`. The directories link:dev[dev] and link:prod[prod] contains sample configuration as it used in the link:init-container/in/standalone.xml#L122[standalone.xml] template.
+This config map is later used as data to be filled into the configuration templates.
+
+To create the configuration map use (assuming the current working directory is this directory):
+
+[source, bash]
+----
+kubectl create configmap wildfly-parameters --from-file=dev
+----
+
+Then start the service and deployment as specified in link:wildfly.yml[wildfly.yml]:
+
+[source, bash]
+----
+kubectl create -f wildfly.yml
+----
+
+In order to check that the configuration was processed properly look at the logs:
+
+[source, bash]
+----
+kubectl logs -f $(kubectl get pod -o name | grep wildfly) server
+
+=========================================================================
+
+  JBoss Bootstrap Environment
+
+  JBOSS_HOME: /opt/jboss/wildfly
+
+  JAVA: /usr/lib/jvm/java/bin/java
+
+  JAVA_OPTS:  -server -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true
+
+=========================================================================
+
+05:48:31,124 INFO  [org.jboss.modules] (main) JBoss Modules version 1.5.2.Final
+05:48:31,294 INFO  [org.jboss.msc] (main) JBoss MSC version 1.2.6.Final
+05:48:31,408 INFO  [org.jboss.as] (MSC service thread 1-1) WFLYSRV0049: WildFly Full 10.1.0.Final (WildFly Core 2.2.0.Final) starting
+05:48:32,546 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0039: Creating http management service using socket-binding (management-http)
+05:48:32,566 INFO  [org.xnio] (MSC service thread 1-3) XNIO version 3.4.0.Final
+05:48:32,580 INFO  [org.xnio.nio] (MSC service thread 1-3) XNIO NIO Implementation Version 3.4.0.Final
+DEVELOPMENT: 05:48:32,627 INFO  [org.jboss.remoting] (MSC service thread 1-3) JBoss Remoting version 4.0.21.Final
+DEVELOPMENT: 05:48:32,713 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 38) WFLYCLINF0001: Activating Infinispan subsystem.
+.....
+----
+
+Note the added prefix `DEVELOPMENT` which comes from the config map.
+
+If you want to change the configuration, replace the ConfigMap and restart the pod (you can directly c&p the first five lines):
+
+
+[source, bash]
+----
+kubectl delete cm wildfly-parameters
+kubectl create configmap wildfly-parameters --from-file=prod
+kubectl delete $(kubectl get pod -o name | grep wildfly)
+sleep 15
+kubectl logs -f $(kubectl get pod -o name | grep wildfly) server
+
+configmap "wildfly-parameters" deleted
+configmap "wildfly-parameters" created
+pod "wildfly-cm-template-3436327307-j7db6" deleted
+=========================================================================
+
+  JBoss Bootstrap Environment
+
+  JBOSS_HOME: /opt/jboss/wildfly
+
+  JAVA: /usr/lib/jvm/java/bin/java
+
+  JAVA_OPTS:  -server -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true
+
+=========================================================================
+
+07:19:18,894 INFO  [org.jboss.modules] (main) JBoss Modules version 1.5.2.Final
+07:19:19,051 INFO  [org.jboss.msc] (main) JBoss MSC version 1.2.6.Final
+07:19:19,121 INFO  [org.jboss.as] (MSC service thread 1-3) WFLYSRV0049: WildFly Full 10.1.0.Final (WildFly Core 2.2.0.Final) starting
+07:19:20,292 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0039: Creating http management service using socket-binding (management-http)
+07:19:20,311 INFO  [org.xnio] (MSC service thread 1-4) XNIO version 3.4.0.Final
+07:19:20,317 INFO  [org.xnio.nio] (MSC service thread 1-4) XNIO NIO Implementation Version 3.4.0.Final
+PRODUCTION: 07:19:20,356 INFO  [org.jboss.remoting] (MSC service thread 1-4) JBoss Remoting version 4.0.21.Final
+PRODUCTION: 07:19:20,431 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 38) WFLYCLINF0001: Activating Infinispan subsystem.
+PRODUCTION: 07:19:20,446 INFO  [org.wildfly.extension.io] (ServerService Thread Pool -- 37) WFLYIO001: Worker 'default' has auto-configured to 4 core threads with 32 task threads based on your 2 available processors
+.....
+----

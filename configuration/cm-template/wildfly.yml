@@ -1,0 +1,88 @@
+# Example Deployment using a config map as input for a template 
+# which is processed from an init-container
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    labels:
+      project: k8spatterns
+      example: cm-template
+    name: wildfly-cm-template
+  spec:
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          project: k8spatterns
+          example: cm-template
+      spec:
+        initContainers:
+        # The init container is responsible for processing configuration
+        # templates. 
+        # The init image expects the following mount setup:
+        # - /params -- A directory containing yaml files for the parameters 
+        #              to fill in the template
+        # - /out -- Directory to which the processed templates are written.
+        # The templates themselves are contained within the 
+        # image container in the director "/in". The parameters come 
+        # from a volume mounted configmap, the output goes 
+        # to a emptyDir shared pod volume.        
+        - image: k8spatterns/example-config-cm-template-init
+          name: init
+          volumeMounts:
+          - mountPath: "/params"
+            name: wildfly-parameters
+          - mountPath: "/out"
+            name: wildfly-config
+        containers:
+        - image: jboss/wildfly:10.1.0.Final
+          name: server
+          command:
+          # Use a special configuration directory holding our processed
+          # configuration templates:
+          - "/opt/jboss/wildfly/bin/standalone.sh"
+          - "-Djboss.server.config.dir=/config"
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          # Mount the volume to which the init-container has written 
+          # the processed templates: 
+          volumeMounts:
+          - mountPath: "/config"
+            name: wildfly-config
+        volumes:
+        # Volume holding the template parameters as config maps. The map
+        # is supposed to hold a file 'config.yml' with is a yaml document
+        # with the following keys:
+        # - logFormat : Log line to use for Wildfly logoutput
+        - name: wildfly-parameters
+          configMap:
+            name: wildfly-parameters
+        # Node and Pod specific directory used to share the processed temlates
+        # between the init container who created it and the the 
+        # server who picks it up during startup
+        - name: wildfly-config
+          emptyDir: {}
+# A service which opens a NodePort is added for your convenience 
+# but is not necessarily required for this example:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      project: k8spatterns
+      example: cm-template
+    name: wildfly-cm-template
+  spec:
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      example: cm-template
+    # Just for demo
+    type: NodePort
