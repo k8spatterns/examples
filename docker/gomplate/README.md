@@ -2,7 +2,7 @@
 
 <img src="https://s3.amazonaws.com/titlepages.leanpub.com/k8spatterns/hero?1492193906" align="right" width="300px" style="float:right; margin: 50px 0px 20px 30px;"/>
 
-This image is a simple wrapper around [gomplate](https://github.com/hairyhenderson/gomplate). It add support for bulk operation and is nicely fit for an init contaiener to pre-process configuration files in a Kubernetes pod.
+This image is a simple wrapper around [gomplate](https://github.com/hairyhenderson/gomplate). It adds support for bulk operation and is nicely fit for an init contaiener to pre-process configuration files in a Kubernetes pod.
 
 This image is typically used as a base image like in 
 
