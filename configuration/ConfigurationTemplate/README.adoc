@@ -109,3 +109,5 @@ PRODUCTION: 07:19:20,431 INFO  [org.jboss.as.clustering.infinispan] (ServerServi
 PRODUCTION: 07:19:20,446 INFO  [org.wildfly.extension.io] (ServerService Thread Pool -- 37) WFLYIO001: Worker 'default' has auto-configured to 4 core threads with 32 task threads based on your 2 available processors
 .....
 ----
+
+Please also have a look to the comments within link:wildfly.yml[wildfly.yml] which explain this examples in even more details.
