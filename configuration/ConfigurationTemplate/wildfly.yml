@@ -9,15 +9,15 @@ items:
   metadata:
     labels:
       project: k8spatterns
-      example: cm-template
-    name: wildfly-cm-template
+      pattern: ConfigurationTemplate
+    name: wildfly
   spec:
     replicas: 1
     template:
       metadata:
         labels:
           project: k8spatterns
-          example: cm-template
+          pattern: ConfigurationTemplate
       spec:
         initContainers:
         # The init container is responsible for processing configuration
@@ -74,8 +74,8 @@ items:
   metadata:
     labels:
       project: k8spatterns
-      example: cm-template
-    name: wildfly-cm-template
+      pattern: ConfigurationTemplate
+    name: wildfly
   spec:
     ports:
     - name: http
