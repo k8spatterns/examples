@@ -1,6 +1,8 @@
 ## Configuration Template
 
-This example demonstrates the usage of the **Configuration Template** pattern. As described in detail in our https://leanpub.com/k8spatterns[Kubernetes Book] this pattern is useful for dynamically creating configuration during application startup by processing templates on the fly. Please refer to the pro and cons of this approach.
+This example demonstrates the usage of the **Configuration Template** pattern. As described in detail in our https://leanpub.com/k8spatterns[Kubernetes Book] this pattern is useful for dynamically creating configuration during application startup by processing templates on the fly. Please check out the pros and cons of this approach from the book. 
+
+IMPORTANT: The configuration book chapters are in initial review and will be available soon in an early draft. Please stand by ...
 
 ### Wildfly configured with templates and configmaps
 
