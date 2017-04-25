@@ -1,9 +1,12 @@
-## Wildfly configured with templates and configmaps
+## Configuration Template
 
-This example demonstrates how a vanilla Wildlfy server can be configured with a `standalone.xml` template which is filled with values from a `ConfigMap` before the server starts. 
-This has the advantage that you don't have to install the large configuration files in a config map which makes it easier to maintain.
-In order to focus on the configuration technique the customization is very moderate: 
-The log format is adapted so that each log line is prefixed with the environment it is running (`prod` or `dev`). Therefore `standalone.xml` is parameterized with a link:init-container/in/standalone.xml#L122[single line]:
+This example demonstrates the usage of the **Configuration Template** pattern. As described in detail in our https://leanpub.com/k8spatterns[Kubernetes Book] this pattern is useful for dynamically creating configuration during application startup by processing templates on the fly. Please refer to the pro and cons of this approach.
+
+### Wildfly configured with templates and configmaps
+
+In this example we will configure a Wildfly application server. As you probably know, Wildlfy uses an XML syntax for its configuration which can be quite lengthy. We will use a configuration template where we want to configure only a small part differently for different environments. In our example we use a `standalone.xml` template which is filled with values from a `ConfigMap` before the server starts. 
+
+The only datum we are want to adapt in this simple example is the log format. The format is adapted so that each log line is prefixed with the environment it is running (`prod` or `dev`). We parameterise `standalone.xml` for this with the link:init-container/in/standalone.xml#L122[single line]:
 
 [source, xml]
 ----
@@ -12,16 +15,20 @@ The log format is adapted so that each log line is prefixed with the environment
 </formatter>
 ----
 
-As a template processor https://github.com/hairyhenderson/gomplate[gomplate] is used which has the notion of "datasources". The syntax for the template is that of https://gohugo.io/templates/go-templates/[Go Templates].
+As a template processor https://github.com/hairyhenderson/gomplate[gomplate] is used which has the notion of "datasources". The template syntax please refer to https://gohugo.io/templates/go-templates/[Go Templates]. 
+Actually its an slightly adapted gomplate so that it fits our use case better. You found the changed version in the https://github.com/rhuss/gomplate[rhuss/gomplate] repo.
+ 
+As described in the pattern's description an Kubernertes _init-container_ is used for processing the templates. The docker build files for this container are in link:init-container[init-container].
 
-The init container which is used for processing the templates is defined in link:init-container[init-container].
+Please check its link:init-container/README.md[README] how to re-create the image, but we already pushed it to Docker hub for your convenience.
 
-### Installation
+### Running the example
 
-First you need to install a config map name `wildfly-parameters` which contains a key `config.yml`. The directories link:dev[dev] and link:prod[prod] contains sample configuration as it used in the link:init-container/in/standalone.xml#L122[standalone.xml] template.
-This config map is later used as data to be filled into the configuration templates.
+The value to fill into the template come from config map which needs to be created first.
 
-To create the configuration map use (assuming the current working directory is this directory):
+The config map nused in the example has the name `wildfly-parameters` and contains a key `config.yml`. The directories link:dev[dev] and link:prod[prod] contains both sample configurations as it can be used in the link:init-container/in/standalone.xml#L122[standalone.xml] template. You would create a different config-map with the name `wildfly-parameters` for each environment.
+
+To create the configuration map use (assuming the current working directory is the directory of this README):
 
 [source, bash]
 ----
@@ -35,7 +42,7 @@ Then start the service and deployment as specified in link:wildfly.yml[wildfly.y
 kubectl create -f wildfly.yml
 ----
 
-In order to check that the configuration was processed properly look at the logs:
+In order to check that the configuration was processed properly check now the logs:
 
 [source, bash]
 ----
@@ -66,8 +73,7 @@ DEVELOPMENT: 05:48:32,713 INFO  [org.jboss.as.clustering.infinispan] (ServerServ
 
 Note the added prefix `DEVELOPMENT` which comes from the config map.
 
-If you want to change the configuration, replace the ConfigMap and restart the pod (you can directly c&p the first five lines):
-
+If you want to change the configuration, replace the config-map and restart the pod (you can directly c&p the first five lines):
 
 [source, bash]
 ----

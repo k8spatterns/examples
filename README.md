@@ -10,14 +10,16 @@ Each of the examples is contained in an extra directory and is self contained.
 
 For feedback, issues or questions in general, please use the [issue tracker](https://github.com/bibryam/k8spatterns/issues) to open issues.
 
-### Configuration
+## Patterns
 
-#### Configuration Resource
+### Foundational Patterns
 
-* [Configuration templates filled with ConfigMap data](configuration/cm-template/README.adoc) - an example how to use a template configuration `standalone.xml` which is processed with gomplate and filled with data from `ConfigMap` before a Wildly server is started.
+### Behavorial Patterns
 
-## Docker Images
+### Structural Patterns
 
-The directory [docker](docker) contains supporting Docker images which are pushed to [Docker Hub](https://hub.docker.com/u/k8spatterns/) for your convenience:
+### Configurational Patterns
 
-* [k8spatterns/gomplate](https://hub.docker.com/r/k8spatterns/gomplate/) - The Go template processor [gomplate](https://github.com/hairyhenderson/gomplate) with a wrapper script for easy bulk operations. It is used in the examples configuration patterns.
+* [Configuration Template](configuration/ConfigurationTemplate/README.adoc) - an example how to use a template configuration `standalone.xml` which is processed with a template processed and filled with data from `ConfigMap` before a Wildly server is started.
+
+### Advanced Patterns
