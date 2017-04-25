@@ -13,3 +13,5 @@ https://github.com/hairyhenderson/gomplate[gomplate] which takes parameters from
 The content of the latter two directories must be provided from the outside, in a Kubernetes environment these are Pod volumes.
 
 You can recreate the image with the script `build.sh` but we already pushed the latest image to Docker Hub so you don't have to do this.
+
+If you rebuild it on your own, please remember that the image must be reachable for the Kubernetes cluster. So you would either need to push it to a registry (and adapt the names before doing this), or when using minikube build against the minikube Docker daemon (`eval $(minikube docker-env)`).
