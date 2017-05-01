@@ -1,5 +1,5 @@
 #!/bin/sh
-repo=k8spatterns/example-config-cm-template-init
+repo=k8spatterns/example-configuration-template-init
 echo "Building ---> ${repo}"
 docker build --no-cache -t ${repo} .
 if [ "x$1" == "x-p" ]; then

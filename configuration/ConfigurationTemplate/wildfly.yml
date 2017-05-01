@@ -30,7 +30,7 @@ items:
         # image container in the director "/in". The parameters come 
         # from a volume mounted configmap, the output goes 
         # to a emptyDir shared pod volume.        
-        - image: k8spatterns/example-config-cm-template-init
+        - image: k8spatterns/example-configuration-template-init
           name: init
           volumeMounts:
           - mountPath: "/params"
