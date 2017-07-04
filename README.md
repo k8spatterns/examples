@@ -22,4 +22,6 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 
 * [Configuration Template](configuration/ConfigurationTemplate/README.adoc) - an example how to use a template configuration `standalone.xml` which is processed with a template processed and filled with data from `ConfigMap` before a Wildly server is started.
 
+* [Immutable Configuration](configuration/ImmutableConfiguration/README.adoc) - several examples how to use immutable configuration containers for application configuration. This includes examples for the plain Docker case and for Kubernetes.
+
 ### Advanced Patterns
