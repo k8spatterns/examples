@@ -1,0 +1,34 @@
+## Immutable container with Docker Volumes
+
+
+This example demonstrates how to use an immutable configuration container with plain Docker means. It uses Docker volumes under the hood to link together the configuration container with the application container.
+
+* Create the application Docker Image first which uses [demo.war](../demo) :
+
+```
+docker build -t app -f Dockerfile-app .
+```
+     
+* Now create _config-dev_ container which holds the configuration for the developer environment. The first step here is to create an image (with version number) and then a container from it
+
+```
+docker build -q --build-arg config=dev.properties -f Dockerfile-config -t config-dev-image:1.0.0 .
+docker create --name config-dev config-dev-image:1.0.0 .
+```
+         
+* Start demo image with _config-dev_
+
+```
+docker run --volumes-from=config-dev -p 8080:8080 app
+```
+  
+* The application is now reachable as [http://localhost:8080/demo](http://localhost:8080/demo). Use the address for your Docker daemon here (which in most of the cases is "localhost").
+     
+
+The same process can be done now for the production environment, but using now `prod.properties` to create a configuration container for the production environment:
+
+```
+docker build -q --build-arg config=prod.properties -f Dockerfile-config -t config-prod-image:1.0.0 .
+docker create --name config-prod config-prod-image:1.0.0 .
+docker run --volumes-from=config-prod -p 8080:8080 app
+```
