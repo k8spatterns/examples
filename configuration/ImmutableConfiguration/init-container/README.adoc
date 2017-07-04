@@ -1,0 +1,70 @@
+## Kubernetes init containers to link configuration containers
+
+In Kubernetes containers within a Pod can share volumes. 
+Unfortunately, there is currently no way to share a directory from within a container directly with another container (but this is https://github.com/kubernetes/kubernetes/issues/831[planned]).
+In order to still use immutable configuration containers for application configuration https://kubernetes.io/docs/concepts/workloads/pods/init-containers/[init containers] can be used to initialize an empty shared volume during startup.
+
+In the Docker example the configuration Docker image was based on _scratch_ which is an empty Docker image without any operating systems.
+We didn't need it there because all what we want was the configuration data which is shared via Docker volumes.
+So this image is completely passive. 
+For our use case here however we need some help from the base image to copy over the configuration data to the share directory.
+`busybox` is a good choice for the base image which allows us to use plain Unix `cp` for this task.
+
+
+### Create images
+
+The images are created similar as in the link:../docker-volumes[plain Docker case]. 
+Like in the other examples we are using minikube as platform and the included Docker daemon for building the image.
+The following instructions assume that you already have a minikube running.
+
+* Set the Docker environment variables to point to the minikube Docker daemon
+
+[source,bash]
+----
+eval $(minikube docker-env)
+----
+
+* Create the application Docker Image first which uses link:../demo[demo.war] :
+
+[source,bash]
+----
+docker build -t k8spatterns/demo:1 -f Dockerfile-demo .
+----
+     
+* Now create the image _config-dev-image_ which holds the configuration for the developer environment:
+
+[source,bash]
+----
+docker build --build-arg config=dev.properties -f Dockerfile-config -t k8spatterns/config-dev:1 .
+----
+         
+   Have a look into `Dockerfile-config`, it's a bit different then for usage with the Docker volume. It uses `busybox` as base images and contains an `ENTRYPOINT` for allowing to copy the configuration data. Also we don't need a container here, the image is sufficient.
+   
+* Apply the Kubernetes resource descriptor:
+
+[source, bash]
+-----
+kubectl create -f demo.yml
+-----
+
+* Open application
+
+[source, bash]
+----
+open $(minikube service --url demo)/demo
+----
+
+Now lets switch over to the production environment. We create a production configuration similar to the development configuration:
+
+[source, bash]
+----
+docker build --build-arg config=prod.properties -f Dockerfile-config -t k8spatterns/config-prod:1 .
+----
+
+The only thing we have finally to do is to exchange the configuration image within the pod declaration of our deployment:
+
+[source, bash]
+----
+kubectl patch deployment demo --type json -p \
+  '[ {"op" : "replace", "path": "/spec/template/spec/initContainers/0/image", "value": "k8spatterns/config-prod:1"}]'
+----

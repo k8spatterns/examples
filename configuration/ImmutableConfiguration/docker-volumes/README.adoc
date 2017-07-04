@@ -1,4 +1,4 @@
-## Immutable container with Docker Volumes
+## Docker Volumes to link configuration containers
 
 This example demonstrates how to use an immutable configuration container with plain Docker means. It uses Docker volumes under the hood to link together the configuration container with the application container.
 
@@ -6,22 +6,22 @@ This example demonstrates how to use an immutable configuration container with p
 
 [source,bash]
 ----
-docker build -t app -f Dockerfile-app .
+docker build -t k8spatterns/demo:1 -f Dockerfile-demo .
 ----
      
 * Now create _config-dev_ container which holds the configuration for the developer environment. The first step here is to create an image (with version number) and then a container from it
 
 [source,bash]
 ----
-docker build -q --build-arg config=dev.properties -f Dockerfile-config -t config-dev-image:1.0.0 .
-docker create --name config-dev config-dev-image:1.0.0 .
+docker build --build-arg config=dev.properties -f Dockerfile-config -t k8spatterns/config-dev:1.0.0 .
+docker create --name config-dev k8spatterns/config-dev:1 .
 ----
          
 * Start demo image with _config-dev_
 
 [source,bash]
 ----
-docker run --volumes-from=config-dev -p 8080:8080 app
+docker run --volumes-from=config-dev -p 8080:8080 k8spatterns/demo:1
 ----
   
 * The application is now reachable as http://localhost:8080/demo[]. Use the address for your Docker daemon here (which in most of the cases is "localhost").
@@ -31,7 +31,7 @@ The same process can be done now for the production environment, but using now `
 
 [source,bash]
 ----
-docker build -q --build-arg config=prod.properties -f Dockerfile-config -t config-prod-image:1.0.0 .
-docker create --name config-prod config-prod-image:1.0.0 .
-docker run --volumes-from=config-prod -p 8080:8080 app
+docker build --build-arg config=prod.properties -f Dockerfile-config -t k8spatterns/config-prod:1.0.0 .
+docker create --name config-prod k8spatterns/config-prod:1 .
+docker run --volumes-from=config-prod -p 8080:8080 k8spatterns/demo:1
 ----

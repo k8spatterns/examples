@@ -1,0 +1,70 @@
+# Example Deployment using a config map as input for a template 
+# which is processed from an init-container
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    labels:
+      project: k8spatterns
+      pattern: ImmutableConfiguration
+    name: demo
+  spec:
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          project: k8spatterns
+          pattern: ImmutableConfiguration
+      spec:
+        initContainers:
+          # The init container holding our configuration. For switching to production 
+          # you need to exchange this configuration image with the production variant
+        - image: k8spatterns/config-dev:1
+          name: init
+          args:
+            # Target directory where to copy the configuration into:
+          - "/config"
+          volumeMounts:
+            # Mount the shared directory
+          - mountPath: "/config"
+            name: config-directory
+        containers:
+          # The application to start and exposing a port at 8080
+        - image: k8spatterns/demo:1
+          name: demo
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          # Mount the volume to which the init-container has written 
+          # the configuration: 
+          volumeMounts:
+          - mountPath: "/config"
+            name: config-directory
+        volumes:
+          # Empty directory used to share the configuration information
+        - name: config-directory
+          emptyDir: {}
+# A service which opens a NodePort is added for your convenience 
+# but is not necessarily required for this example:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      project: k8spatterns
+      pattern: ImmutableConfiguration
+    name: demo
+  spec:
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      pattern: ImmutableConfiguration
+    # Just for demo
+    type: NodePort

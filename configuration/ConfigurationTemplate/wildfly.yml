@@ -83,6 +83,7 @@ items:
       protocol: TCP
       targetPort: 8080
     selector:
-      example: cm-template
+      project: k8spatterns
+      pattern: ConfigurationTemplate
     # Just for demo
     type: NodePort
