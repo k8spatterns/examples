@@ -40,7 +40,17 @@ docker build --build-arg config=dev.properties -f Dockerfile-config -t k8spatter
          
    Have a look into `Dockerfile-config`, it's a bit different then for usage with the Docker volume. It uses `busybox` as base images and contains an `ENTRYPOINT` for allowing to copy the configuration data. Also we don't need a container here, the image is sufficient.
    
-* Apply the Kubernetes resource descriptor:
+
+* Next lets create the configuration for the production environment from `prod.properties`. We create a production configuration similar to the development configuration:
+
+[source, bash]
+----
+docker build --build-arg config=prod.properties -f Dockerfile-config -t k8spatterns/config-prod:1 .
+----
+
+### Apply Kubernetes resources
+
+It's time now to apply the Kubernetes resource descriptor:
 
 [source, bash]
 -----
@@ -54,17 +64,32 @@ kubectl create -f demo.yml
 open $(minikube service --url demo)/demo
 ----
 
-Now lets switch over to the production environment. We create a production configuration similar to the development configuration:
-
-[source, bash]
-----
-docker build --build-arg config=prod.properties -f Dockerfile-config -t k8spatterns/config-prod:1 .
-----
-
 The only thing we have finally to do is to exchange the configuration image within the pod declaration of our deployment:
 
 [source, bash]
 ----
 kubectl patch deployment demo --type json -p \
   '[ {"op" : "replace", "path": "/spec/template/spec/initContainers/0/image", "value": "k8spatterns/config-prod:1"}]'
+----
+
+WARNING: There is currently an issue with Kubernetes not updating initContainers with `kubectl patch` or `kubectl apply`. Please https://github.com/kubernetes/kubectl/issues/27[track] https://github.com/kubernetes/kubernetes/issues/47264[these issues] for updates.
+
+### OpenShift Template
+
+If you are on OpenShift, e.g. by running minishift, you can benefit from the template mechanism provided by OpenShift.
+
+Our example can be deployed with the template defined in `demo-openshift-template.yml`:
+
+[source, bash]
+----
+oc create -f demo-openshift-template.yml
+----
+
+The template contains the same elements as in `demo.yml` but is parameterised on the init containers' image. The template variable used here is `CONFIG_IMAGE` and defaults to `k8spatterns/config-dev:1`.
+
+To instantiate the template just call `oc new-app` with the configuration image you want to use:
+
+[source, bash]
+----
+oc new-app demo -p CONFIG_IMAGE=k8spatterns/config-prod:1
 ----

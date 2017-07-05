@@ -1,0 +1,81 @@
+# Example Template for parameterizing the configuration image with OpenShift templates
+---
+apiVersion: v1
+kind: Template
+metadata:
+  labels:
+    project: k8spatterns
+    pattern: ImmutableConfiguration
+  name: demo
+parameters:
+  - name: CONFIG_IMAGE
+    description: Image name of the configuration image to use
+    value: k8spatterns/config-dev:1
+objects:  
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      project: k8spatterns
+      pattern: ImmutableConfiguration
+    name: demo
+  spec:
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          project: k8spatterns
+          pattern: ImmutableConfiguration
+        annotations:
+          # OpenShift not yet supports the initContainers field, but supports
+          # init containers via annotations. 
+          # Use the parameter ${CONFIG_IMAGE} to switch configuration for environments
+          pod.beta.kubernetes.io/init-containers: |-
+            [{
+              "name": "init",
+              "image": "${CONFIG_IMAGE}",
+              "imagePullPolicy": "IfNotPresent",
+              "args": [ "/config" ],
+              "volumeMounts": [{
+                "name": "config-directory",
+                "mountPath": "/config"
+              }]
+            }]
+      spec:
+        containers:
+          # The application to start and exposing a port at 8080
+        - image: k8spatterns/demo:1
+          name: demo
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          # Mount the volume to which the init-container has written 
+          # the configuration: 
+          volumeMounts:
+          - mountPath: "/config"
+            name: config-directory
+        volumes:
+          # Empty directory used to share the configuration information
+        - name: config-directory
+          emptyDir: {}
+# A service which opens a NodePort is added for your convenience 
+# but is not necessarily required for this example:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      project: k8spatterns
+      pattern: ImmutableConfiguration
+    name: demo
+  spec:
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      pattern: ImmutableConfiguration
+    # Just for demo
+    type: NodePort
