@@ -18,6 +18,8 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 
 ### Structural Patterns
 
+* [Sidecar](structural/Sidecar/README.adoc) - Git polling example for a sidecar
+
 ### Configuration Patterns
 
 * [Configuration Template](configuration/ConfigurationTemplate/README.adoc) - an example how to use a template configuration `standalone.xml` which is processed with a template processed and filled with data from `ConfigMap` before a Wildly server is started.
