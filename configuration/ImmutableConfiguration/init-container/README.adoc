@@ -4,10 +4,10 @@ In Kubernetes containers within a Pod can share volumes.
 Unfortunately, there is currently no way to share a directory from within a container directly with another container (but this is https://github.com/kubernetes/kubernetes/issues/831[planned]).
 In order to still use immutable configuration containers for application configuration https://kubernetes.io/docs/concepts/workloads/pods/init-containers/[init containers] can be used to initialize an empty shared volume during startup.
 
-In the Docker example the configuration Docker image was based on _scratch_ which is an empty Docker image without any operating systems.
-We didn't need it there because all what we want was the configuration data which is shared via Docker volumes.
+In the Docker example the configuration Docker image was based on _scratch_ which is an empty Docker image without any operating system files.
+We didn't need anything more there because all what we want was the configuration data which is shared via Docker volumes.
 So this image is completely passive. 
-For our use case here however we need some help from the base image to copy over the configuration data to the share directory.
+However for the reason stated above we need some help from the base image to copy over the configuration data to the share directory.
 `busybox` is a good choice for the base image which allows us to use plain Unix `cp` for this task.
 
 
