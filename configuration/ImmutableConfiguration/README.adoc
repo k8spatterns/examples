@@ -1,0 +1,42 @@
+
+## Immutable Configuration
+
+The examples here demonstrate the **Immutable Configuration** Pattern which is uses an immutable configuration container linked to an application in one way or the other.
+
+### Demo application
+
+For these examples we are using a simple "Hello World" type Java Servlet which picks up the configuration for a background color and a label from a properties file in the file system:
+
+[source, java]
+----
+private Properties getConfig() throws IOException {
+    Properties props = new Properties();
+    props.load(new FileInputStream("/config/demo.properties"));
+    return props;
+}
+----
+
+You find the source to this example in the directory `demo`. Just run 
+
+[source]
+----
+mvn clean install
+----
+
+within this directory to re-create the war file. Binary copies of this application are already copied over to the example directories.
+
+In order to test the application just call 
+
+[source, bash]
+----
+mvn clean install tomcat7:run
+----
+
+and the direct your browser to `http://localhost:8080/demo`. You will get an error message that the configuration file can't be found.
+
+### Examples
+
+The following examples demonstrate how to apply the "Immutable Configuration" pattern to various enviroments:
+
+* link:docker-volumes/README.adoc[Docker Volumes] demonstrates how to use plain Docker volumes to link together the configuration and application container.
+* link:init-container/README.adoc[Init Container] uses an https://kubernetes.io/docs/concepts/workloads/pods/init-containers/[init container] initialize a pod's volume with the configuration from a configuration container in a Kubernetes context.

@@ -1,0 +1,40 @@
+## Sidecar
+
+This examples shows a useful example for a Sidecar in link:web-app.yml[web-app.yml]:
+
+* The main container is a _httpd_ daemon who serves HTML file from within its directory `/var/www/html`. This directory is mounted from a volume named `git`.
+* The sidecar container is a stock image containing a `git` CLI tool. It also mounts the volume `git` in a directory and executes a command to pull a git repository periodically into this directory.
+
+The effect is, that as soon as something changes in the Git repository, the HTML files that the HTTP daemon serves get updated.
+
+You can choose the Git repository by setting then environment variable `GIT_REPO` accordingly.
+
+Also not the trick with `watch` to perform a periodic polling loop without requiring a shell script (as it would be needed for a `for` loop):
+
+[source, bash]
+----
+sh -c "git clone $(GIT_REPO) . && watch -n 600 git pull"
+----
+
+For you convenience a `nodePort` service is exposed so that you can access the HTML pages from the outside
+
+### Installation
+
+* Start minikube
+* Apply the resource descriptor
+
+[source, bash]
+----
+kubectl -f web-app.yml
+----
+
+* When all images are pulled and the pods are running, open your browser with the web pages
+
+[source, bash]
+----
+minikube service web-app
+----
+
+If you want to test whether the pages are really updated, change `GIT_REPO` in `web-app.yml` to a git repo which is under your control and then change files after the pods has been started. 
+
+You can also tune the update interval in the sidecar command definition, which is currently set to 10 minutes.
