@@ -32,7 +32,7 @@ items:
       command:
       - "sh"
       - "-c"
-      - "git clone $(GIT_REPO) . && watch -n 600 git pull"
+      - "git clone $(GIT_REPO) . && watch -n 10 git pull"
       workingDir: /var/lib/data
     volumes:
     # The shared directory for holding the files
