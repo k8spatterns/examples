@@ -28,11 +28,11 @@ items:
         name: git
       env:
         - name: GIT_REPO
-          value: https://github.com/rhuss/beginner-html-site-scripted
+          value: https://github.com/mdn/beginner-html-site-scripted
       command:
       - "sh"
       - "-c"
-      - "git clone $(GIT_REPO) . && watch -n 10 git pull"
+      - "git clone $(GIT_REPO) . && watch -n 60 git pull"
       workingDir: /var/lib/data
     volumes:
     # The shared directory for holding the files
