@@ -1,0 +1,33 @@
+# Example Deployment using a config map as input for a template
+# which is processed from an init-container
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    project: k8spatterns
+    pattern: Controller
+  name: expose-controller
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        project: k8spatterns
+        pattern: Controller
+    spec:
+      containers:
+      - name: kubeapi-proxy
+        image: rhuss/kubeapi-proxy
+      - name: expose-controller
+        image: rhuss/curl-jq
+        command:
+        - "sh"
+        - "/expose-script/expose-controller.sh"
+        volumeMounts:
+        - mountPath: "/expose-script"
+          name: expose-controller-script
+      volumes:
+      - name: expose-controller-script
+        configMap:
+          name: expose-controller-script
