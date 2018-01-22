@@ -1,23 +1,80 @@
 ## Controller
 
+This example shows a simple *Controller* which reacts on a certain annotation given on services.
+
+This controller is the poor men's version of Fabric8's https://github.com/fabric8io/exposecontroller[expose-controller].
+It watches the Kubernetes API for new `Service` and for each service with an annotation `expose=/path` it will create a new `Ingress` object for this service, matching on the given path.
+If an ingress object already exists for this service, then nothing will be done.
+Also, no ingress gets removed when a `Service` is removed.
+
+For a full explanation of how this controller works, please refer to "Controller" pattern in our book.
+
+The easiest way to try this example is by using https://github.com/kubernetes/minikube[minikube] with an ingress controller enabled:
 
 ```
 # Start minikube and enable the ingress addon
 minikube start
 minikube addons enable ingress
+```
 
+The controller script itself is stored in a `ConfigMap` and can be easily edited later on:
+
+```
 # Create a configmap holding the controller shell script:
 kubectl create configmap expose-controller-script --from-file=./expose-controller.sh
+```
 
+For the controlled a `Deployment` creates a pod with two containers:
+
+* One Kubernetes API proxy which exposes the API on localhost with port 8001
+* The main container which executes the script from the configmap. It is based on a single Alpine base image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] included.
+
+To create this deployment just call:
+
+```
 # Create the controller object:
 kubectl create -f expose-controller.yml
+```
 
+You might want to have a look at the descriptor file; it contains some useful comments along the way.
+
+That's all.
+Now you have a nice little Controller which watches on `Services` and reacts based on given annotations.
+
+To try it out, we are reusing the simple web application from the link:../../structural/Sidecar[Sidecar] example.
+It is slightly modified as we are adding an annotation `expose: /mdn` and mount the git sync HTML files to an `mdn` directory so that the application serves these below a context `/mdn`.
+Before applying the following descriptors, it is recommended to start a tail on the controller pod's log with `kubectl logs -f expose-controller-... expose-controller`.
+This command will show the events received by the controller as they come in.
+
+The create the web application itself:
+
+```
 # Create a sample web application with an 'expose' annotation:
 kubectl create -f web-app.yml
+```
 
+To verify that indeed an ingress object is created, try:
+
+```
 # Check that an ingress has been created
 kubectl get ingress web-app -o yaml
-
-# Open Ingress route
-open http://$(minikube ip)/mdn
 ```
+
+Finally, let's point our browser to the exposed ingress by
+
+
+```
+# Open Ingress route
+open https://$(minikube ip)/mdn
+```
+
+(`open` works nicely on macOS, for other operating systems, just open manually the URL `https://$(minikube ip)/mdn`)
+
+
+
+### Docker Images
+
+This example uses two straightforward Docker images which you can find in the subdirectories:
+
+* link:curl-jq[rhuss/curl-jq] which is an https://hub.docker.com/_/alpine/[alpine] Image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] added
+* link:kubeapi-proxy[rhuss/kubeapi-proxy] is an alpine Linux with a local `kubectl` installed and `kubectl proxy` started with the proper CA and token mounted. The original version https://github.com/luksa/kubernetes-in-action/tree/master/Chapter08/kubectl-proxy[kubectl-proxy] is from https://github.com/luksa[Marko Lukša] who introduced this proxy in his awesome book https://www.manning.com/books/kubernetes-in-action[Kubernetes in Action]. Highly recommended!
