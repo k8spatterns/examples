@@ -1,0 +1,23 @@
+## Controller
+
+
+```
+# Start minikube and enable the ingress addon
+minikube start
+minikube addons enable ingress
+
+# Create a configmap holding the controller shell script:
+kubectl create configmap expose-controller-script --from-file=./expose-controller.sh
+
+# Create the controller object:
+kubectl create -f expose-controller.yml
+
+# Create a sample web application with an 'expose' annotation:
+kubectl create -f web-app.yml
+
+# Check that an ingress has been created
+kubectl get ingress web-app -o yaml
+
+# Open Ingress route
+open http://$(minikube ip)/mdn
+```

@@ -1,0 +1,63 @@
+# Example for a HTTP server with a git pulling sidecar
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    name: web-app
+    labels:
+      project: k8spatterns
+      pattern: Controller
+      app: web-app
+  spec:
+    containers:
+    # Main container is a stock httpd serving from /var/www/html
+    - name: app
+      image: centos/httpd
+      ports:
+        - containerPort: 80
+      volumeMounts:
+      - mountPath: /var/www/html/mdn
+        name: git
+    # Sidecar poll every 10 minutes a given repository with git
+    - name: poll
+      image: axeclbr/git
+      volumeMounts:
+      - mountPath: /var/lib/data
+        name: git
+      env:
+        - name: GIT_REPO
+          value: https://github.com/mdn/beginner-html-site-scripted
+      command:
+      - "sh"
+      - "-c"
+      - "git clone $(GIT_REPO) . && watch -n 600 git pull"
+      workingDir: /var/lib/data
+    volumes:
+    # The shared directory for holding the files
+    - emptyDir: {}
+      name: git
+# A service which opens a NodePort is added for your convenience
+# but is not necessarily required for this example:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      project: k8spatterns
+      pattern: Controller
+      app: web-app
+    annotations:
+      # Annotation indicating that this path should be reachable as
+      # ingress route and will be picked up by the ingress controller:
+      expose: "/mdn"
+    name: web-app
+  spec:
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: web-app
