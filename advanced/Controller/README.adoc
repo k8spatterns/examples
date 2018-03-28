@@ -26,8 +26,8 @@ kubectl create configmap expose-controller-script --from-file=./expose-controlle
 
 In order to deploy the conrolller a `Deployment` creates a pod with two containers:
 
-* One Kubernetes API proxy which exposes the Kubernetes API on localhost with port 8001. The image for `k8spatterns/kubeapi-proxy` is defined in this [Dockerfile](kubeapi-proxy/Dockerfile)
-* The main container which executes the script from the configmap. It is based on a single Alpine base image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] included. The Dockerfile for this image `k8spattern/curl-jq` can be found [here](curl-jq/Dockerfile)
+* One Kubernetes API proxy which exposes the Kubernetes API on localhost with port 8001. The image for `k8spatterns/kubeapi-proxy` is defined in this link:kubeapi-proxy/Dockerfile[Dockerfile].
+* The main container which executes the script from the configmap. It is based on a single Alpine base image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] included. The Dockerfile for this image `k8spattern/curl-jq` can be found link:curl-jq/Dockerfile[here].
 
 To create this deployment just call:
 
