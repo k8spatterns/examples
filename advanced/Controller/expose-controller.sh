@@ -25,7 +25,7 @@ do
   echo "::: $type -- $service [$port] expose = $expose"
 
   # If a new service has been added and when its labeled with "expose", then
-  # create an ingress objecgt for it
+  # create an ingress object for it
   if [ $type = "ADDED" ] && [ $expose != 'null' ]; then
     # Check for Ingress with the same name
     http_code=$(curl -s -o /dev/null -w "%{http_code}" $k8s_ingress_url/$service)
