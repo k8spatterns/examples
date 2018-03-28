@@ -18,9 +18,9 @@ spec:
     spec:
       containers:
       - name: kubeapi-proxy
-        image: rhuss/kubeapi-proxy
+        image: k8spatterns/kubeapi-proxy
       - name: expose-controller
-        image: rhuss/curl-jq
+        image: k8spatterns/curl-jq
         command:
         - "sh"
         - "/expose-script/expose-controller.sh"
