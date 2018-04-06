@@ -64,4 +64,4 @@ spec:
           name: mappings-config
           key: twitter-to-salesforce
   - connection:
-      name: salesforce-insert-contact
+      name: salesforce-create-or-update-contact
