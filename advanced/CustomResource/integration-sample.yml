@@ -1,0 +1,67 @@
+# Connection to Twitter for checking all
+# mentions of the own Twitter handle
+---
+kind: Connection
+apiVersion: syndesis.io/v1
+metadata:
+  name: twitter-search-kubernetes-patterns
+spec:
+  action: io.syndesis:twitter-search-action
+  outputShape:
+    kind: java
+    class: twitter4j.Status
+  properties:
+  - name: keywords
+    value: "kubernetes patterns"
+  - name: interval
+    value: "5000"
+  - name: accessToken
+    value: 4593e95fa67ec90b0012345aa345
+  - name: accessTokenSecret
+    valueFrom:
+      secretKeyRef:
+        name: twitter-secret
+        key: accessTokenSecret
+---
+kind: Connection
+apiVersion: syndesis.io/v1
+metadata:
+  name: salesforce-create-or-update-contact
+spec:
+  action: io.syndesis:salesforce-upsert-sobject
+  inputShape:
+    kind: jsonSchema
+  outputShape:
+    kind: java
+    class: org.apache.camel.component.salesforce.api.dto.CreateSObjectResult
+  properties:
+  - name: object
+    value: contact
+  - name: identifier
+    value: Id
+  # OAuth consumer key to use
+  - name: consumerKey
+    value: 90b0012343454593e
+  # OAuth consumer secret
+  - name:
+    valueFrom:
+      secretKeyRef:
+        name: salesforce-secret
+        key: consumerSecret
+---
+kind: Integration
+apiVersion: syndesis.io/v1
+metadata:
+  name: twitter-to-salesforce
+  tags: [ "twitter", "salesforce" ]
+spec:
+  steps:
+  - connection:
+      name: twitter-search-kubernetes-patterns
+  - mapping:
+      valueFrom:
+        configMapKeyRef:
+          name: mappings-config
+          key: twitter-to-salesforce
+  - connection:
+      name: salesforce-insert-contact
