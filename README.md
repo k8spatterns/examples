@@ -3,7 +3,7 @@
 
 # Kubernetes Patterns - Examples
 
-This GitHub project contains the examples from the [Kubernetes Patterns](https://leanpub.com/k8spatterns) book by [Bilgin Ibryam](https://github.com/bibryam) and [Roland Huß](https://github.com/rhuss). 
+This GitHub project contains the examples from the [Kubernetes Patterns](https://leanpub.com/k8spatterns) book by [Bilgin Ibryam](https://github.com/bibryam) and [Roland Huß](https://github.com/rhuss).
 Each of the examples is contained in an extra directory and is self contained.
 
 [minikube](https://github.com/kubernetes/minikube) is recommended not only for trying out theses examples but also for an easy and simple to use Kubernetes setup in general.
@@ -27,3 +27,5 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 * [Immutable Configuration](configuration/ImmutableConfiguration/README.adoc) - several examples how to use immutable configuration containers for application configuration. This includes examples for the plain Docker case and for Kubernetes.
 
 ### Advanced Patterns
+
+* [Controller](advanced/Controller/README.adoc) is a simple, pure shell based controller which watches `Service` resources and exposes an `Ingress` route when it detects an `exposeService` label attached to the service.

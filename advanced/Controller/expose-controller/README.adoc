@@ -7,7 +7,8 @@ It watches the Kubernetes API for new `Service` and for each service with an ann
 If an ingress object already exists for this service, then nothing will be done.
 Also, no ingress gets removed when a `Service` is removed.
 
-For a full explanation of how this controller works, please refer to "Controller" pattern in our book.
+For a full explanation of how this controller works, please refer to the "Controller" pattern in our book.
+Note, that this is example is meant for educational purposes only and is not suitable for general purpose usage.
 
 The easiest way to try this example is by using https://github.com/kubernetes/minikube[minikube] with an ingress controller enabled:
 
@@ -24,7 +25,7 @@ The controller script itself is stored in a `ConfigMap` and can be easily edited
 kubectl create configmap expose-controller-script --from-file=./expose-controller.sh
 ```
 
-In order to deploy the conrolller a `Deployment` creates a pod with two containers:
+In order to deploy the controlller a `Deployment` creates a pod with two containers:
 
 * One Kubernetes API proxy which exposes the Kubernetes API on localhost with port 8001. The image for `k8spatterns/kubeapi-proxy` is defined in this link:kubeapi-proxy/Dockerfile[Dockerfile].
 * The main container which executes the script from the configmap. It is based on a single Alpine base image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] included. The Dockerfile for this image `k8spattern/curl-jq` can be found link:curl-jq/Dockerfile[here].

@@ -1,0 +1,64 @@
+# Example for a HTTP server with a git pulling sidecar
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapp-config
+data:
+  message: "Welcome to Kubernetes Patterns !"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      # Main container is a stock httpd serving from /var/www/html
+      - name: app
+        image: k8spatterns/mini-http-server
+        ports:
+        - containerPort: 8080
+        env:
+        # Message to print is taken from the ConfigMap as env var.
+        # Note that changes to the ConfigMap require a restart of the Pod
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: webapp-config
+              key: message
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp
+spec:
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: webapp
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: webapp
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: webapp
+          servicePort: 8080
+        path: "/"

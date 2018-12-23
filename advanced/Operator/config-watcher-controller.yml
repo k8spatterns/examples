@@ -1,0 +1,69 @@
+# Service account required for watching to resources
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: config-watcher-controller
+---
+# Bind to an appropriate permission
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: config-watcher:edit
+subjects:
+- kind: ServiceAccount
+  name: config-watcher-controller
+roleRef:
+  name: edit
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: config-watcher:crd
+subjects:
+- kind: ServiceAccount
+  name: config-watcher-controller
+roleRef:
+  name: config-watcher-crd
+  kind: Role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Example Deployment using a config map as input for a template
+# which is processed from an init-container
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    project: k8spatterns
+    pattern: Controller
+  name: config-watcher-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-watcher-controller
+  template:
+    metadata:
+      labels:
+        project: k8spatterns
+        pattern: Controller
+        app: config-watcher-controller
+    spec:
+      serviceAccountName: config-watcher-controller
+      containers:
+      - name: kubeapi-proxy
+        image: k8spatterns/kubeapi-proxy
+      - name: config-watcher
+        image: k8spatterns/curl-jq
+        command:
+        - "sh"
+        - "/watcher/config-watcher.sh"
+        volumeMounts:
+        - mountPath: "/watcher"
+          name: config-watcher
+      volumes:
+      - name: config-watcher
+        configMap:
+          name: config-watcher

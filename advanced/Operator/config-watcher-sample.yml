@@ -1,0 +1,12 @@
+# A ConfigWatch watching a configmap named "webapp-config"
+# and restarts pods with label "app=webapp" in the same
+# namespace.
+---
+kind: ConfigWatcher
+apiVersion: k8spatterns.io/v1
+metadata:
+  name: webapp-config-watcher
+spec:
+  configMap: webapp-config
+  podSelector:
+    app: webapp

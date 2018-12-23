@@ -1,7 +1,25 @@
+# Service account required for watching to resources
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: expose-controller
+---
+# Bind to an appropriate permission
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: expose-controller
+subjects:
+- kind: ServiceAccount
+  name: expose-controller
+roleRef:
+  name: edit
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+---
 # Example Deployment using a config map as input for a template
 # which is processed from an init-container
----
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -10,12 +28,17 @@ metadata:
   name: expose-controller
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: expose-controller
   template:
     metadata:
       labels:
         project: k8spatterns
         pattern: Controller
+        app: expose-controller
     spec:
+      serviceAccountName: expose-controller
       containers:
       - name: kubeapi-proxy
         image: k8spatterns/kubeapi-proxy
