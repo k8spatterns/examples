@@ -7,6 +7,9 @@ apiVersion: k8spatterns.io/v1
 metadata:
   name: webapp-config-watcher
 spec:
+  # The config map's name which should be watched
   configMap: webapp-config
+  # A label selector for the pods to delete if the
+  # given config map changs
   podSelector:
     app: webapp

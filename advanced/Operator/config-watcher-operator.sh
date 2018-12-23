@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Call it with the namespace to monitor
-namespace=${1:-default}
+# Namespace to watch (or 'default' if not given)
+namespace=${WATCH_NAMESPACE:-default}
 
 # API URL setup. Requires an ambassador API proxy running side-by-side on localhost
 base=http://localhost:8001

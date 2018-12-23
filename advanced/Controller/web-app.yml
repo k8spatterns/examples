@@ -4,6 +4,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: webapp-config
+  annotations:
+    k8spatterns.io/podDeleteSelector: "app=webapp"
 data:
   message: "Welcome to Kubernetes Patterns !"
 ---
