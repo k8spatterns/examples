@@ -42,7 +42,7 @@ start_event_loop() {
 delete_pods_with_selector() {
   local selector=${1}
 
-  echo "::::: Deleting pods with $label_selector"
+  echo "::::: Deleting pods with $selector"
 
   # Pick up all pod names which match the given selector
   local pods=$(curl -s $base/api/v1/${ns}/pods?labelSelector=$selector | \
@@ -50,11 +50,11 @@ delete_pods_with_selector() {
 
   # Delete all pods that matcehed
   for pod in $pods; do
-    echo "::::: Deleting pod $pod"
-
     # Delete but also check exit code
     exit_code=$(curl -s -X DELETE -o /dev/null -w "%{http_code}" $base/api/v1/${ns}/pods/$pod)
-    if [ $exit_code -ne 200 ]; then
+    if [ $exit_code -eq 200 ]; then
+      echo "::::: Deleted pod $pod"
+    else
       echo "::::: Error deleting pod $pod: $exit_code"
     fi
   done

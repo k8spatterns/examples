@@ -8,6 +8,8 @@ Each of the examples is contained in an extra directory and is self contained.
 
 [minikube](https://github.com/kubernetes/minikube) is recommended not only for trying out theses examples but also for an easy and simple to use Kubernetes setup in general.
 
+ALternatively you can also try out these examples on the [Kubernetes Playground](https://www.katacoda.com/courses/kubernetes/playground) or [Play with Kubernetes](https://labs.play-with-k8s.com/).
+
 For feedback, issues or questions in general, please use the [issue tracker](https://github.com/bibryam/k8spatterns/issues) to open issues.
 
 ## Patterns
