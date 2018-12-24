@@ -81,11 +81,3 @@ and then finally call the URL again to check that the content has been updated
 # Access webapp via the included Ingress obect
 curl -sk https://webapp.$(minikube ip).nip.io
 ```
-
-### Docker Images
-
-This example uses two straightforward Docker images:
-
-* link:../images/curl-jq.dockerfile[k8spatterns/curl-jq] which is an https://hub.docker.com/_/alpine/[alpine] Image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] added
-* link:../images/kubeapi-proxy.dockerfile[k8spatterns/kubeapi-proxy] is an alpine Linux with a local `kubectl` installed and `kubectl proxy` started with the proper CA and token mounted. The original version https://github.com/luksa/kubernetes-in-action/tree/master/Chapter08/kubectl-proxy[kubectl-proxy] is from https://github.com/luksa[Marko Lukša] who introduced this proxy in his fine book https://www.manning.com/books/kubernetes-in-action[Kubernetes in Action].
-* link:../images/mini-http-server.dockerfile[k8spatterns/mini-http-server] is a super simple HTTP server based on `nc` which just answers each HTTP request with the same message provided by an environment variable `MESSAGE`. This is for demo purposes only, of course.
