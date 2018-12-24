@@ -89,7 +89,7 @@ After this connection between `ConfigMap` and `Pods` has been configured, change
 [source, bash]
 ----
 # Patch config-map to update the web content
-kubectl patch configmap webapp-config -p '{"data":{"message":"Greets from your smooth operator"}}'
+kubectl patch configmap webapp-config -p '{"data":{"message":"Greets from your smooth operator!"}}'
 ----
 
 and then finally call the URL again to check that the content has been updated
