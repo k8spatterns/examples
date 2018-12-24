@@ -1,0 +1,91 @@
+## Controller
+
+This example demonstrates a simple *Controller* which evaluates `ConfigMaps` and restart associated pods if such a `ConfigMap` changes.
+
+This controller is been inspired from https://github.com/fabric8io/configmapcontroller[configmap-controller] but for more limited.
+
+This controller watches all `ConfigMap` in the namespace in which this controller is deployed and reacts on the annotation `k8spatterns.io/podDeleteSelector`.
+If this annotation is given on a `ConfigMap` that has changed, then the value of this annotation is taken as a label selector to find `Pods` to kill.
+Supposed that these pods are managed by a backend controller like `Deployment`, these `Pods` will be respawned again, eventually picking up the changed configuration.
+
+For a full explanation of how this controller works, please refer to the "Controller" pattern in our book.
+
+WARNING: Note, that this is example is meant for educational purposes only and is not suitable for general purpose usage.
+
+The easiest way to try this example is by using https://github.com/kubernetes/minikube[minikube] with an ingress controller enabled:
+
+```
+# Start minikube and enable the ingress addon
+minikube start
+minikube addons enable ingress
+```
+
+The controller script itself is stored in a `ConfigMap` and can be easily edited later on:
+
+```
+# Create a configmap holding the controller shell script:
+kubectl create configmap config-watcher-controller --from-file=./config-watcher-controller.sh
+```
+
+In order to deploy the controller a `Deployment` creates a pod with two containers:
+
+* One Kubernetes API proxy which exposes the Kubernetes API on localhost with port 8001. The image for `k8spatterns/kubeapi-proxy` is defined in this link:../images/kubeapi-proxy.dockerfile[Dockerfile].
+* The main container which executes the script from the configmap. It is based on a single Alpine base image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] included. The Dockerfile for this image `k8spattern/curl-jq` can be found link:../images/curl-jq.dockerfile[here].
+
+Both images, https://cloud.docker.com/u/k8spatterns/repository/docker/k8spatterns/kubeapi-proxy[k8spatterns/kubeapi-proxy] and https://cloud.docker.com/u/k8spatterns/repository/docker/k8spatterns/curl-jq[k8spatterns/curl-jq] are available from Docker Hub.
+
+To create this deployment in the current namespace, call:
+
+```
+# Create the controller Deployment
+kubectl create -f config-watcher-controller.yml
+```
+
+You might want to have a look at the descriptor file; it contains some useful comments along the way and also the security setup to allow the controller to watch resources and to restart `Pods`.
+
+That's all.
+Now you have a nice little Controller which watches on `ConfigMap` and restart `Pods` in case of updates.
+
+To try it out, we are reusing the super simple web application which just exposes an environment variable as content.
+This link:../images/mini-http-server.dockerfile[image] uses `nc` to deliver the content and can be found on Docker Hub as https://cloud.docker.com/u/k8spatterns/repository/docker/k8spatterns/mini-http-server[k8spatterns/mini-http-server].
+
+Before we deploy this app, we should tail on the log of our controller to see how it works (e.g. `kubectl logs -f config-watcher-controller-....`) to see the events received by the controller as they come in.
+
+The create the web application itself:
+
+```
+# Create a sample web application with an 'expose' annotation:
+kubectl create -f web-app.yml
+```
+
+If you look into this descriptor, you will find a `Deployment` using our dumb HTTP server which references the content environment variable via a `ConfigMap`.
+The `ConfigMap` itself is annotated with a pod selector `k8spatterns.io/podDeleteSelector: "app=webapp"` which directly select the webapp `Pod`.
+
+You can access our web app directly
+
+```
+# Access webapp via the included Ingress obect
+curl -sk https://webapp.$(minikube ip).nip.io
+```
+
+Now change the content of `ConfigMap` and watch the log of your controller:
+
+```
+# Patch config-map to update the web content
+kubectl patch configmap webapp-config -p '{"data":{"message":"Take this update!"}}'
+```
+
+and then finally call the URL again to check that the content has been updated
+
+```
+# Access webapp via the included Ingress obect
+curl -sk https://webapp.$(minikube ip).nip.io
+```
+
+### Docker Images
+
+This example uses two straightforward Docker images:
+
+* link:../images/curl-jq.dockerfile[k8spatterns/curl-jq] which is an https://hub.docker.com/_/alpine/[alpine] Image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] added
+* link:../images/kubeapi-proxy.dockerfile[k8spatterns/kubeapi-proxy] is an alpine Linux with a local `kubectl` installed and `kubectl proxy` started with the proper CA and token mounted. The original version https://github.com/luksa/kubernetes-in-action/tree/master/Chapter08/kubectl-proxy[kubectl-proxy] is from https://github.com/luksa[Marko Lukša] who introduced this proxy in his fine book https://www.manning.com/books/kubernetes-in-action[Kubernetes in Action].
+* link:../images/mini-http-server.dockerfile[k8spatterns/mini-http-server] is a super simple HTTP server based on `nc` which just answers each HTTP request with the same message provided by an environment variable `MESSAGE`. This is for demo purposes only, of course.

@@ -19,7 +19,6 @@ start_event_loop() {
   curl -N -s $base/api/v1/${ns}/configmaps?watch=true | while read -r event
   do
     # Event type & name
-    echo $event
     local type=$(echo "$event" | jq -r .type)
     local config_map=$(echo "$event" | jq -r .object.metadata.name)
 
