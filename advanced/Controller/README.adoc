@@ -81,7 +81,7 @@ Now change the content of `ConfigMap` and watch the log of your controller:
 kubectl patch configmap webapp-config -p '{"data":{"message":"Take this update!"}}'
 ----
 
-and then finally call the URL again to check that the content has been updated
+and then finally call the URL again to check that the content has been updated to
 
 [source,bash]
 ----

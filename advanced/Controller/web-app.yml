@@ -1,4 +1,4 @@
-# ConfigMap which holds the value of the data to server by
+# ConfigMap which holds the value of the data to serve by
 # the webapp
 apiVersion: v1
 kind: ConfigMap
