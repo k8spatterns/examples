@@ -2,5 +2,5 @@
 
 Here you can find two examples for building container images within a Kubernetes / OpenShift cluster:
 
-* link:openshift/README.adoc[Openshift builds] is an example how to use a chained build with an S2I build followed by a Docker build for creating a simple Spring Boot based REST service.
+* link:openshift/README.adoc[OpenShift build] is an example how to use a chained build with an S2I build followed by a Docker build for creating a simple Spring Boot based REST service.
 * link:knative/README.adoc[Knative build] gives an example for Knative build pipepline to compile the same REST service whose source you can find at https://github.com/k8spatterns/random-generator.
