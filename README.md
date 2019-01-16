@@ -1,14 +1,14 @@
 
-<a href="https://leanpub.com/k8spatterns"><img src="https://s3.amazonaws.com/titlepages.leanpub.com/k8spatterns/hero?1492193906" align="right" width="300px" style="float:right; margin: 50px 0px 20px 30px;"/></a>
+<!--- <a href="https://leanpub.com/k8spatterns"><img src="https://s3.amazonaws.com/titlepages.leanpub.com/k8spatterns/hero?1492193906" align="right" width="300px" style="float:right; margin: 50px 0px 20px 30px;"/></a> -->
 
 # Kubernetes Patterns - Examples
 
-This GitHub project contains the examples from the [Kubernetes Patterns](https://leanpub.com/k8spatterns) book by [Bilgin Ibryam](https://github.com/bibryam) and [Roland Huß](https://github.com/rhuss).
+This GitHub project contains the examples from the "Kubernetes Patterns" book by [Bilgin Ibryam](https://github.com/bibryam) and [Roland Huß](https://github.com/rhuss) (_to be announced soon_)
 Each of the examples is contained in an extra directory and is self contained.
 
-[minikube](https://github.com/kubernetes/minikube) is recommended not only for trying out theses examples but also for an easy and simple to use Kubernetes setup in general.
-
-ALternatively you can also try out these examples on the [Kubernetes Playground](https://www.katacoda.com/courses/kubernetes/playground) or [Play with Kubernetes](https://labs.play-with-k8s.com/).
+Installation instructions for running the examples are summarized in an extra [installation](INSTALLATION.adoc) page.
+By default, you just need a vanilla Kubernetes installation.
+If addons are required, the example description explains this additional requirement.
 
 For feedback, issues or questions in general, please use the [issue tracker](https://github.com/bibryam/k8spatterns/issues) to open issues.
 
