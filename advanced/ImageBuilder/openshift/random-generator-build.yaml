@@ -1,0 +1,101 @@
+# Imagestream for holding the result of the Maven build
+# This image is the S2I images (including Maven) + the created Jar
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: random-generator-compile-result
+---
+# Imagestream of the runtime used in the deployment
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: random-generator-runtime
+---
+# Build configuration for building the random number generator
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: random-generator-compile
+spec:
+  # Fetch the source code from GitHub
+  source:
+    git:
+      uri: https://github.com/k8spatterns/random-generator
+  strategy:
+    # For building the image we are using source-to-image (S2I)
+    sourceStrategy:
+      # The builder image is picked up directly from Docker Hub
+      # Could be alos an ImageStreamTag to reference an internal
+      # builder image
+      from:
+        kind: DockerImage
+        name: fabric8/s2i-java:3.0-java8
+  output:
+    # The build will add the image to an imagestream tag image.
+    # This imagestream tag already needs to exist
+    # This name can be used in a Deployment then.
+    to:
+      kind: ImageStreamTag
+      name: random-generator-compile-result:latest
+  triggers:
+  # Offer a WebHook trigger which could be configured at GitHub
+  # to trigger a rebuild every time the source code changes
+  - type: GitHub
+    github:
+      # The secret becomes part of the WebHook URL which needs to
+      # be configured in GitHub.
+      secret: xDf689A
+  # Trigger a rebuild everytime the builder image changes
+  - type: ImageChange
+  # Also trigger a rebuild when configuration changes
+  - type: ConfigChange
+---
+# BuildConfig for the chained build.
+# This will take the result of the previous S2I run (a jar)
+# and copy it into a location on a pure Java runtime image (non-s2i)
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: random-generator-runtime
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: random-generator-runtime:latest
+  source:
+    images:
+    # This image source take the result of the previous compile step
+    # and copies it into the Docker build's context directory which then
+    # in turn will be picked up by the Dockerfile
+    - from:
+        kind: ImageStreamTag
+        name: random-generator-compile-result:latest
+      paths:
+      # The S2I builder moved the compiled result to /deployments in th
+      # S2I builder image
+      - sourcePath: /deployments/.
+        destinationDir: "."
+    # Dockerfile for building the runtime image (this is another source)
+    dockerfile: |-
+      FROM fabric8/java-alpine-openjdk8-jre
+
+      # Set a default environment, can be overwritten in the deployment
+      ENV RANDOM_GENERATOR_ENV development
+
+      # Pick up all jar files which has been copied over from the build run
+      COPY *.jar /deployments/
+  strategy:
+    # We are using a Docker build with a dockerfile
+    type: Docker
+  triggers:
+  # Rebuild when we change this definition
+  - type: ConfigChange
+  # Rebuild automatically when the image from an S2I run has been recreated.
+  # This is how the build chain works.
+  - imageChange:
+      automatic: true
+      from:
+        kind: ImageStreamTag
+        name: random-generator-compile-result:latest
+    type: ImageChange
+---

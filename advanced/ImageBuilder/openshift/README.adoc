@@ -1,0 +1,92 @@
+## ImageBuilder - OpenShift Builds
+
+This example demonstrates a a https://docs.openshift.com/container-platform/3.11/dev_guide/builds/advanced_build_operations.html#dev-guide-chaining-builds[chained] OpenShift build.
+
+In the first step, an S2I build compiles a simple REST service for generating random numbers.
+The second step then takes the generated image, extracts the jar file and with the help of a Docker build creates a much smaller image which only the final artefact (and not the build environment).
+
+Both steps are connected with triggers, so that the second (Dockerfile) build starts automatically when the first build has finished.
+
+A deployment (with a service and a route) are provided in link:random-generator-deploy.yml[random-generator-deploy.yml] so that the build can be easily tested.
+The deployment also uses a trigger to start a redeployment as soon as the second build has finished.
+
+First you need a running OpenShift installation with the corresponding client tool `oc`.
+The easies way is to use Minishift which can be installed as described in the link:../../INSTALLATION.adoc#minishift[installation instructions].
+
+Assuming that you are connected to OpenShift (verify with `oc get pods`), apply the build configuration:
+
+[source, bash]
+----
+oc create -f random-generator-build.yml
+
+imagestream.image.openshift.io/random-generator-compile-result created
+imagestream.image.openshift.io/random-generator-runtime created
+buildconfig.build.openshift.io/random-generator-compile created
+buildconfig.build.openshift.io/random-generator-runtime created
+----
+
+this will create:
+
+* 2 image stream `random-generator-compile-result` for the S2I generated image and `random-generator-runtime` for the final runtime
+* A build config `random-generator-compile` for an S2I build which fetches the sources from https://github.com/k8spatterns/random-generator/ and compiles it with the s2i image `fabric8/s2i-java:3.0-java8`
+* A build config `random-generator-runtime` which uses a much smaller base image `fabric8/java-alpine-openjdk8-jre` and copies over the compiled far jar from the previous build into a directory and creates the runtime image with the help of a Dockerfile. That's an example of an OpenShift Docker build.
+
+Please refer to the comments in this file for more explanations.
+
+After all builds have been finished you should see the following result:
+
+[source, bash]
+----
+oc get pods
+NAME                               READY     STATUS      RESTARTS   AGE
+random-generator-compile-1-build   0/1       Completed   0          1m
+random-generator-runtime-2-build   0/1       Completed   0          55s
+----
+
+You can check the output of the builds easily too:
+
+[source, bash]
+----
+# Logs of S2I build (ommit -f if you don't want to follow the log)
+oc logs -f bc/random-generator-compile
+
+# Logs of Docker build
+oc logs -f bc/random-generator-runtime
+----
+
+Now its time to test the image.
+Create teh DeploymentConfig, Service and Route with:
+
+[source, bash]
+----
+oc create -f random-generator-deploy.yml
+deploymentconfig.apps.openshift.io/random-generator created
+service/random-generator created
+route.route.openshift.io/random-generator created
+----
+
+Again, check the source for more detailed explanations.
+When the deployment has been finished, use this command to try out the service (assuming that you have `curl` and `jq` installed):
+
+[source, bash]
+----
+curl -s $(oc get routes random-generator -o jsonpath={.spec.host}) | jq .
+{
+ "random": -302344373,
+ "id": "e893723c-3949-4df8-8592-b62d06df346d",
+ "environment": "development"
+}
+----
+
+Note, how the `id` changes with each call, as we are using two replicas to serve the random numbers.
+
+Now its your turn to play a bit with this setup:
+
+* What happens when you start the initial build manually with `oc start-build random-generator-compile` ?
+* When adding a label to the build config via `oc edit bc/random-generator-compile` ?
+* Add an enviroment variable `RANDOM_GENERATOR_ENV=production` to the deployment via `oc edit dc/random-generator`. Does the trigger work ?
+
+In all cases you should see some automatic rebuilding and redeployment.
+Feel also free to fork https://github.com/k8spatterns/random-generator/, add a Webhook to the forked Repo to point to your installation to automatically start a build when the source changes, via the configured https://github.com/k8spatterns/random-generator/[GitHub trigger] on the `random-generator-compile` build config. Your OpenShift installation needs to be reachable from the outside world, so a plain Minishift setup is not good enough here.
+
+More background information about this example can be found in our book of course :)

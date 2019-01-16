@@ -1,0 +1,13 @@
+## Prerequisites for running the examples
+
+This document describes various installation options for Kubernetes to try out these examples.
+All examples has been tested with <<minikube>> toroughly, but should also work without change on the other installation options.
+
+[[minikube]]
+### Minikube
+
+[[gke]]
+### GKE
+
+[[minishift]]
+### Minishift (OpenShift examples)

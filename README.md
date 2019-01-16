@@ -33,3 +33,5 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 * [Controller](advanced/Controller/README.adoc) is a simple, pure shell based controller which watches `ConfigMap` resources for changes and restarts `Pods` by using a label selector provided as annotation. An additional [example controller](advanced/Controller/expose-controller/README.adoc) exposes an `Ingress` route when it detects an `exposeService` label attached to the service.
 
 * [Operator](advanced/Operator/README.adoc) is based on the `ConfigMap` watch [controller](advanced/Controller/README.adoc) and introduces a CRD `ConfigWatcher` which connects a `ConfigMap` with a set of `Pods` to restart in case of a config change.
+
+* [ImageBuilder](advanced/ImageBuilder/README.adoc) shows you how you can setup a [chained build](advanced/ImageBuilder/openshift/README.adoc) on OpenShift and how to use [Knative build](advanced/ImageBuilder/knative/README.adoc) for doing builds within the cluster.

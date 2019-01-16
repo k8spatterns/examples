@@ -1,0 +1,62 @@
+# DeploymentConfig for starting up the random-generator-runtime
+# With two replicas
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: random-generator
+spec:
+  replicas: 2
+  selector:
+    app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      - image: ' '
+        name: random-generator
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+  triggers:
+  # Redeploy when configuration changes
+  - type: ConfigChange
+
+  # Redeploy when the image of the container 'random-generator' (the only container)
+  # changes. This happens after a build so that we have an automatic redeployment
+  # when a new build has been performed.
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - random-generator
+      from:
+        kind: ImageStreamTag
+        name: random-generator-runtime:latest
+    type: ImageChange
+---
+# A service for exposing our random generator
+apiVersion: v1
+kind: Service
+metadata:
+  name: random-generator
+spec:
+  selector:
+    app: random-generator
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+---
+# The route for accessing the service from externally.
+# Use `oc get route` to find out the URL
+# Best try it with:
+# curl -s $(oc get routes random-generator -o jsonpath={.spec.host})
+apiVersion: v1
+kind: Route
+metadata:
+  name: random-generator
+spec:
+  to:
+    kind: Service
+    name: random-generator
