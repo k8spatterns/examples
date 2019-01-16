@@ -1,6 +1,6 @@
 ## Prerequisites for running the examples
 
-This document describes various installation options for Kubernetes to try out these examples.
+This document describes various installation options for Kubernetes and extensions which we are using in the examples.
 All examples has been tested with <<minikube>> toroughly, but should also work without change on the other installation options.
 
 [[minikube]]
@@ -11,3 +11,7 @@ All examples has been tested with <<minikube>> toroughly, but should also work w
 
 [[minishift]]
 ### Minishift (OpenShift examples)
+
+
+[[knative]]
+### Knative
