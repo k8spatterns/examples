@@ -16,13 +16,46 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 
 ### Foundational Patterns
 
+* [Automatable Unit](foundational/AutomatableUnit/README.adoc) -
+
+* [Predictable Demands](foundational/PredictableDemands/README.adoc) -
+
+* [Dynamic Placement](foundational/DynamicPlacement/README.adoc) -
+
+* [Declarative Deployment](foundational/DeclarativeDeployment/README.adoc) -
+
+* [Observable Interior](foundational/ObservableInterior/README.adoc) -
+
+* [Life Cycle Conformance](foundational/LifeCycleConformance/README.adoc) -
+
 ### Behavorial Patterns
+
+* [Batch Job](behavorial/BatchJob/README.adoc) -
+
+* [Scheduled Job](behavorial/ScheduledJob/README.adoc) -
+
+* [Daemon Service](behavorial/DaemonService/README.adoc) -
+
+* [Singleton Service](behavorial/SingletionService/README.adoc) -
+
+* [Self Awareness](behavorial/SelfAwareness/README.adoc) -
 
 ### Structural Patterns
 
 * [Sidecar](structural/Sidecar/README.adoc) - Git polling example for a sidecar
 
+* [Init Container](structural/InitContainer/README.adoc) -
+
+* [Ambassador](structural/Ambassador/README.adoc) -
+
+* [Adapter](structural/Adapter/README.adoc) -
+
 ### Configuration Patterns
+
+* [Envvar Configuration](configuration/EnvvarConfiguration/README.adoc) -
+
+* [Configuration Resource](configuration/ConfigurationResource/README.adoc) -
+
 
 * [Configuration Template](configuration/ConfigurationTemplate/README.adoc) - an example how to use a template configuration `standalone.xml` which is processed with a template processed and filled with data from `ConfigMap` before a Wildly server is started.
 
@@ -30,8 +63,12 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 
 ### Advanced Patterns
 
+* [Stateful Service](advanced/StatefulService/README.adoc) -
+
 * [Controller](advanced/Controller/README.adoc) - a simple, pure shell based controller which watches `ConfigMap` resources for changes and restarts `Pods` by using a label selector provided as annotation. An additional [example controller](advanced/Controller/expose-controller/README.adoc) exposes an `Ingress` route when it detects an `exposeService` label attached to the service.
 
 * [Operator](advanced/Operator/README.adoc) - operator based on the `ConfigMap` watch [controller](advanced/Controller/README.adoc) and introduces a CRD `ConfigWatcher` which connects a `ConfigMap` with a set of `Pods` to restart in case of a config change.
 
 * [Image Builder](advanced/ImageBuilder/README.adoc) - setup a [chained build](advanced/ImageBuilder/openshift/README.adoc) on OpenShift and use [Knative build](advanced/ImageBuilder/knative/README.adoc) for doing builds within the cluster.
+
+* [ElasticScale](advanced/ElasticScale/README.adoc) -
