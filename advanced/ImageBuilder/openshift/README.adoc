@@ -90,3 +90,20 @@ In all cases you should see some automatic rebuilding and redeployment.
 Feel also free to fork https://github.com/k8spatterns/random-generator/, add a Webhook to the forked Repo to point to your installation to automatically start a build when the source changes, via the configured https://github.com/k8spatterns/random-generator/[GitHub trigger] on the `random-generator-compile` build config. Your OpenShift installation needs to be reachable from the outside world, so a plain Minishift setup is not good enough here.
 
 More background information about this example can be found in our book of course :)
+
+[[image-builder-openshift-multi-stage]]
+### Multi stage build
+
+This directory also contains an example for a plain Docker multi-stage build.
+This build is equivalent to the chained build as it also uses a build stage for compiling the artefact and then create the runtime image with the created fat jar.
+
+[source, bash]
+----
+# Setup the multi-stage build. You might get an error if the imagestream
+# 'random-generator-runtim' already exists, but you can ignore that.
+oc create -f random-generator-multi-stage-docker.yml
+
+----
+
+You can monitor the build as described above for the chained build.
+Also, as this build pushes to the same imagestream you can just reuse the deployment above to check this image.

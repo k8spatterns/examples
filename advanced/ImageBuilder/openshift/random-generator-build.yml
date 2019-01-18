@@ -77,15 +77,18 @@ spec:
         destinationDir: "."
     # Dockerfile for building the runtime image (this is another source)
     dockerfile: |-
-      FROM fabric8/java-alpine-openjdk8-jre
+      FROM openjdk:8-alpine
 
       # Set a default environment, can be overwritten in the deployment
       ENV RANDOM_GENERATOR_ENV development
 
       # Pick up all jar files which has been copied over from the build run
-      COPY *.jar /deployments/
+      COPY random-generator*.jar /
+
+      # Start up the
+      CMD java -jar /random-generator*.jar
   strategy:
-    # We are using a Docker build with a dockerfile
+    # We are using a Docker build with the dockerfile above
     type: Docker
   triggers:
   # Rebuild when we change this definition

@@ -1,0 +1,51 @@
+# Imagestream of the runtime used in the deployment
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: random-generator-runtime
+---
+# BuildConfig for a multi-stage Docker build
+# This build will checkout the source, run Maven,
+# and create a runtime image from the generated artefact
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: random-generator-multi-stage
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: random-generator-runtime:latest
+  source:
+    # Dockerfile for building the runtime image (this is another source)
+    dockerfile: |-
+      # Multi stage Dockerfile for creating the random generator
+      FROM maven:3-jdk-8-alpine as builder
+
+      # Checkout source
+      RUN apk add git \
+       && git clone \
+              https://github.com/k8spatterns/random-generator.git \
+              /tmp/source
+
+      # Run a plain mvn build for compiling the jar file
+      RUN mvn package -f /tmp/source
+      # ---------------------------------------------------------------
+      # Runtime
+      FROM openjdk:8-alpine
+
+      # Set a default environment, can be overwritten in the deployment
+      ENV RANDOM_GENERATOR_ENV multi-stage
+
+      # Copy jar file from builds stage
+      COPY --from=builder /tmp/source/target/random-generator*.jar /
+
+      # Start up the application
+      CMD java -jar /random-generator*.jar
+  strategy:
+    # We are using a Docker build with the dockerfile above
+    type: Docker
+  triggers:
+  # Rebuild when we change this definition
+  - type: ConfigChange
+---
