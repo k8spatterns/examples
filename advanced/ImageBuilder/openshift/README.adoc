@@ -11,7 +11,7 @@ A deployment (with a service and a route) are provided in link:random-generator-
 The deployment also uses a trigger to start a redeployment as soon as the second build has finished.
 
 First you need a running OpenShift installation with the corresponding client tool `oc`.
-The easies way is to use Minishift which can be installed as described in the link:../../../INSTALLATION.adoc#minishift[installation instructions].
+The easies way is to use Minishift which can be installed as described in the link:../../../INSTALL.adoc#minishift[installation instructions].
 
 Assuming that you are connected to OpenShift (verify with `oc get pods`), apply the build configuration:
 

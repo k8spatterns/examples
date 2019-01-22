@@ -4,7 +4,7 @@ This example demonstrates how to build images with https://github.com/knative/bu
 
 Two variations are offered, one with a plain Knative `Build`, the other using a `BuildTemplate`.
 First, you need to have Knative installed.
-Please refer to the link::../../../INSTALL.adoc#Knative[installation instructions] for the options you have for installing Knative build
+Please refer to the link:../../../INSTALL.adoc#knative[installation instructions] for the options you have for installing Knative build
 
 Both examples require a registry to push the created image into.
 For the simplicities sake, we install an insecure and unprotected registry directly into the current namespace.
