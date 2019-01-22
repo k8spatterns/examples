@@ -88,3 +88,16 @@ and then finally call the URL again to check that the content has been updated t
 # Access webapp via the included Ingress obect
 curl -sk https://webapp.$(minikube ip).nip.io
 ----
+
+## More Information
+
+* https://github.com/kubernetes/community/blob/a0fdd9ccfa6d5a6b17d8d2d3eec1d2e1ee12f3c4/contributors/devel/controllers.md[Kubernetes Documentation]
+* https://blog.openshift.com/writing-custom-controller-python/[Writing a Custom Controller in Python by Karim Boumedhel]
+* https://engineering.bitnami.com/articles/a-deep-dive-into-kubernetes-controllers.html[A deep dive into Kubernetes controllers by Tu Nguyen]
+* https://github.com/fabric8io/exposecontroller[Expose Controller by Fabric8] for auto exposing Services via OpenShift Routes or Kubernetes Ingress.
+* https://github.com/fabric8io/configmapcontroller[ConfigMap Controller by Fabric8] for restarting Deployments when a ConfigMap content changes.
+* https://www.youtube.com/watch?v=_BuqPMlXfpE[Writing a custom controller by Aaron Levy]
+* https://medium.com/@cloudark/kubernetes-custom-controllers-b6c7d0668fdf[Writing Kubernetes Custom Controller] with a good overview of how to write custom controllers with Kubernetes' client-go library
+* https://github.com/heptio/contour[Contour] - an Ingress controller for the Envoy proxy
+* https://coreos.com/operators/[Operators] by CoreOS
+* https://github.com/Mirantis/k8s-AppController[AppController] by Mirantis
