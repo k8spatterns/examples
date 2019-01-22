@@ -17,7 +17,7 @@ RUN mvn package -f /tmp/source
 FROM openjdk:8-alpine
 
 # Set a default environment, can be overwritten in the deployment
-ENV RANDOM_GENERATOR_ENV multi-stage
+ENV BUILD_TYPE docker-multi-stage
 
 # Copy jar file from builds stage
 COPY --from=builder /tmp/source/target/random-generator*.jar /

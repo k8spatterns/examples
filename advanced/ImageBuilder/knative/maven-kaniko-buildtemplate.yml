@@ -1,0 +1,51 @@
+apiVersion: build.knative.dev/v1alpha1
+kind: BuildTemplate
+metadata:
+  name: maven-kaniko
+spec:
+  # Supported parameters with defaults (if any)
+  parameters:
+  # Mandatory image name to push to
+  - name: IMAGE
+    description: The name of the image to create and push
+  # Used to set an env-variable with is also returned by the random-generator service
+  - name: BUILD_TYPE
+    description: Type of build used
+    default: knative-build-maven-kaniko-template
+  steps:
+
+  # Build the Spring Boot fat jar with a Maven builder image
+  - name: maven-build
+    image: gcr.io/cloud-builders/mvn
+    args:
+    - package
+    # This volume hared among all steps contains the source code, too.
+    # We assume a top-level pom.xml here with a single artefact created in target/
+    workingDir: /workspace
+
+  # Create a Dockerfile which is used in the next step
+  # The Dockerfile just copies the JAR file to the image
+  # and starts it with java -jar
+  - name: prepare-docker-context
+    image: alpine
+    command:
+    - ash
+    - -x
+    - -c
+    - |-
+      cat <<EOT >/workspace/Dockerfile
+      # Simple Dockerfile for firing up a JAR file
+      FROM openjdk:8-alpine
+      ENV BUILD_TYPE ${BUILD_TYPE}
+      COPY target/*jar /
+      CMD java -jar /*.jar
+      EOT
+
+  # Use Kaniko to do a daemonless build and push it to
+  # the imae specified with ${IMAGE}
+  - name: image-build-and-push
+    image: gcr.io/kaniko-project/executor
+    args:
+    - --context=/workspace
+    - --insecure
+    - --destination=${IMAGE}

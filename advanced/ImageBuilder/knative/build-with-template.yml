@@ -1,0 +1,18 @@
+apiVersion: build.knative.dev/v1alpha1
+kind: Build
+metadata:
+  name: random-generator-template
+spec:
+  source:
+    git:
+      url: https://github.com/k8spatterns/random-generator.git
+      revision: master
+  template:
+    # The template to use and installed via maven-kaniko-buildtemplate.yml
+    name: maven-kaniko
+    arguments:
+    # Parameter to set, which is the image name that's gets generated
+    # As registry we are using the registry service we have installed in
+    # our namespace
+    - name: IMAGE
+      value: registry:80/k8spatterns/random-generator

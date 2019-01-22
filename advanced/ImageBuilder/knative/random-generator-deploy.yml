@@ -1,0 +1,48 @@
+# DeploymentConfig for starting up the random-generator-runtime
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      - image: registry:80/k8spatterns/random-generator
+        imagePullPolicy: Always
+        name: random-generator
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
+# A service for exposing our random generator
+apiVersion: v1
+kind: Service
+metadata:
+  name: random-generator
+spec:
+  selector:
+    app: random-generator
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+---
+# The route for accessing the service from externally.
+# Use `oc get route` to find out the URL
+# Best try it with:
+# curl -s $(oc get routes random-generator -o jsonpath={.spec.host})
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: random-generator
+spec:
+  backend:
+    serviceName: random-generator
+    servicePort: 8080

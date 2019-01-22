@@ -79,8 +79,8 @@ spec:
     dockerfile: |-
       FROM openjdk:8-alpine
 
-      # Set a default environment, can be overwritten in the deployment
-      ENV RANDOM_GENERATOR_ENV development
+      # Set the build type
+      ENV BUILD_TYPE s2i-chained-build
 
       # Pick up all jar files which has been copied over from the build run
       COPY random-generator*.jar /

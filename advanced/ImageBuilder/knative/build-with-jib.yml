@@ -1,0 +1,22 @@
+apiVersion: build.knative.dev/v1alpha1
+kind: Build
+metadata:
+  name: random-generator-build-jib
+spec:
+  source:
+    git:
+      # Source is takend directly from master of our simple Maven project
+      url: https://github.com/k8spatterns/random-generator.git
+      revision: master
+  steps:
+  - name: build-and-push
+    # Builder images with Java and Maven included
+    image: gcr.io/cloud-builders/mvn
+    args:
+    - compile
+    # Use the jib-maven-plugin for doing a daemonless build and push to a registry
+    - com.google.cloud.tools:jib-maven-plugin:build
+    - -Djib.allowInsecureRegistries=true
+    # Referencing our internal registry service deployed in the same namespace
+    - -Djib.to.image=registry:80/k8spatterns/random-generator
+    workingDir: /workspace

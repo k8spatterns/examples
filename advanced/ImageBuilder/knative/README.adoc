@@ -1,1 +1,139 @@
 ## ImageBuilder - Knative build
+
+This example demonstrates how to build images with https://github.com/knative/build[Knative build], starting from https://github.com/k8spatterns/random-generator[source] stored in a GitHub repository.
+
+Two variations are offered, one with a plain Knative `Build`, the other using a `BuildTemplate`.
+First, you need to have Knative installed.
+Please refer to the link::../../../INSTALL.adoc#Knative[installation instructions] for the options you have for installing Knative build
+
+Both examples require a registry to push the created image into.
+For the simplicities sake, we install an insecure and unprotected registry directly into the current namespace.
+
+[source, bash]
+----
+kubectl create -f registry.yml
+----
+
+This registry is only available within from the current namespace as `registry`.
+Of course, feel free to adapt the examples below to use another registry which is more accessible than that.
+
+### Simple Build
+
+To start a simple build with the https://github.com/GoogleContainerTools/jib[Jib Maven Plugin]
+you create the build with
+
+[source, bash]
+----
+kubectl create -f build-with-jib.yml
+----
+
+As always, you might want to have a look into the descriptor, it contains some useful comments.
+
+To monitor the build check the pods:
+
+[source, bash]
+----
+kubectl get pods
+
+NAME                                    READY   STATUS     RESTARTS   AGE
+random-generator-build-jib-pod-b68481   0/1     Init:1/3   0          7s
+registry-59df4ddcdc-jhkdg               1/1     Running    0          42s
+----
+
+and the logs
+
+[source]
+----
+kubectl logs random-generator-build-jib-pod-b68481 -c build-step-build-and-push
+
+[INFO] Scanning for projects...
+Downloading: https://repo.maven.apache.org/maven2/....
+....
+[INFO]
+[INFO] Containerizing application to registry:80/k8spatterns/random-generator...
+[WARNING] Base image 'gcr.io/distroless/java' does not use a specific image digest - build may not be reproducible
+[INFO] Retrieving registry credentials for registry:80...
+[INFO] Getting base image gcr.io/distroless/java...
+[INFO] Building dependencies layer...
+[INFO] Building resources layer...
+[INFO] Building classes layer...
+[INFO]
+[INFO] Container entrypoint set to [java, -cp, /app/resources:/app/classes:/app/libs/*, io.k8spatterns.examples.RandomGeneratorApplication]
+[INFO]
+[INFO] Built and pushed image as registry:80/k8spatterns/random-generator
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 24.203 s
+[INFO] Finished at: 2019-01-22T11:24:16Z
+[INFO] Final Memory: 39M/403M
+[INFO] ------------------------------------------------------------------------
+----
+
+In order to deploy see this application, see below.
+
+### Build Template
+
+As alternative you can build the application with a `BuildTemplate`.
+
+First, install the template:
+
+[source, bash]
+----
+kubectl create -f maven-kaniko-buildtemplate.yml
+----
+
+You can verify the template with
+
+[source]
+----
+kubectl get buildtemplate
+NAME           AGE
+maven-kaniko   7s
+----
+
+Now start the build which uses this template:
+
+[source, bash]
+----
+kubectl create -f build-with-template.yml
+----
+
+You can watch the progress of the build with
+
+[source]
+----
+kubectl get pods
+NAME                                    READY   STATUS      RESTARTS   AGE
+random-generator-template-pod-0ae221    0/1     Completed   0          1m
+
+kubectl logs random-generator-template-pod-0ae221 -c build-step-maven-build
+.....
+kubectl logs random-generator-template-pod-0ae221 -c build-step-image-build-and-push
+.....
+----
+
+### Deploy application
+
+When you have build the random-generatot with one of the methods above, you can deploy it easily.
+Unfortunately, for picking up images, Kubernetes (or at least Minikube) doesn't support service DNS lookups in the `image:` field of a container specification.
+
+So we need to insert the IP adress directly which you can do while deploying, like in:
+
+[source, bash]
+----
+cat random-generator-deploy.yml | \
+  sed -e "s/registry:80/$(kubectl get svc registry -o jsonpath={.spec.clusterIP}):80/" | \
+  kubectl create -f -
+----
+
+This will also install an `Ingress` object which allows you access the service easily from outside the cluster.
+If you are testing with Minikube, you should be sure that you have the Ingress addon enabled with `minikube addons enable ingress` before deploying the application.
+
+On Minikube you then access the service with
+
+[source, bash]
+----
+curl -sL http://random-service.$(minikube ip).nip.io | jq .
+----

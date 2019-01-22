@@ -6,15 +6,27 @@ All examples has been tested with <<minikube>> toroughly, but should also work w
 [[minikube]]
 ### Minikube
 
-[minikube](https://github.com/kubernetes/minikube) is recommended not only for trying out theses examples but also for an easy and simple to use Kubernetes setup in general.
+https://github.com/kubernetes/minikube[minikube] is recommended not only for trying out theses examples but also for an easy and simple to use Kubernetes setup in general.
+
+
+Some of the examples use an `Ingress` object to export a service to the outside.
+For Minikube you have to enable ingress support with
+
+[source, bash]
+----
+minikube addons enable ingress
+----
 
 [[gke]]
 ### GKE
 
 [[kubernetes-playground]]
-### Kubernetes Playground
+### Kubernetes playgrounds
 
-ALternatively you can also try out these examples on the [Kubernetes Playground](https://www.katacoda.com/courses/kubernetes/playground) or [Play with Kubernetes](https://labs.play-with-k8s.com/).
+ALternatively you can also try out these examples on these playgrounds:
+
+* https://www.katacoda.com/courses/kubernetes/playground[Kubernetes Playground]
+* https://labs.play-with-k8s.com/[Play with Kubernetes]
 
 [[minishift]]
 ### Minishift (OpenShift examples)
@@ -22,3 +34,62 @@ ALternatively you can also try out these examples on the [Kubernetes Playground]
 
 [[knative]]
 ### Knative
+
+For installing Knative on your own, you have several options.
+These are described directly on the https://github.com/knative/docs/tree/master/install[Knative GitHub repository].
+
+For a `minikube` based installation, just follow these https://github.com/knative/docs/blob/master/install/Knative-with-Minikube.md[instructions].
+
+For our example of link:./advanced/ImageBuilder/knative/README.adoc[Knative build] we need these installations steps:
+
+* Startup minikube with the appropriate options.
+* Install Istio
+* Install Knative serving
+* Install Knative build (as described [here])
+
+In short the following commands will setup your installation.
+Please wait after each step that all new pods has been settled.
+In case of any problems, please refer to the installation instructions for https://github.com/knative/docs/tree/master/install[Knative serving] and [Knative build].
+
+[source, bash]
+----
+# Install minikube
+minikube start --memory=8192 --cpus=4 \
+  --kubernetes-version=v1.11.5 \
+  --vm-driver=hyperkit \
+  --disk-size=30g \
+  --extra-config=apiserver.enable-admission-plugins="LimitRanger,NamespaceExists,NamespaceLifecycle,ResourceQuota,ServiceAccount,DefaultStorageClass,MutatingAdmissionWebhook"
+
+# Install istio
+# (note that there are some errors like "unable to recognize ..." at the end of the output,
+# but this seems to be harmless)
+curl -L https://github.com/knative/serving/releases/download/v0.3.0/istio.yaml \
+  | sed 's/LoadBalancer/NodePort/' \
+  | kubectl apply --filename -
+
+# Label the default namespace with istio-injection=enabled.
+kubectl label namespace default istio-injection=enabled
+
+# Wait until all istio pods are up
+sleep 60
+kubectl get pods --namespace istio-system
+
+# Install Knative serving
+# (with similar warnings as for the Istio installations, potentially harmless)
+curl -L https://github.com/knative/serving/releases/download/v0.3.0/serving.yaml \
+  | sed 's/LoadBalancer/NodePort/' \
+  | kubectl apply --filename -
+
+# Wait until knative-serving pods are up
+sleep 60
+kubectl get pods --namespace knative-serving
+
+# Install Knative build
+kubectl apply --filename https://storage.googleapis.com/knative-releases/build/latest/release.yaml
+
+# Wait until knative-build is up and running
+sleep 60
+kubectl get pods --namespace knative-build
+----
+
+As an alternative to a Minikube installation you can also use the free offering from Instruqt for experimenting with Knative with their https://instruqt.com/public/topics/knative[Knative tutorials]
