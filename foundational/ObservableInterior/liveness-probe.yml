@@ -1,0 +1,16 @@
+# Container with a Liveness Probe
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-liveness-check
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    livenessProbe:
+      httpGet:
+        path: /_status/healthz
+        port: 80
+      initialDelaySeconds: 30
+      timeoutSeconds: 1

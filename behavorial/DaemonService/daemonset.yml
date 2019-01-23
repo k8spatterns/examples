@@ -1,0 +1,23 @@
+# DaemonSet resource
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+ name: ssdchecker
+spec:
+ selector:
+   matchExpressions:
+     - key: checker
+       operator: In
+       values:
+         - ssd
+ template:
+   metadata:
+     labels:
+       checker: ssd
+   spec:
+     nodeSelector:
+       disk: ssd
+     containers:
+     - name: ssdchecker
+       image: ssdchecker

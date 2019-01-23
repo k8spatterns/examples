@@ -1,0 +1,15 @@
+#Container with Readiness Probe
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-readiness-check
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    readinessProbe:
+      exec:
+        command:
+        - ls
+        - /var/ready
