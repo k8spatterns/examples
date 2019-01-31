@@ -36,7 +36,7 @@ To monitor the build check the pods:
 kubectl get pods
 
 NAME                                    READY   STATUS     RESTARTS   AGE
-random-generator-build-jib-pod-b68481   0/1     Init:1/3   0          7s
+random-generator-with-jib-pod-b68481   0/1     Init:1/3   0          7s
 registry-59df4ddcdc-jhkdg               1/1     Running    0          42s
 ----
 
@@ -44,7 +44,7 @@ and the logs
 
 [source]
 ----
-kubectl logs random-generator-build-jib-pod-b68481 -c build-step-build-and-push
+kubectl logs random-generator-with-jib-pod-b68481 -c build-step-build-and-push
 
 [INFO] Scanning for projects...
 Downloading: https://repo.maven.apache.org/maven2/....
@@ -106,11 +106,11 @@ You can watch the progress of the build with
 ----
 kubectl get pods
 NAME                                    READY   STATUS      RESTARTS   AGE
-random-generator-template-pod-0ae221    0/1     Completed   0          1m
+random-generator-with-template-pod-0ae221    0/1     Completed   0          1m
 
-kubectl logs random-generator-template-pod-0ae221 -c build-step-maven-build
+kubectl logs random-generator-with-template-pod-0ae221 -c build-step-maven-build
 .....
-kubectl logs random-generator-template-pod-0ae221 -c build-step-image-build-and-push
+kubectl logs random-generator-with-template-pod-0ae221 -c build-step-image-build-and-push
 .....
 ----
 

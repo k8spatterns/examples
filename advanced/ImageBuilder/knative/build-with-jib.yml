@@ -1,7 +1,7 @@
 apiVersion: build.knative.dev/v1alpha1
 kind: Build
 metadata:
-  name: random-generator-build-jib
+  name: random-generator-with-jib
 spec:
   source:
     git:

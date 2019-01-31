@@ -1,7 +1,7 @@
 apiVersion: build.knative.dev/v1alpha1
 kind: Build
 metadata:
-  name: random-generator-template
+  name: random-generator-with-template
 spec:
   source:
     git:
