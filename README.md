@@ -22,7 +22,7 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 
 * [Declarative Deployment](foundational/DeclarativeDeployment/README.adoc) -
 
-* [Observable Interior](foundational/ObservableInterior/README.adoc) -
+* [Observable Interior](foundational/ObservableInterior/README.adoc) - Liveness and Readiness checks for the random generator.
 
 * [Life Cycle Conformance](foundational/LifeCycleConformance/README.adoc) -
 
