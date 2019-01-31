@@ -4,7 +4,7 @@
 # Kubernetes Patterns - Examples
 
 This GitHub project contains the examples from the "Kubernetes Patterns" book by [Bilgin Ibryam](https://github.com/bibryam) and [Roland Huß](https://github.com/rhuss) (_to be announced soon_)
-Each of the examples is contained in an extra directory and is self contained.
+Each of the examples is contained in an extra directory per pattern and is self contained.
 
 Installation instructions for running the examples are summarized in an extra [installation](INSTALLATION.adoc) page.
 By default, you just need a vanilla Kubernetes installation.
@@ -15,8 +15,6 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 ## Patterns
 
 ### Foundational Patterns
-
-* [Automatable Unit](foundational/AutomatableUnit/README.adoc) -
 
 * [Predictable Demands](foundational/PredictableDemands/README.adoc) - Our sample random generator dealing with hard requirements on ConfigMap and PersistentVolumeClaims as well as with resource limits.
 

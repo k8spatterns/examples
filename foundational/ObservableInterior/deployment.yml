@@ -1,0 +1,37 @@
+# DeploymentConfig for starting up the random-generator-runtime
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      - image: k8spatterns/random-generator:1.0
+        name: random-generator
+        env:
+        # Tell random-generator to wait 20 seconds when starting up
+        - name: DELAY_STARTUP
+          value: "20"
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          # Spring Boot's actuator comes in handy as a liveness probe check
+          # You can use the endpoint "/toggle-heath" to toggle the health state
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          # How long to wait until the liveness check should kick it.
+          initialDelaySeconds: 30
+        readinessProbe:
+          # We are checking for a file created by our app when its ready
+          exec:
+            command: [ "stat", "/random-generator-ready" ]

@@ -95,7 +95,7 @@ random-generator   1/1     Running   0          3s
 We can easily check this by sending an HTTP request.
 As we haven't installed a Service, lets poke a hole with a port-forward into the cluster and use curl to check the output:
 
-[source]
+[source, bash]
 ----
 # Port forward to Pod
 kubectl port-forward pod/random-generator 8080:8080 &
@@ -103,7 +103,6 @@ kubectl port-forward pod/random-generator 8080:8080 &
 # Send a request to our service
 curl -s http://localhost:8080 | jq .
 
-Handling connection for 8080
 {
   "random": 79003229,
   "pattern": "Predictable Demands",
