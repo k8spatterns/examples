@@ -52,7 +52,13 @@ Now you have a nice little Controller which watches on `ConfigMap` and restart `
 To try it out, we are reusing the super simple web application which just exposes an environment variable as content.
 This link:../images/mini-http-server.dockerfile[image] uses `nc` to deliver the content and can be found on Docker Hub as https://cloud.docker.com/u/k8spatterns/repository/docker/k8spatterns/mini-http-server[k8spatterns/mini-http-server].
 
-Before we deploy this app, we should tail on the log of our controller (e.g. `kubectl logs -f config-watcher-controller-....`) to see the events received by the controller as they come in.
+Before we deploy this app, we should tail on the log of our controller (e.g. `kubectl logs -f config-watcher-controller-....`) to see the events received by the controller as they come in, e.g. with
+
+[source,bash]
+----
+controller_pod=$(kubectl get pod -o name | grep config-watcher-controller | sed -e "s/^pods\///")
+kubectl logs -f $controller_pod config-watcher
+----
 
 Then create the web application itself:
 
@@ -64,6 +70,9 @@ kubectl create -f web-app.yml
 
 If you look into this descriptor, you will find a `Deployment` using our dumb HTTP server which references the content environment variable via a `ConfigMap`.
 The `ConfigMap` itself is annotated with a pod selector `k8spatterns.io/podDeleteSelector: "app=webapp"` which directly select the webapp `Pod`.
+
+This resource file also includes the definition of a Service and an Ingress object so that we can access the server from the outside.
+
 
 You can access our web app directly
 

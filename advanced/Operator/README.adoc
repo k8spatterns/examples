@@ -25,6 +25,11 @@ As a first step, we have to install the CRD along with a role to allow to modify
 ----
 # Register ConfigWatcher CRD
 kubectl create -f config-watcher-crd.yml
+
+# Verify that the CRD is registered
+$ kubectl get crd
+NAME                            CREATED AT
+configwatchers.k8spatterns.io   2018-12-28T17:19:28Z
 ----
 
 The operator script itself is stored in a `ConfigMap`:
@@ -82,6 +87,11 @@ We have to first install a concreate custom resource of kind `ConfigWatcher` to 
 ----
 # Install a ConfigWatcher custom resource
 kubectl create -f config-watcher-sample.yml
+
+# Check that the resource has been created
+kubectl get configwatchers
+NAME                      AGE
+webapp-config-watcher     1m
 ----
 
 After this connection between `ConfigMap` and `Pods` has been configured, change the content of `ConfigMap` and watch the operator log:
@@ -96,6 +106,6 @@ and then finally call the URL again to check that the content has been updated
 
 [source, bash]
 ----
-# Access webapp via the included Ingress obect
+# Access webapp via the included Ingress object
 curl -sk https://webapp.$(minikube ip).nip.io
 ----
