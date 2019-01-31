@@ -1,0 +1,29 @@
+# .Resource limits
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-generator
+spec:
+  containers:
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
+    env:
+    - name: PATTERN
+      valueFrom:
+        # First Hard requirement for a config map to exist.
+        configMapKeyRef:
+          name: random-generator-config
+          key: pattern
+      # Enabling logging into the mounted volume
+    - name: LOG_FILE
+      value: /logs/random.log
+    volumeMounts:
+      - mountPath: "/logs"
+        name: log-volume
+  volumes:
+    - name: log-volume
+      # Second hard requirement is that the specified persitent volume claim
+      # exists and is bound.
+      persistentVolumeClaim:
+        claimName: random-generator-log

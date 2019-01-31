@@ -1,24 +1,76 @@
 ## Prerequisites for running the examples
 
-This document describes various installation options for Kubernetes and extensions which we are using in the examples.
-All examples has been tested with <<minikube>> toroughly, but should also work without change on the other installation options.
+This document describes various installation options for Kubernetes and extensions which we are using in the pattern examples.
+All examples has been tested with <<minikube>> thoroughly, but should also work without change on the other installation options.
 
 [[minikube]]
 ### Minikube
 
 https://github.com/kubernetes/minikube[minikube] is recommended not only for trying out theses examples but also for an easy and simple to use Kubernetes setup in general.
 
+You can download Minikube from ....
+Essentially, Minikube is a CLI tool for starting a virtual machine with a Docker daemon and a single node Kubernetes cluster.
+
+To start Minikube you just call
+
+[source, bash]
+----
+minikube start
+----
+
+If you do this for the first time Minikube will download all required files and starts a VM whose default runtime depends on your operating system and installation options.
 
 Some of the examples use an `Ingress` object to export a service to the outside.
-For Minikube you have to enable ingress support with
+For Minikube you have to enable ingress support with:
 
 [source, bash]
 ----
 minikube addons enable ingress
 ----
 
+Otherwise, the pure Kubernetes examples should work out of the box with the default options of Minikube.
+
+If you want to optimise Minikube, use  `minikube start --help` for all options available for starting Minikube.
+
+The most important options are
+
+`--memory`::
+  Set the heap memory of the VM. The default of 2048 is sometimes too less, especially when using more advanced deployments. Use 4096 (or even 8192) to be on the safe side.
+
+`--vm-driver`::
+  Use this option if you want to change the VM to use, because the default choice doesn't works for you. Check `minikube start --help | grep vm-driver` to find out the possible options.
+
+`--disk-size`::
+  Size of the VM's hard drive. The default of 20 GB might be too small if you use many images or too large if you only want to use Minikube for our examples.
+
+You can easily access the Docker daemon running within the Minikube VM by using:
+
+[source, bash]
+----
+eval $(minikube docker-env)
+----
+
+Now you can just use the Docker CLI `docker` as usual.
+
+There are many more features to explore (like ssh-ing into the VM, exposing Services via NodePort, port-forwarding to Pods e.g. for remote debugging and more)
+Please consult the Minikube documentation for details.
+
 [[gke]]
 ### GKE
+
+The Google Kubernetes Engine is another popular and easy to use alternative to try out the examples of this book.
+
+You find the entry point [here] which allows you to setup a fully managed multi-node cluster.
+For new users Google provides a free budget for a certain time period so that you can easily try things out.
+
+[[aks]]
+### AKE
+
+Azure Kubernetes Engine
+
+### EKS
+
+Elastic Kubernetes Engine
 
 [[kubernetes-playground]]
 ### Kubernetes playgrounds
@@ -28,9 +80,62 @@ ALternatively you can also try out these examples on these playgrounds:
 * https://www.katacoda.com/courses/kubernetes/playground[Kubernetes Playground]
 * https://labs.play-with-k8s.com/[Play with Kubernetes]
 
+[[kubectl]]
+### kubectl
+
+Kubectl is the CLI client used to access any Kubernetes cluster.
+You can download it from ....
+Pick the variant matching your operating system and put it into your execution path.
+Most of the time you don't have to update `kubectl` when you update your cluster as older kubectl version typically also work nicely with newer clusters.
+
+We recommend to set a shell alias like *k* to shorten `kubectl` in the command line because you have to type it quite often.
+
+Some other handy aliases and functions:
+
+[source, bash]
+----
+# Shorten kubectl to k
+alias k=kubectl
+
+# Get a pod by only providing a partial name
+function pod {
+  kubectl get pod -o name | grep -v "Terminating" | grep $1 | sed -e "s/^pods\///"
+}
+
+# Change the current context (e.g. 'k8s_context minikube')
+function k8s_context {
+   kubectl config use-context $1
+}
+
+# Watch periodically all pods
+function k8s_watch {
+  watch kubectl get pods
+}
+
+# Add command line completion for your shell. Replace 'zsh' with your shell.
+source <(kubectl completion zsh)
+----
+
 [[minishift]]
 ### Minishift (OpenShift examples)
 
+Minishift is the OpenShift equivalent to Minikube.
+
+It can be downloaded from the [Minishift release page]
+
+Minishift is very similar to Minikube and shares a similar set of commands.
+For example, to startup Minishift just use `minishift start`, too.
+
+Nearly every Minikube option is available for Minishift, too.
+
+There are some additional commands which you can leverage:
+
+minishift oc-env::
+  This command can be evale to set the PATH to an `oc` binary, which is OpenShift equivalent to `kubectl`
+minishift console::
+  Open the OpenShift console
+minishift openshift service::
+  The equivalent to `minikube service`, i.e. list services and their exposed URLs
 
 [[knative]]
 ### Knative
@@ -92,4 +197,4 @@ sleep 60
 kubectl get pods --namespace knative-build
 ----
 
-As an alternative to a Minikube installation you can also use the free offering from Instruqt for experimenting with Knative with their https://instruqt.com/public/topics/knative[Knative tutorials]
+As an alternative to a Minikube installation you can also use the free offering from Instruqt for experimenting with Knative with their https://instruqt.com/public/topics/knative[Knative tutorials].

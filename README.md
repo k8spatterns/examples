@@ -18,7 +18,7 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 
 * [Automatable Unit](foundational/AutomatableUnit/README.adoc) -
 
-* [Predictable Demands](foundational/PredictableDemands/README.adoc) -
+* [Predictable Demands](foundational/PredictableDemands/README.adoc) - Our sample random generator dealing with hard requirements on ConfigMap and PersistentVolumeClaims as well as with resource limits.
 
 * [Dynamic Placement](foundational/DynamicPlacement/README.adoc) -
 

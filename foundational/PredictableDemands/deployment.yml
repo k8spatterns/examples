@@ -1,0 +1,31 @@
+# DeploymentConfig for starting up the random-generator-runtime
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      - image: k8spatterns/random-generator:1.0
+        imagePullPolicy: Always
+        name: random-generator
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources:
+          # Initial resource request for CPU and memory
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          # Upper limit until we want our application to grow at max
+          limits:
+            cpu: 200m
+            memory: 200Mi
