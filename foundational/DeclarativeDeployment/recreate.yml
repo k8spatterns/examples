@@ -4,18 +4,10 @@ kind: Deployment
 metadata:
   name: random-generator
 spec:
-  # More than 1 replica is required for a rolling update
   replicas: 3
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      # Number of Pods which can be run temporarily in addition the replicas
-      # specified during an updated
-      # (so it could 4 in our case at max)
-      maxSurge: 1
-      # Number of Pods which can be unavaiable during the update. Here it could
-      # be that only 2 Pods are running at a time during the update
-      maxUnavailable: 1
+    # Kill first all old Pods, then start the new version
+    type: Recreate
   selector:
     matchLabels:
       app: random-generator
@@ -33,8 +25,6 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
-        # Readiness probes are very important for a RollingUpdate to work properly,
-        # so don't forget them
         livenessProbe:
           httpGet:
             path: /actuator/health

@@ -1,1 +1,20 @@
 ## Declarative Deployment
+
+* Rolling update with random-generator version 1 and 2
+
+
+
+kubectl create -f rolling-update.yml
+
+
+while true; do
+  curl -s http://random-generator.$(minikube ip).nip.io/info | jq '.version,.id'
+  echo ===========================
+  sleep 1
+done
+
+
+kubectl set image deployment random-generator random-generator=k8spatterns/random-generator:2.0
+
+
+kubectl rollout status deploy random-generator

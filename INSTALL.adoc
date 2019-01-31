@@ -84,11 +84,17 @@ ALternatively you can also try out these examples on these playgrounds:
 ### kubectl
 
 Kubectl is the CLI client used to access any Kubernetes cluster.
-You can download it from ....
+Installation instructions for kubectl can be found on the  https://kubernetes.io/docs/tasks/tools/install-kubectl/[Kubernetes site].
 Pick the variant matching your operating system and put it into your execution path.
 Most of the time you don't have to update `kubectl` when you update your cluster as older kubectl version typically also work nicely with newer clusters.
 
 We recommend to set a shell alias like *k* to shorten `kubectl` in the command line because you have to type it quite often.
+
+
+Other tools which are used in the examples:
+
+* https://curl.haxx.se/[curl] for accessing services via HTTP (you can use any other client, of course, too)
+* https://stedolan.github.io/jq/[jq] for visualizing JSON results
 
 Some other handy aliases and functions:
 
