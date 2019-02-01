@@ -11,7 +11,7 @@ To access the PersistentVolume used in this demo, let's mount a local directory 
 minikube start --mount --mount-string="$(pwd)/logs:/example"
 ----
 
-This makes this directory available within the Minikube VM at the path `/data`.
+This makes this directory available within the Minikube VM at the path `/example`.
 
 For this (and many other demos) we are using a simple https://github.com/k8spatterns/random-generator[random number service], which is a simple REST service exposing a random number and can be found also in the image `k8spatterns/random-generator:1.0` on Docker Hub
 
@@ -184,7 +184,6 @@ Also don't forget the check the logs, too !
 
 === More Information
 
-* https://github.com/k8spatterns/examples/tree/master/foundational/PredictableDemands[Predictable Demands example]
 * https://attractivechaos.github.io/plb/[Programming language benchmarks]
 * http://kubernetes.io/docs/user-guide/configmap/[Using ConfigMap]
 * http://kubernetes.io/docs/user-guide/config-best-practices/[Best Practices for Configuration]

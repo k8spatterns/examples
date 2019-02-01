@@ -71,7 +71,6 @@ Can you spot the difference when doing the update, also with respect to the down
 
 === More Information
 
-* https://github.com/k8spatterns/examples/tree/master/foundational/DeclarativeDeployment[Declarative Deployment example]
 * https://kubernetes.io/docs/tasks/run-application/rolling-update-replication-controller/[Rolling Update]
 * https://kubernetes.io/docs/concepts/workloads/controllers/deployment/[Deployments]
 * http://kubernetes.io/docs/user-guide/deploying-applications/[Deploying Applications]

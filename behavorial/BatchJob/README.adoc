@@ -60,7 +60,6 @@ kubectl delete jobs --label app=random-generator
 
 === More Information
 
-* https://github.com/k8spatterns/examples/tree/master/behavorial/BatchJob[BatchJob example]
 * https://kubernetes.io/docs/concepts/jobs/run-to-completion-finite-workloads/[Run to Completion Finite Workloads]
 * https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/[Parallel Processing using Expansions]
 * https://kubernetes.io/docs/tasks/job/coarse-parallel-processing-work-queue/[Coarse Parallel Processing Using a Work Queue]

@@ -15,7 +15,6 @@ spec:
     spec:
       containers:
       - image: k8spatterns/random-generator:1.0
-        imagePullPolicy: Always
         name: random-generator
         ports:
         - containerPort: 8080

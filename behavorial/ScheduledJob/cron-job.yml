@@ -1,20 +1,34 @@
-# A CronJob resource
----
-apiVersion: batch/v2alpha1
+apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: hello
+  name: random-generator
 spec:
-  schedule: "*/1 * * * *"
+  # Every three minutes
+  schedule: "*/3 * * * *"
   jobTemplate:
     spec:
+      # Templae for the job to generate
       template:
         spec:
           containers:
-          - name: hello
-            image: busybox
-            args:
-            - /bin/sh
-            - -c
-            - date; echo Hello from the Kubernetes cluster
+          - image: k8spatterns/random-generator:1.0
+            name: random-generator
+            command:
+            - java
+            # Use / as classpath to pick up the class file
+            - -classpath
+            - /
+            # Class running batch job
+            - RandomRunner
+            # 1. Arg: File to store data (on a PV)
+            - /logs/random-generator.log
+            # 2. How many iterations
+            - "10000"
+            volumeMounts:
+            - mountPath: /logs
+              name: log-volume
           restartPolicy: OnFailure
+          volumes:
+          - name: log-volume
+            persistentVolumeClaim:
+              claimName: random-generator-log

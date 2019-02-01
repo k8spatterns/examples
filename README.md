@@ -31,7 +31,7 @@ Also we love contributions like spelling fixes, bug fixes, improvements, ... Ple
 
 * [Batch Job](behavorial/BatchJob/README.adoc) - Generate thousand of randum numbers into a file with a batch job
 
-* [Scheduled Job](behavorial/ScheduledJob/README.adoc) -
+* [Scheduled Job](behavorial/ScheduledJob/README.adoc) - Reuses the [Batch Job](behavorial/BatchJob/README.adoc) example, but runs it periodically at a configured schedule
 
 * [Daemon Service](behavorial/DaemonService/README.adoc) -
 

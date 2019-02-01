@@ -59,7 +59,6 @@ NOTE: You could also use OpenShift for this example, e.g. by using Minishift. In
 
 === More Information
 
-* https://github.com/k8spatterns/examples/tree/master/foundational/LifeCycleConformance[Life Cycle Conformance example]
 * https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/[Container Lifecycle Hooks]
 * https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/[Attaching Handlers to Container Lifecycle Events]
 * https://cloud.google.com/blog/products/gcp/kubernetes-best-practices-terminating-with-grace[Kubernetes best practices: terminating with grace]

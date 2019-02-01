@@ -71,7 +71,6 @@ kubectl get pods -w
 
 === More Information
 
-* https://github.com/k8spatterns/examples/tree/master/foundational/ObservableInterior[Observable Interior example]
 * https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/[Configuring Liveness and Readiness Probes]
 * http://kubernetes.io/docs/user-guide/production-pods/[Working with Containers in Production]
 * https://cloud.google.com/blog/products/gcp/kubernetes-best-practices-setting-up-health-checks-with-readiness-and-liveness-probes[Kubernetes best practices: Setting up health checks with readiness and liveness probes]
