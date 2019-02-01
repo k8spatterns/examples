@@ -1,5 +1,21 @@
 ## Declarative Deployment
 
+For this example you can use any Kubernetes installation you have access to.
+See the link:../INSTALL.adoc[INSTALL] documentation for some options you have.
+
+Let's now look, how we can get out https://github.com/k8spatterns/random-generator[random-generator] application from version 1 to version 2 with different update strategies.
+
+First, install the application in version 1 by using the given deployment descriptor
+
+[source, bash]
+----
+kubectl create -f deployment.yml
+----
+
+This will deploy 3 replicas of the `random-generator` and configures a `RollingUpdate` update strategy (which would be also the default).
+
+In
+
 * Rolling update with random-generator version 1 and 2
 
 
