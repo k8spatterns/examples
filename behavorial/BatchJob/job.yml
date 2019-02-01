@@ -3,15 +3,39 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: pi
+  # Use a generated name so that dis descriptor can be applied
+  # multiple times for each run
+  generateName: random-generator-
+  labels:
+    app: random-generator
 spec:
+  # Job should run 5 Pods
+  completions: 5
+  # 3 Pods should run in parallel
+  parallelism: 3
   template:
     metadata:
-      name: pi
+      name: random-generator
     spec:
       containers:
-      - name: pi
-        image: perl
-        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      - image: k8spatterns/random-generator:1.0
+        name: random-generator
+        command:
+        - java
+        # Use / as classpath to pick up the class file
+        - -classpath
+        - /
+        # Class running batch job
+        - RandomRunner
+        # 1. Arg: File to store data (on a PV)
+        - /logs/random-generator.log
+        # 2. How many iterations
+        - "10000"
+        volumeMounts:
+        - mountPath: /logs
+          name: log-volume
       restartPolicy: OnFailure
-
+      volumes:
+      - name: log-volume
+        persistentVolumeClaim:
+          claimName: random-generator-log

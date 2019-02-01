@@ -1,1 +1,67 @@
 ## Batch Job
+
+Let's create a batch job for generating thousands of random number.
+Our usual REST example at https://github.com/k8spatterns/random-generator[random-generator] contains also a plain Java class `RandomRunner` which is suitable for batch processing.
+
+This examples assumes a Kubernetes installation available.
+In this case its best played through with Minikube as we need some support for PVs.
+Check the link:../INSTALL.adoc#minikube[INSTALL] documentation for how to install Minikube.
+
+
+To access the PersistentVolume used in this demo, let's mount a local directory into the Minikube VM that we later then use a PersistentVolume mounted into the Pod:
+
+[source, bash]
+----
+minikube start --mount --mount-string="$(pwd)/logs:/example"
+----
+
+This makes this directory available within the Minikube VM at the path `/example`.
+
+Let's create now the PersistentVolume along with a PVC which can be mounted into our Job later:
+
+[source, bash]
+----
+kubectl create -f pv-and-pvc.yml
+----
+
+The job can be started with
+
+
+[source, bash]
+----
+kubectl create -f job.yml
+----
+
+This Job will create multiple Pods to create the number.
+Each Pod will run for creating 10000 entries into `logs/random-generator.log`.
+The Job is confiured to run the Pod 5 times, with 3 max running in parallel.
+That will take some minutes, but at the end you should have 50000 entries in the log file.
+
+You can check the Job's status with
+
+[source, bash]
+----
+kubectl get jobs
+NAME                     COMPLETIONS   DURATION   AGE
+random-generator-lnx4v   3/5           100s       100s
+----
+
+Also you can check with `kubetl get pods` that only 3 Pods will run at the same time.
+
+If you want to run the Job a second time, just call `kubectl create -f job.yml` again.
+The Job's name is auto generated, so there won't be any name clash.
+
+You can delete all jobs with
+
+[source, bash]
+----
+kubectl delete jobs --label app=random-generator
+----
+
+=== More Information
+
+* https://github.com/k8spatterns/examples/tree/master/behavorial/BatchJob[BatchJob example]
+* https://kubernetes.io/docs/concepts/jobs/run-to-completion-finite-workloads/[Run to Completion Finite Workloads]
+* https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/[Parallel Processing using Expansions]
+* https://kubernetes.io/docs/tasks/job/coarse-parallel-processing-work-queue/[Coarse Parallel Processing Using a Work Queue]
+* https://kubernetes.io/docs/tasks/job/fine-parallel-processing-work-queue/[Fine Parallel Processing Using a Work Queue]
