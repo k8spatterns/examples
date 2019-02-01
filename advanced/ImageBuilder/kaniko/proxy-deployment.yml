@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-proxy
+  template:
+    metadata:
+      labels:
+        app: kube-proxy
+    spec:
+      containers:
+      - name: kubeapi-proxy
+        image: registry.kube-system.svc.cluster.local/k8spatterns/kubectl-proxy:kaniko
+      - name: shell
+        image: k8spatterns/curl-jq
+        command:
+        - "sleep"
+        - "7200"

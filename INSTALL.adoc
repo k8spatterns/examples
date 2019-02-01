@@ -71,7 +71,7 @@ There are many options you can get your hands on a managed Kubernetes cluster pr
 Most of the offerings also have a time-limited tier to try things out.
 This would be an ideal playground for the more advanced patterns which involve multiple nodes and can not be easily tested on a single node cluster like Minikube.
 
-Here's a list of Kubernetes cloud offerenis, which is very likely not complete footnote:[Feel free to open a pull request adding more to this list]:
+Here's a list of Kubernetes cloud offerings, which is very likely not complete footnote:[Feel free to open a pull request adding more to this list]:
 
 https://cloud.google.com/kubernetes-engine/[Google Kubernetes Engine] (GKE)::
   For new users Google provides a free budget for a certain time period so that you can easily try things out.
@@ -87,8 +87,14 @@ https://www.digitalocean.com/products/kubernetes/[Kubernetes on Digital Ocean]::
 
 ALternatively you can also try out these examples on these playgrounds:
 
-* https://www.katacoda.com/courses/kubernetes/playground[Kubernetes Playground]
-* https://labs.play-with-k8s.com/[Play with Kubernetes]
+https://www.katacoda.com/courses/kubernetes/playground[Kubernetes Playground]::
+  Fully pre-installed Kubernetes playground provided by Katacoda (you can also use `k` instead of `kubectl` in the terminal).
+https://labs.play-with-k8s.com/[Play with Kubernetes]::
+  Playground for setting up a Kubernetes cluster, provided by Tutorius. More about how to learn installing Kubernetes, but then can be used for our examples, too.
+
+For a quick setup experience we recommend Katacoda's https://www.katacoda.com/courses/kubernetes/playground[Kubernetes Playground].
+It provides a two node cluster, so we can try out 'real' cluster examples here which are not possible with Minikube.
+If you try out the samples with this playground, we recommend to checkout these examples with `git clone https://github.com/k8spatterns/examples.git` before starting.
 
 [[kubectl-curl-jq]]
 ### CLI: kubectl, curl, jq

@@ -20,7 +20,7 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 
 * [Dynamic Placement](foundational/DynamicPlacement/README.adoc) -
 
-* [Declarative Deployment](foundational/DeclarativeDeployment/README.adoc) -
+* [Declarative Deployment](foundational/DeclarativeDeployment/README.adoc) - Rolling and fixed update of the random generator Deployment from version 1.0 to 2.0.
 
 * [Observable Interior](foundational/ObservableInterior/README.adoc) - Liveness and Readiness checks for the random generator.
 

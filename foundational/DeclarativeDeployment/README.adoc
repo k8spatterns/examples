@@ -9,28 +9,72 @@ First, install the application in version 1 by using the given deployment descri
 
 [source, bash]
 ----
-kubectl create -f deployment.yml
+kubectl create -f rolling_update.yml
 ----
 
 This will deploy 3 replicas of the `random-generator` and configures a `RollingUpdate` update strategy (which would be also the default).
 
-In
+In order to be able to access our application, lets create a Service and Ingress object, too:
 
-* Rolling update with random-generator version 1 and 2
+[source, bash]
+----
+kubectl create -f service_and_ingress.yml
+----
 
+The Service is of type `NodePort`, so even if you don't have an ingress controller installed you can access the random generator via the node port that you can find out via `kubectl get svc random-generator`
 
+Let's start now in a dedicated terminal window a loop which constantly accesses our Service. The following example assumes that you are using Minishift with ingress enabled.
 
-kubectl create -f rolling-update.yml
-
-
+[source, bash]
+----
 while true; do
   curl -s http://random-generator.$(minikube ip).nip.io/info | jq '.version,.id'
   echo ===========================
   sleep 1
 done
+----
 
+Alternatively, you can also use the script `call_random_generator.sh` which does the same but via the Service's node port and can be used on e.g. the Kubernetes playgrounds footnote:[You can open multiple terminals on Katakoda with the '+' sign beside the terminal tabs].
 
+Now it's time to update to version 2.0.
+As mentioned in the book, you can it in several ways.
+Here we are using the easiest one and call `kubectl set image`:
+
+[source, bash]
+----
 kubectl set image deployment random-generator random-generator=k8spatterns/random-generator:2.0
+----
+
+After you started the deployment you can do several things to monitor the update:
+
+* Watch the terminal with the query loop we started. Do you see the change from version 1 to version 2 ? Are there any errors reported by curl ?
+* Use `kubectl get pods -w` to watch how the Pods are coming down and up
+* Use `kubectl rollout status` to see the status of the rollout.
+
+When the update has finished, let's have some fun:
+
+* Rollback the deployment with `kubectl rollout undo deploy/random-generator`
+* Check the update history `kubectl rollout history deploy/random-generator`
 
 
-kubectl rollout status deploy random-generator
+Finally let's switch the update strategy to `Recreate`:
+
+[source, bash]
+----
+kubectl replace -f recreate.yml
+
+# Update to version 2.0 (or change to 1.0 when you have 2.0 running)
+kubectl set image deployment random-generator random-generator=k8spatterns/random-generator:2.0
+----
+
+Can you spot the difference when doing the update, also with respect to the downtime ?
+
+=== More Information
+
+* https://github.com/k8spatterns/examples/tree/master/foundational/DeclarativeDeployment[Declarative Deployment example]
+* https://kubernetes.io/docs/tasks/run-application/rolling-update-replication-controller/[Rolling Update]
+* https://kubernetes.io/docs/concepts/workloads/controllers/deployment/[Deployments]
+* http://kubernetes.io/docs/user-guide/deploying-applications/[Deploying Applications]
+* http://martinfowler.com/bliki/BlueGreenDeployment.html[Blue-Green Deployment]
+* https://martinfowler.com/bliki/CanaryRelease.html[Canary Release]
+* https://www.openshift.com/promotions/devops-with-openshift.html[DevOps with OpenShift]
