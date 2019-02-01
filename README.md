@@ -6,11 +6,12 @@
 This GitHub project contains the examples from the "Kubernetes Patterns" book by [Bilgin Ibryam](https://github.com/bibryam) and [Roland Huß](https://github.com/rhuss) (_to be announced soon_)
 Each of the examples is contained in an extra directory per pattern and is self contained.
 
-Installation instructions for running the examples are summarized in an extra [installation](INSTALL.adoc) page.
-By default, you just need a vanilla Kubernetes installation.
+Installation instructions for the examples' prerequisites are summarized in [INSTALL](INSTALL.adoc).
+By default, you just need access to a vanilla Kubernetes installation, like Minikube.
 If addons are required, the example description explains this additional requirement.
 
 For feedback, issues or questions in general, please use the [issue tracker](https://github.com/bibryam/k8spatterns/issues) to open issues.
+Also we love contributions like spelling fixes, bug fixes, improvements, ... Please open Pull Requests, we are happy to review them !
 
 ## Patterns
 
@@ -24,7 +25,7 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 
 * [Observable Interior](foundational/ObservableInterior/README.adoc) - Liveness and Readiness checks for the random generator.
 
-* [Life Cycle Conformance](foundational/LifeCycleConformance/README.adoc) -
+* [Life Cycle Conformance](foundational/LifeCycleConformance/README.adoc) - postStart and preStop hooks demonstrated with the random generator application.
 
 ### Behavorial Patterns
 
@@ -54,7 +55,7 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 
 * [Configuration Resource](configuration/ConfigurationResource/README.adoc) -
 
-* [Configuration Template](configuration/ConfigurationTemplate/README.adoc) - an example how to use a template configuration `standalone.xml` which is processed with a template processed and filled with data from `ConfigMap` before a Wildly server is started.
+* [Configuration Template](configuration/ConfigurationTemplate/README.adoc) - an example how to use a template configuration `standalone.xml` which is processed with a template processed and filled with data from `ConfigMap` before a Wildfly server is started.
 
 * [Immutable Configuration](configuration/ImmutableConfiguration/README.adoc) - several examples how to use immutable configuration containers for application configuration. This includes examples for the plain Docker case and for Kubernetes.
 

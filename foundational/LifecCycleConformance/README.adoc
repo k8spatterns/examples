@@ -1,1 +1,66 @@
 ## Life Cycle Conformance
+
+For this simple example, you need access to a Kubernetes installation.
+Anyone as described in link:../../INSTALL.adoc[INSTALL] is good enough.
+
+Our sample https://github.com/k8spatterns/random-generator[random-genertore] application provides a `/shutdown` endpoint which we use to log its call during shutdown of a Pod.
+
+But lets create the Pod first:
+
+[source, bash]
+----
+kubectl create -f pod.yml
+----
+
+and verify its status with
+
+[source, bash]
+----
+kubectl get pods -w
+----
+
+As you can see, the Pod only starts  only after 30s because we use a `sleep 30` as preStart hool (you can't even check the logs before).
+
+In order to watch the logs during shutdown we start a `kubectl logs` in the background:
+
+[source, bash]
+----
+kubectl logs -f random-generator &
+----
+
+You can see the `postStart` message which has been picked up by random generator during startup and copied to the standard output of the application container.
+The environment variable `WAIT_FOR_POST_START` that we set for our main application container indicates the random generator application to wait until the postStart file has been created:
+
+----
+io.k8spatterns.examples.RandomGeneratorApplication - Waiting for postStart to be finished ....
+io.k8spatterns.examples.RandomGeneratorApplication - Waiting for postStart to be finished ....
+io.k8spatterns.examples.RandomGeneratorApplication - Waiting for postStart to be finished ....
+io.k8spatterns.examples.RandomGeneratorApplication - postStart Message: Wake up!
+....
+----
+
+Now let's kill the Pod:
+
+[source, bash]
+----
+kubectl delete pod random-generator
+----
+
+You should see in the logs messages like the following which indicate that our `/shutdown` endpoint as been called indeed:
+
+----
+....
+i.k.examples.RandomGeneratorApplication  : SHUTDOWN NOW
+o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+i.k.examples.RandomGeneratorApplication  : >>>> SHUTDOWN HOOK called. Possibly because of a SIGTERM from Kubernetes
+----
+
+NOTE: You could also use OpenShift for this example, e.g. by using Minishift. In this case you could also examine the log of the container after this has been finished, with `oc debug`. This is not possible with Kubernetes, so we start the log output command before we kill the Pod.
+
+=== More Information
+
+* https://github.com/k8spatterns/examples/tree/master/foundational/LifeCycleConformance[Life Cycle Conformance example]
+* https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/[Container Lifecycle Hooks]
+* https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/[Attaching Handlers to Container Lifecycle Events]
+* https://cloud.google.com/blog/products/gcp/kubernetes-best-practices-terminating-with-grace[Kubernetes best practices: terminating with grace]
+* https://pracucci.com/graceful-shutdown-of-kubernetes-pods.html[Graceful shutdown of Pods with Kubernetes]

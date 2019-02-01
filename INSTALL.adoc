@@ -10,7 +10,7 @@ Content:
 * <<kubernetes-playground, Kubernetes Playgrounds>>
 * <<kubectl-curl-jq, CLI:  kubectl, curl and jq>>
 * <<minishift, Minishift>>
-* <<knative, KNative>>
+* <<knative, Knative>>
 
 [[minikube]]
 ### Minikube

@@ -1,0 +1,29 @@
+# DeploymentConfig for starting up the random-generator
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-generator
+spec:
+  containers:
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
+    env:
+    # Indication for the application that it should wait for the postStart file to be
+    # created.
+    - name: WAIT_FOR_POST_START
+      value: "true"
+    lifecycle:
+      # Wait 30s seconds before setting the container to be ready.
+      # The sleep is just a simulation for any lengthy startup code to be run
+      # Also, log to a file which then is picked up by the application
+      postStart:
+        exec:
+          command:
+          - sh
+          - -c
+          - sleep 30 && echo "Wake up!" > /postStart_done
+      # Call out to the /shutdown endpoint. Check logs for the result
+      preStop:
+        httpGet:
+          port: 8080
+          path: shutdown
