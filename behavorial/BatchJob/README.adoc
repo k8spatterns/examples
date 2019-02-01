@@ -5,7 +5,7 @@ Our usual REST example at https://github.com/k8spatterns/random-generator[random
 
 This examples assumes a Kubernetes installation available.
 In this case its best played through with Minikube as we need some support for PVs.
-Check the link:../INSTALL.adoc#minikube[INSTALL] documentation for how to install Minikube.
+Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for how to install Minikube.
 
 
 To access the PersistentVolume used in this demo, let's mount a local directory into the Minikube VM that we later then use a PersistentVolume mounted into the Pod:
