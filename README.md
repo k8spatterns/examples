@@ -29,7 +29,7 @@ Also we love contributions like spelling fixes, bug fixes, improvements, ... Ple
 
 ### Behavorial Patterns
 
-* [Batch Job](behavorial/BatchJob/README.adoc) -
+* [Batch Job](behavorial/BatchJob/README.adoc) - Generate thousand of randum numbers into a file with a batch job
 
 * [Scheduled Job](behavorial/ScheduledJob/README.adoc) -
 
