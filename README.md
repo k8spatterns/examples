@@ -37,7 +37,7 @@ Also we love contributions like spelling fixes, bug fixes, improvements, ... Ple
 
 * [Singleton Service](behavorial/SingletionService/README.adoc) -
 
-* [Self Awareness](behavorial/SelfAwareness/README.adoc) -
+* [Self Awareness](behavorial/SelfAwareness/README.adoc) - Using the Downward API for setting environment variables and mount resource fields as files with the random-generator service.
 
 ### Structural Patterns
 

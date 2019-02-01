@@ -1,1 +1,70 @@
 ## Self Awareness
+
+For this example any Kubernetes installation can be used, as described in link:../../INSTALL.adoc[INSTALL].
+
+In order to focus on the usage of the _Downward API_ we create just a Pod which references own properties in the environment variables and mounts labels and annotations as files:
+
+[source, bash]
+----
+kubectl create -f pod.yml
+----
+
+The sample https://github.com/k8spatterns/random-generator[random-generator] REST service exposes an endpoint `/info` which picks up this info and returns it in the response.
+For this simple example we don't provide a Service (but of course feel free to add one).
+Instead we are just using a port forwarding reverse proxy to access the REST endpoint:
+
+[source, bash]
+----
+kubectl port-forward random-generator 8080:8080 &
+----
+
+We start it in the background so that we can stay in the same terminal windows.
+
+Next let's test this endpoint:
+
+[source, bash]
+----
+curl -s localhost:8080/info | jq .
+{
+  "memory.free": 23,
+  "NODE_NAME": "minikube",
+  "memory.used": 46,
+  "cpu.procs": 1,
+  "memory.max": 481,
+  "pattern": "Self Awareness",
+  "annotations": "kubernetes.io/config.seen=\"2019-02-01T19:33:51.438536517Z\"\nkubernetes.io/config.source=\"api\"",
+  "id": "103f3362-fe3f-4cdd-9d47-b2d1d06197a2",
+  "labels": "app=\"random-generator\"",
+  "POD_IP": "172.17.0.6",
+  "version": "1.0"
+}
+----
+
+Please not the entries for `POD_INFO`, `NODE_NAME`, `annotations` and `labels` and how they refer to Pod internal data.
+
+TO verify that an update of the label is reflected in the mounted volumes, use
+
+[source, bash]
+----
+patch=$(cat <<EOT
+[
+  {
+    "op": "add",
+    "path": "/metadata/labels",
+    "value": {
+      "app": "random-generator-updated"
+    }
+  }
+]
+EOT
+)
+kubectl patch pod random-generator --type=json -p=$patch
+----
+
+When you now re-run the `curl` command you will see how the `labels` entry in the response chnges.
+
+=== More Information
+
+* https://kubernetes.io/docs/tasks/configure-pod-container/downward-api-volume-expose-pod-information/[Using Downward API]
+* http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html[Instance Metadata and User Data]
+* http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-introspection.html[Amazon ECS Container Agent Introspection]
