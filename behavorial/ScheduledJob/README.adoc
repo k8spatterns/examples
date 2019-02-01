@@ -2,7 +2,7 @@
 
 Our Cron Job example builds on top of the link:../BatchJob/README.adoc[Batch Job] example above, to the basic setuup is the same:
 
-* A Minikube installation avaiable, ideally with link:../INSTALL.adoc#minikube[Minikube]
+* A Minikube installation avaiable, ideally with link:../../INSTALL.adoc#minikube[Minikube]
 * Minikube started with `minikube start --mount --mount-string="$(pwd)/logs:/example"` to mount the local `logs/` into the Minikube VM
 
 
