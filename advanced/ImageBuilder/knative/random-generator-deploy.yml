@@ -34,10 +34,10 @@ spec:
     protocol: TCP
     targetPort: 8080
 ---
-# The route for accessing the service from externally.
-# Use `oc get route` to find out the URL
-# Best try it with:
-# curl -s $(oc get routes random-generator -o jsonpath={.spec.host})
+# The ingress for accessing the service from externally.
+# Use `kubectl get ingress` to find out the URL
+# On Minishift best try it with:
+# curl -s http://random-generator.$(minikube ip).nip.io/
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:

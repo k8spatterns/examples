@@ -6,7 +6,11 @@ All examples has been tested with <<minikube>> thoroughly, but should also work 
 Content:
 
 * <<minikube, Minikube>>
+* <<cloud, Kubernetes in the cloud>>
 * <<kubernetes-playground, Kubernetes Playgrounds>>
+* <<kubectl-curl-jq, CLI:  kubectl, curl and jq>>
+* <<minishift, Minishift>>
+* <<knative, KNative>>
 
 [[minikube]]
 ### Minikube
@@ -60,7 +64,7 @@ Now you can just use the Docker CLI `docker` as usual.
 There are many more features to explore (like ssh-ing into the VM, exposing Services via NodePort, port-forwarding to Pods e.g. for remote debugging and more)
 Please consult the Minikube documentation for details.
 
-[[cloud-offerings]]
+[[cloud]]
 ### Kubernetes in the Cloud
 
 There are many options you can get your hands on a managed Kubernetes cluster provided by a cloud Provider.
@@ -69,10 +73,14 @@ This would be an ideal playground for the more advanced patterns which involve m
 
 Here's a list of Kubernetes cloud offerenis, which is very likely not complete footnote:[Feel free to open a pull request adding more to this list]:
 
-* https://cloud.google.com/kubernetes-engine/[Google Kubernetes Engine] (GKE). For new users Google provides a free budget for a certain time period so that you can easily try things out.
-* https://docs.microsoft.com/en-us/azure/aks/[Azure Kubernetes Service] (AKS) by Microsoft
-* Amazon's https://aws.amazon.com/eks/[Elastic Container Service] (EKS)
-* Managed Kubernetes cluster on https://www.digitalocean.com/products/kubernetes/[Digital Ocean]
+https://cloud.google.com/kubernetes-engine/[Google Kubernetes Engine] (GKE)::
+  For new users Google provides a free budget for a certain time period so that you can easily try things out.
+https://docs.microsoft.com/en-us/azure/aks/[Azure Kubernetes Service] (AKS)::
+  Managed Kubernetes Cluster by Microsoft
+https://aws.amazon.com/eks/[Elastic Container Service] (EKS)::
+  Kubernetes on Amazon Web Services (AWS)
+https://www.digitalocean.com/products/kubernetes/[Kubernetes on Digital Ocean]::
+  Managed Kubernetes cluster provided by Digital Ocean
 
 [[kubernetes-playground]]
 ### Kubernetes playgrounds
@@ -82,8 +90,8 @@ ALternatively you can also try out these examples on these playgrounds:
 * https://www.katacoda.com/courses/kubernetes/playground[Kubernetes Playground]
 * https://labs.play-with-k8s.com/[Play with Kubernetes]
 
-[[kubectl]]
-### kubectl
+[[kubectl-curl-jq]]
+### CLI: kubectl, curl, jq
 
 Kubectl is the CLI client used to access any Kubernetes cluster.
 Installation instructions for kubectl can be found on the  https://kubernetes.io/docs/tasks/tools/install-kubectl/[Kubernetes site].

@@ -1,6 +1,6 @@
 == Predictable Demands
 
-For this example we recommend to use a Minikube installation described link:../INSTALL.adoc#minikube[here].
+For this example we recommend to use a Minikube installation described link:../../INSTALL.adoc#minikube[here].
 In order to play a bit with memory limits, we assume that you use 2GB memory for your Minikube VM (which is also the default).
 You can adapt the memory of the Minikube VM with `--memory`.
 

@@ -1,6 +1,6 @@
 == Observable Interior
 
-For this example we need a Kubernetes installation as described in link:../INSTALL.adoc[INSTALLATION.adoc].
+For this example we need a Kubernetes installation as described in link:../../INSTALL.adoc[INSTALLATION.adoc].
 
 For our example for this pattern we are reusing our https://github.com/k8spatterns/random-generator[random-generator] which also includes support for health checks.
 

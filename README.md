@@ -6,7 +6,7 @@
 This GitHub project contains the examples from the "Kubernetes Patterns" book by [Bilgin Ibryam](https://github.com/bibryam) and [Roland Huß](https://github.com/rhuss) (_to be announced soon_)
 Each of the examples is contained in an extra directory per pattern and is self contained.
 
-Installation instructions for running the examples are summarized in an extra [installation](INSTALLATION.adoc) page.
+Installation instructions for running the examples are summarized in an extra [installation](INSTALL.adoc) page.
 By default, you just need a vanilla Kubernetes installation.
 If addons are required, the example description explains this additional requirement.
 
