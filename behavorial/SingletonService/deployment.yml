@@ -1,0 +1,21 @@
+# DeploymentConfig for starting up the random-generator
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-generator
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      - image: k8spatterns/random-generator:1.0
+        name: random-generator
+        ports:
+        - containerPort: 8080
+          protocol: TCP

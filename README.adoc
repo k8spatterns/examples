@@ -40,7 +40,7 @@ link:behavorial/ScheduledJob/README.adoc[Scheduled Job]::
 link:behavorial/DaemonService/README.adoc[Daemon Service]::
   Sample maintenance script for maintenance jobs on every node of a cluster [*]
 link:behavorial/SingletonService/README.adoc[Singleton Service]::
-  _TBD_
+  Example of a PodDisruptionBudget for controlling volontary disruptions
 link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
   Using the Downward API for setting environment variables and mount resource fields as files with the random-generator service.
 
