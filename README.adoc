@@ -22,14 +22,14 @@ Each of the examples is contained in an extra directory per pattern and is self 
 
 link:foundational/PredictableDemands/README.adoc[Predictable Demands]::
   Our sample random generator dealing with hard requirements on ConfigMap and PersistentVolumeClaims as well as with resource limits.
-link:foundational/AutomatedPlacement/README.adoc[Automated Placement]::
-  Example with node selector, pod and node affinity, taint and tolerations demonstrated.
 link:foundational/DeclarativeDeployment/README.adoc[Declarative Deployment]::
   Rolling and fixed update of the random generator Deployment from version 1.0 to 2.0.
 link:foundational/HealthProbe/README.adoc[Health Probe]::
   Liveness and Readiness probes for the random generator.
 link:foundational/ManagedLifecycle/README.adoc[Managed Lifecycle]::
   `postStart` and `preStop` hooks demonstrated with the random generator application.
+link:foundational/AutomatedPlacement/README.adoc[Automated Placement]::
+  Example with node selector, pod and node affinity, taint and tolerations demonstrated.
 
 === Behavorial Patterns
 
