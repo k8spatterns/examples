@@ -3,21 +3,38 @@
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
- name: ssdchecker
+  name: random-refresher
 spec:
- selector:
-   matchExpressions:
-     - key: checker
-       operator: In
-       values:
-         - ssd
- template:
-   metadata:
-     labels:
-       checker: ssd
-   spec:
-     nodeSelector:
-       disk: ssd
-     containers:
-     - name: ssdchecker
-       image: ssdchecker
+  selector:
+    matchLabels:
+      app: random-refresher
+  template:
+    metadata:
+      labels:
+        app: random-refresher
+    spec:
+      # Only use nodes with the label 'feature=hw-rng' enabled
+      nodeSelector:
+        feature: hw-rng
+      # Also run on the the master even it's tainted
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+      containers:
+      - image: k8spatterns/random-generator:1.0
+        name: random-generator
+        # A somewhat useless command to demonstrate the concept running
+        # on every node. This commands writer 10000 entries to /dev/random every 30s
+        command:
+        - sh
+        - -c
+        - "while true; do java -cp / RandomRunner /host_dev/random 100000; sleep 30; done"
+        # Mount host's /dev directory
+        volumeMounts:
+        - mountPath: /host_dev
+          name: devices
+      volumes:
+      # Expose devices into this daemon set
+      - name: devices
+        hostPath:
+          path: /dev

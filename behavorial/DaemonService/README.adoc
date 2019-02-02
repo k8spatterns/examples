@@ -1,1 +1,10 @@
-## Daemon Service
+== Daemon Service
+
+IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
+
+
+=== More Information
+
+* https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/[DaemonSets]
+* https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/[Performing a Rolling Update on a DaemonSet]
+* https://blog.giantswarm.io/understanding-basic-kubernetes-concepts-v-daemon-sets-and-jobs/[DaemonSets and Jobs]
