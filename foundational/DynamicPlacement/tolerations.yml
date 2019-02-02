@@ -1,7 +1,14 @@
 # Tolerations
 ---
-tolerations:
-- key: "key"
-  operator: "Equal"
-  value: "value"
-  effect: "NoSchedule"
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tolerations
+spec:
+  containers:
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
+  tolerations:
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+    effect: NoSchedule

@@ -1,15 +1,12 @@
-# Node selector based on type of disk available
----
+# Node selector example which only picks the node
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
-  labels:
-    env: test
+  name: node-selector
 spec:
   containers:
-  - name: nginx
-    image: nginx
-    imagePullPolicy: IfNotPresent
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
   nodeSelector:
+    # Simple match on labels
     disktype: ssd

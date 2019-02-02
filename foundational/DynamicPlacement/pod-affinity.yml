@@ -3,29 +3,45 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: with-pod-affinity
+  name: pod-affinity
 spec:
   affinity:
     podAffinity:
+      # We required to find pods with a label 'confidential=high'.
+      # Then k8s checks whether the nodes on which these Pods are
+      # running have a label "security-zone".
+      # If so, then all nodes are looked up which have the same value of this
+      # label. These nodes are then considered for being the
+      # host of this Pod.
       requiredDuringSchedulingIgnoredDuringExecution:
       - labelSelector:
-          matchExpressions:
-          - key: security
-            operator: In
-            values:
-            - S1
-        topologyKey: failure-domain.beta.kubernetes.io/zone
+          matchLabels:
+            confidential: high
+        topologyKey: security-zone
     podAntiAffinity:
+      # We don't want to run on any node where a pod with the
+      # label 'confidential=none' is running, but if these are
+      # the only available then its still ok to be scheduled
+      # on such a node
       preferredDuringSchedulingIgnoredDuringExecution:
       - weight: 100
         podAffinityTerm:
           labelSelector:
-            matchExpressions:
-            - key: security
-              operator: In
-              values:
-              - S2
+            matchLabels:
+              confidential: none
           topologyKey: kubernetes.io/hostname
   containers:
-  - name: with-pod-affinity
-    image: gcr.io/google_containers/pause:2.0
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
+---
+# Placeholder Pod for attracting the random-generator Pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: confidential-high
+  labels:
+    confidential: high
+spec:
+  containers:
+  - image: gcr.io/google_containers/pause:2.0
+    name: pause

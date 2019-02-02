@@ -19,7 +19,7 @@ Also we love contributions like spelling fixes, bug fixes, improvements, ... Ple
 
 * [Predictable Demands](foundational/PredictableDemands/README.adoc) - Our sample random generator dealing with hard requirements on ConfigMap and PersistentVolumeClaims as well as with resource limits.
 
-* [Dynamic Placement](foundational/DynamicPlacement/README.adoc) -
+* [Dynamic Placement](foundational/DynamicPlacement/README.adoc) - Example with node selector, pod and node affinity, taint and tolerations demonstrated.
 
 * [Declarative Deployment](foundational/DeclarativeDeployment/README.adoc) - Rolling and fixed update of the random generator Deployment from version 1.0 to 2.0.
 
