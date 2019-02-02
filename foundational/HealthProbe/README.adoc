@@ -1,4 +1,4 @@
-== Observable Interior
+== Health Probe
 
 For this example we need a Kubernetes installation as described in link:../../INSTALL.adoc[INSTALLATION.adoc].
 

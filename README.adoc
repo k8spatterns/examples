@@ -26,8 +26,8 @@ link:foundational/DynamicPlacement/README.adoc[Dynamic Placement]::
   Example with node selector, pod and node affinity, taint and tolerations demonstrated.
 link:foundational/DeclarativeDeployment/README.adoc[Declarative Deployment]::
   Rolling and fixed update of the random generator Deployment from version 1.0 to 2.0.
-link:foundational/ObservableInterior/README.adoc[Observable Interior]::
-  Liveness and Readiness checks for the random generator.
+link:foundational/HealthProbe/README.adoc[Health Probe]::
+  Liveness and Readiness probes for the random generator.
 link:foundational/LifeCycleConformance/README.adoc[Life Cycle Conformance]::
   `postStart` and `preStop` hooks demonstrated with the random generator application.
 
