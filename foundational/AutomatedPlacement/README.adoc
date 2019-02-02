@@ -1,4 +1,4 @@
-## Dynamic Placement
+## Automated Placement
 
 
 This example illustrates the ways how the placement of scheduled pods can be influenced.
