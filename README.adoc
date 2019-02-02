@@ -1,8 +1,10 @@
-pass:[<a href="https://leanpub.com/k8spatterns"><img src="https://s3.amazonaws.com/titlepages.leanpub.com/k8spatterns/hero?1492193906" align="right" width="300px" style="float:right; margin: 50px 0px 20px 30px;"/></a>]
+//pass:[<a href="https://leanpub.com/k8spatterns"><img src="https://s3.amazonaws.com/titlepages.leanpub.com/k8spatterns/hero?1492193906" align="right" width="300px" style="float:right; margin: 50px 0px 20px 30px;"/></a>]
 
 = Kubernetes Patterns - Examples
 
-This GitHub project contains the examples from the "Kubernetes Patterns" book by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß] (_to be announced soon_)
+This GitHub project contains the examples from the "Kubernetes Patterns" book by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß]
+
+IMPORTANT: We are currently ramping up the book to be published by a _real_ publisher. This should happen soon, so please stay tuned ....
 
 Installation instructions for the examples' prerequisites are summarized in link:INSTALL.adoc[INSTALL].
 By default, you just need access to a vanilla Kubernetes installation, like Minikube.
@@ -36,9 +38,9 @@ link:behavorial/BatchJob/README.adoc[Batch Job]::
 link:behavorial/ScheduledJob/README.adoc[Scheduled Job]::
   Reuses the link:behavorial/BatchJob/README.adoc[Batch Job] example, but runs it periodically at a configured schedule
 link:behavorial/DaemonService/README.adoc[Daemon Service]::
-
+  _TBD_
 link:behavorial/SingletionService/README.adoc[Singleton Service]::
-
+  _TBD_
 link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
   Using the Downward API for setting environment variables and mount resource fields as files with the random-generator service.
 
@@ -46,19 +48,19 @@ link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
 
 link:structural/Sidecar/README.adoc[Sidecar]::
   Git polling example for a sidecar
-
 link:structural/InitContainer/README.adoc[Init Container]::
-
+  _TBD_
 link:structural/Ambassador/README.adoc[Ambassador]::
-
+  _TBD_
 link:structural/Adapter/README.adoc[Adapter]::
+  _TBD_
 
 === Configuration Patterns
 
 link:configuration/EnvvarConfiguration/README.adoc[Envvar Configuration]::
-
+  _TBD_
 link:configuration/ConfigurationResource/README.adoc[Configuration Resource]::
-
+  _TBD_
 link:configuration/ConfigurationTemplate/README.adoc[Configuration Template]::
   Example how to use a template configuration `standalone.xml` which is processed with a template processed and filled with data from `ConfigMap` before a Wildfly server is started.
 link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]::
@@ -67,7 +69,7 @@ link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]::
 === Advanced Patterns
 
 link:advanced/StatefulService/README.adoc[Stateful Service]::
-
+  _TBD_
 link:advanced/Controller/README.adoc[Controller]::
   Simple, pure shell based controller which watches `ConfigMap` resources for changes and restarts `Pods` by using a label selector provided as annotation. An additional link:advanced/Controller/expose-controller/README.adoc[example controller] exposes an `Ingress` route when it detects an `exposeService` label attached to the service.
 link:advanced/Operator/README.adoc[Operator]::
@@ -75,3 +77,4 @@ link:advanced/Operator/README.adoc[Operator]::
 link:advanced/ImageBuilder/README.adoc[Image Builder]::
   Setup a link:advanced/ImageBuilder/openshift/README.adoc[chained build] on OpenShift and use link:advanced/ImageBuilder/knative/README.adoc[Knative build] for doing builds within the cluster.
 link:advanced/ElasticScale/README.adoc[ElasticScale]::
+  _TBD_
