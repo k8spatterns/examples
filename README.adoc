@@ -4,7 +4,7 @@
 
 This GitHub project contains the examples from the "Kubernetes Patterns" book by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß]
 
-IMPORTANT: We are currently ramping up the book to be published by a _real_ publisher. This should happen soon, so please stay tuned ....
+IMPORTANT: We are currently ramping up the book to be published by an established publisher. The announcement should happen soon, so please stay tuned ....
 
 Installation instructions for the examples' prerequisites are summarized in link:INSTALL.adoc[INSTALL].
 By default, you just need access to a vanilla Kubernetes installation, like Minikube.
@@ -40,7 +40,7 @@ link:behavorial/ScheduledJob/README.adoc[Scheduled Job]::
 link:behavorial/DaemonService/README.adoc[Daemon Service]::
   Sample maintenance script for maintenance jobs on every node of a cluster [*]
 link:behavorial/SingletonService/README.adoc[Singleton Service]::
-  Example of a PodDisruptionBudget for controlling volontary disruptions
+  Example of a PodDisruptionBudget for controlling volontary disruptions [*]
 link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
   Using the Downward API for setting environment variables and mount resource fields as files with the random-generator service.
 
@@ -53,7 +53,7 @@ link:structural/InitContainer/README.adoc[Init Container]::
 link:structural/Ambassador/README.adoc[Ambassador]::
   _TBD_
 link:structural/Adapter/README.adoc[Adapter]::
-  _TBD_
+  Adapter for exporting timing information from the sample random-generator application in a Prometheus format [*]
 
 === Configuration Patterns
 

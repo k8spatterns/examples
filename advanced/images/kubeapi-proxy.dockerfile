@@ -1,3 +1,4 @@
+# Image: k8spatterns/kubeapi-proxy
 FROM alpine
 ENV KUBECTL_VERSION=v1.9.1
 RUN apk update \

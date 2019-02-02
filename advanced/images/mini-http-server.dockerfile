@@ -1,3 +1,4 @@
+# Image name: k8spatterns/mini-http-server
 # Possibly one of the simplest HTTP Server
 FROM alpine
 
@@ -8,7 +9,7 @@ ENV MESSAGE="Welcome to Kubernetes Patterns !"
 RUN apk update \
  && apk add netcat-openbsd
 
-ENTRYPOINT [ \
+CMD [ \
   "/bin/ash", "-c", \
   "while true ; do \
      echo -e \"HTTP/1.1 200 OK\n\n $MESSAGE\n\" | nc -l -p 8080 -q 1; \

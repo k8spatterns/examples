@@ -1,0 +1,51 @@
+# DeploymentConfig for starting up the random-generator
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      # ------------------------------------------------
+      # Main application
+      - image: k8spatterns/random-generator:1.0
+        name: random-generator
+        env:
+        # The log file that we want to export
+        - name: LOG_FILE
+          value: /logs/random.log
+        ports:
+        # Application running on port 8080
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /logs
+          name: logs
+      # ------------------------------------------------
+      # Prometheus adapter
+      - image: k8spatterns/random-generator-exporter
+        name: prometheus-adapter
+        env:
+        # Logfile  to pick up by exporter script
+        - name: LOG_FILE
+          value: /logs/random.log
+        ports:
+        # Expose prometheus metrics via that port
+        - containerPort: 9889
+          protocol: TCP
+        # Mount shared volume for accessing the logs
+        volumeMounts:
+        - mountPath: /logs
+          name: logs
+      volumes:
+      # New empty directory volume for sharing the log file between container
+      - name: logs
+        emptyDir: {}

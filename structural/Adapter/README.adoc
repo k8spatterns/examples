@@ -1,1 +1,3 @@
-## Adapter
+== Adapter
+
+* Prometheus adapter with `nc` for the random-generator service, transforming the log to a Prometheus related format
