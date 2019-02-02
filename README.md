@@ -1,10 +1,8 @@
-
-<!--- <a href="https://leanpub.com/k8spatterns"><img src="https://s3.amazonaws.com/titlepages.leanpub.com/k8spatterns/hero?1492193906" align="right" width="300px" style="float:right; margin: 50px 0px 20px 30px;"/></a> -->
+pass:[<a href="https://leanpub.com/k8spatterns"><img src="https://s3.amazonaws.com/titlepages.leanpub.com/k8spatterns/hero?1492193906" align="right" width="300px" style="float:right; margin: 50px 0px 20px 30px;"/></a>]
 
 # Kubernetes Patterns - Examples
 
 This GitHub project contains the examples from the "Kubernetes Patterns" book by [Bilgin Ibryam](https://github.com/bibryam) and [Roland Huß](https://github.com/rhuss) (_to be announced soon_)
-Each of the examples is contained in an extra directory per pattern and is self contained.
 
 Installation instructions for the examples' prerequisites are summarized in [INSTALL](INSTALL.adoc).
 By default, you just need access to a vanilla Kubernetes installation, like Minikube.
@@ -14,6 +12,9 @@ For feedback, issues or questions in general, please use the [issue tracker](htt
 Also we love contributions like spelling fixes, bug fixes, improvements, ... Please open Pull Requests, we are happy to review them !
 
 ## Patterns
+
+All example are categorized according to the Book's patterns catergory.
+Each of the examples is contained in an extra directory per pattern and is self contained.
 
 ### Foundational Patterns
 
@@ -25,7 +26,7 @@ Also we love contributions like spelling fixes, bug fixes, improvements, ... Ple
 
 * [Observable Interior](foundational/ObservableInterior/README.adoc) - Liveness and Readiness checks for the random generator.
 
-* [Life Cycle Conformance](foundational/LifeCycleConformance/README.adoc) - postStart and preStop hooks demonstrated with the random generator application.
+* [Life Cycle Conformance](foundational/LifeCycleConformance/README.adoc) - `postStart` and `preStop` hooks demonstrated with the random generator application.
 
 ### Behavorial Patterns
 

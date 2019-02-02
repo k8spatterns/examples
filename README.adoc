@@ -1,0 +1,77 @@
+pass:[image:https://s3.amazonaws.com/titlepages.leanpub.com/k8spatterns/hero?1492193906[,300px,link=https://leanpub.com/k8spatterns]]
+
+= Kubernetes Patterns - Examples
+
+This GitHub project contains the examples from the "Kubernetes Patterns" book by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß] (_to be announced soon_)
+
+Installation instructions for the examples' prerequisites are summarized in link:INSTALL.adoc[INSTALL].
+By default, you just need access to a vanilla Kubernetes installation, like Minikube.
+If addons are required, the example description explains this additional requirement.
+
+For feedback, issues or questions in general, please use the https://github.com/bibryam/k8spatterns/issues[issue tracker] to open issues.
+Also we love contributions like spelling fixes, bug fixes, improvements, ... Please open Pull Requests, we are happy to review them !
+
+== Patterns
+
+All example are categorized according to the Book's patterns catergory.
+Each of the examples is contained in an extra directory per pattern and is self contained.
+
+=== Foundational Patterns
+
+link:foundational/PredictableDemands/README.adoc[Predictable Demands]::
+  Our sample random generator dealing with hard requirements on ConfigMap and PersistentVolumeClaims as well as with resource limits.
+link:foundational/DynamicPlacement/README.adoc[Dynamic Placement]::
+  Example with node selector, pod and node affinity, taint and tolerations demonstrated.
+link:foundational/DeclarativeDeployment/README.adoc[Declarative Deployment]::
+  Rolling and fixed update of the random generator Deployment from version 1.0 to 2.0.
+link:foundational/ObservableInterior/README.adoc[Observable Interior]::
+  Liveness and Readiness checks for the random generator.
+link:foundational/LifeCycleConformance/README.adoc[Life Cycle Conformance]::
+  `postStart` and `preStop` hooks demonstrated with the random generator application.
+
+=== Behavorial Patterns
+
+link:behavorial/BatchJob/README.adoc[Batch Job]::
+  Generate thousand of randum numbers into a file with a batch job
+link:behavorial/ScheduledJob/README.adoc[Scheduled Job]::
+  Reuses the link:behavorial/BatchJob/README.adoc[Batch Job] example, but runs it periodically at a configured schedule
+link:behavorial/DaemonService/README.adoc[Daemon Service]::
+
+link:behavorial/SingletionService/README.adoc[Singleton Service]::
+
+link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
+  Using the Downward API for setting environment variables and mount resource fields as files with the random-generator service.
+
+=== Structural Patterns
+
+link:structural/Sidecar/README.adoc[Sidecar]::
+  Git polling example for a sidecar
+
+link:structural/InitContainer/README.adoc[Init Container]::
+
+link:structural/Ambassador/README.adoc[Ambassador]::
+
+link:structural/Adapter/README.adoc[Adapter]::
+
+=== Configuration Patterns
+
+link:configuration/EnvvarConfiguration/README.adoc[Envvar Configuration]::
+
+link:configuration/ConfigurationResource/README.adoc[Configuration Resource]::
+
+link:configuration/ConfigurationTemplate/README.adoc[Configuration Template]::
+  Example how to use a template configuration `standalone.xml` which is processed with a template processed and filled with data from `ConfigMap` before a Wildfly server is started.
+link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]::
+  Several examples how to use immutable configuration containers for application configuration. This includes examples for the plain Docker case and for Kubernetes.
+
+=== Advanced Patterns
+
+link:advanced/StatefulService/README.adoc[Stateful Service]::
+
+link:advanced/Controller/README.adoc[Controller]::
+  Simple, pure shell based controller which watches `ConfigMap` resources for changes and restarts `Pods` by using a label selector provided as annotation. An additional link:advanced/Controller/expose-controller/README.adoc[example controller] exposes an `Ingress` route when it detects an `exposeService` label attached to the service.
+link:advanced/Operator/README.adoc[Operator]::
+  Operator based on the `ConfigMap` watch link:advanced/Controller/README.adoc[controller] and introduces a CRD `ConfigWatcher` which connects a `ConfigMap` with a set of `Pods` to restart in case of a config change.
+link:advanced/ImageBuilder/README.adoc[Image Builder]::
+  Setup a link:advanced/ImageBuilder/openshift/README.adoc[chained build] on OpenShift and use link:advanced/ImageBuilder/knative/README.adoc[Knative build] for doing builds within the cluster.
+link:advanced/ElasticScale/README.adoc[ElasticScale]::
