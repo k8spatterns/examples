@@ -1,4 +1,4 @@
-## Controller
+== Controller
 
 This example shows a simple *Controller* which reacts on a certain annotation given on services.
 
@@ -73,7 +73,7 @@ open https://$(minikube ip)/mdn
 
 
 
-### Docker Images
+=== Docker Images
 
 This example uses two straightforward Docker images which you can find in the subdirectories:
 

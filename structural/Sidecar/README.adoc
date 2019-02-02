@@ -1,4 +1,4 @@
-## Sidecar
+== Sidecar
 
 This examples shows a useful example for a Sidecar in link:web-app.yml[web-app.yml]:
 
@@ -18,7 +18,7 @@ sh -c "git clone $(GIT_REPO) . && watch -n 600 git pull"
 
 For you convenience a `nodePort` service is exposed so that you can access the HTML pages from the outside
 
-### Installation
+=== Installation
 
 * Start minikube
 * Apply the resource descriptor

@@ -1,4 +1,4 @@
-## Supporting Docker images
+== Supporting Docker images
 
 This directory contains some image which are used in our link:../Controller/README.adoc[Controller] and link:../Operator/README.adoc[Operator] examples.
 

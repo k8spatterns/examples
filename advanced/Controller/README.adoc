@@ -1,4 +1,4 @@
-## Controller
+== Controller
 
 This example demonstrates a simple *Controller* which evaluates `ConfigMaps` and restart associated pods if such a `ConfigMap` changes.
 
@@ -98,7 +98,7 @@ and then finally call the URL again to check that the content has been updated t
 curl -sk https://webapp.$(minikube ip).nip.io
 ----
 
-## More Information
+== More Information
 
 * https://github.com/kubernetes/community/blob/a0fdd9ccfa6d5a6b17d8d2d3eec1d2e1ee12f3c4/contributors/devel/controllers.md[Kubernetes Documentation]
 * https://blog.openshift.com/writing-custom-controller-python/[Writing a Custom Controller in Python by Karim Boumedhel]

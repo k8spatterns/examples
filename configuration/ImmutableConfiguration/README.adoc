@@ -1,9 +1,9 @@
 
-## Immutable Configuration
+== Immutable Configuration
 
 The examples here demonstrate the **Immutable Configuration** Pattern which is uses an immutable configuration container linked to an application in one way or the other.
 
-### Demo application
+=== Demo application
 
 For these examples we are using a simple "Hello World" type Java Servlet which picks up the configuration for a background color and a label from a properties file in the file system:
 
@@ -34,7 +34,7 @@ mvn clean install tomcat7:run
 
 and the direct your browser to `http://localhost:8080/demo`. You will get an error message that the configuration file can't be found.
 
-### Examples
+=== Examples
 
 The following examples demonstrate how to apply the "Immutable Configuration" pattern to various enviroments:
 

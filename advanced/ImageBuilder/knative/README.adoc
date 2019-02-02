@@ -1,4 +1,4 @@
-## ImageBuilder - Knative build
+== ImageBuilder - Knative build
 
 This example demonstrates how to build images with https://github.com/knative/build[Knative build], starting from https://github.com/k8spatterns/random-generator[source] stored in a GitHub repository.
 
@@ -17,7 +17,7 @@ kubectl create -f registry.yml
 This registry is only available within from the current namespace as `registry`.
 Of course, feel free to adapt the examples below to use another registry which is more accessible than that.
 
-### Simple Build
+=== Simple Build
 
 To start a simple build with the https://github.com/GoogleContainerTools/jib[Jib Maven Plugin]
 you create the build with
@@ -73,7 +73,7 @@ Downloading: https://repo.maven.apache.org/maven2/....
 
 In order to deploy see this application, see below.
 
-### Build Template
+=== Build Template
 
 As alternative you can build the application with a `BuildTemplate`.
 
@@ -114,7 +114,7 @@ kubectl logs random-generator-with-template-pod-0ae221 -c build-step-image-build
 .....
 ----
 
-### Deploy application
+=== Deploy application
 
 When you have build the random-generatot with one of the methods above, you can deploy it easily.
 Unfortunately, for picking up images, Kubernetes (or at least Minikube) doesn't support service DNS lookups in the `image:` field of a container specification.

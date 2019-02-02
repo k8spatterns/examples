@@ -1,4 +1,4 @@
-## Self Awareness
+== Self Awareness
 
 For this example any Kubernetes installation can be used, as described in link:../../INSTALL.adoc[INSTALL].
 

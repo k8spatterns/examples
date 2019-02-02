@@ -1,4 +1,4 @@
-## Batch Job
+== Batch Job
 
 Let's create a batch job for generating thousands of random number.
 Our usual REST example at https://github.com/k8spatterns/random-generator[random-generator] contains also a plain Java class `RandomRunner` which is suitable for batch processing.

@@ -1,4 +1,4 @@
-## ImageBuilder
+== ImageBuilder
 
 Here you can find two examples for building container images within a Kubernetes / OpenShift cluster:
 

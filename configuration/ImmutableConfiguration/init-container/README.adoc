@@ -1,4 +1,4 @@
-## Kubernetes init containers to link configuration containers
+== Kubernetes init containers to link configuration containers
 
 In Kubernetes containers within a Pod can share volumes. 
 Unfortunately, there is currently no way to share a directory from within a container directly with another container (but this is https://github.com/kubernetes/kubernetes/issues/831[planned]).
@@ -11,7 +11,7 @@ However for the reason stated above we need some help from the base image to cop
 `busybox` is a good choice for the base image which allows us to use plain Unix `cp` for this task.
 
 
-### Create images
+=== Create images
 
 The images are created similar as in the link:../docker-volumes[plain Docker case]. 
 Like in the other examples we are using minikube as platform and the included Docker daemon for building the image.
@@ -48,7 +48,7 @@ docker build --build-arg config=dev.properties -f Dockerfile-config -t k8spatter
 docker build --build-arg config=prod.properties -f Dockerfile-config -t k8spatterns/config-prod:1 .
 ----
 
-### Apply Kubernetes resources
+=== Apply Kubernetes resources
 
 It's time now to apply the Kubernetes resource descriptor:
 
@@ -74,7 +74,7 @@ kubectl patch deployment demo --type json -p \
 
 WARNING: There is currently an issue with Kubernetes not updating initContainers with `kubectl patch` or `kubectl apply`. Please https://github.com/kubernetes/kubectl/issues/27[track] https://github.com/kubernetes/kubernetes/issues/47264[these issues] for updates.
 
-### OpenShift Template
+=== OpenShift Template
 
 If you are on OpenShift, e.g. by running minishift, you can benefit from the template mechanism provided by OpenShift.
 

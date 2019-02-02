@@ -1,4 +1,4 @@
-## ImageBuilder - OpenShift Builds
+== ImageBuilder - OpenShift Builds
 
 This example demonstrates a a https://docs.openshift.com/container-platform/3.11/dev_guide/builds/advanced_build_operations.html#dev-guide-chaining-builds[chained] OpenShift build.
 
@@ -92,7 +92,7 @@ Feel also free to fork https://github.com/k8spatterns/random-generator/, add a W
 More background information about this example can be found in our book of course :)
 
 [[image-builder-openshift-multi-stage]]
-### Multi stage build
+=== Multi stage build
 
 This directory also contains an example for a plain Docker multi-stage build.
 This build is equivalent to the chained build as it also uses a build stage for compiling the artefact and then create the runtime image with the created fat jar.

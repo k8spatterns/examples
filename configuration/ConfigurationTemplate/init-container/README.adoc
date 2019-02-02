@@ -1,4 +1,4 @@
-### Init Image
+=== Init Image
 
 The init container is used to process a set of configuration templates with values coming a `ConfigMap`.
 The processed templates are written out into a directory.

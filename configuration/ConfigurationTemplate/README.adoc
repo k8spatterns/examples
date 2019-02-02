@@ -1,8 +1,8 @@
-## Configuration Template
+== Configuration Template
 
 This example demonstrates the usage of the **Configuration Template** pattern. As described in detail in our book this pattern is useful for dynamically creating configuration during application startup by processing templates on the fly. Please check out the pros and cons of this approach from the book.
 
-### Wildfly configured with templates and configmaps
+=== Wildfly configured with templates and configmaps
 
 In this example we will configure a Wildfly application server. As you probably know, Wildlfy uses an XML syntax for its configuration which can be quite lengthy. We will use a configuration template where we want to configure only a small part differently for different environments. In our example we use a `standalone.xml` template which is filled with values from a `ConfigMap` before the server starts.
 
@@ -22,7 +22,7 @@ As described in the pattern's description an Kubernertes _init-container_ is use
 
 Please check its link:init-container/README.md[README] how to re-create the image, but we already pushed it to Docker hub for your convenience.
 
-### Running the example
+=== Running the example
 
 The value to fill into the template come from config map which needs to be created first.
 

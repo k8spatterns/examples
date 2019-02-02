@@ -1,4 +1,4 @@
-## Operator
+== Operator
 
 This advanced example introduces a simple *Operator* which is based on the config watcher link:../Controller/README.adoc[Controller], so we recommend to try controller demo first.
 

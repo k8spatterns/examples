@@ -1,4 +1,4 @@
-## Docker Volumes to link configuration containers
+== Docker Volumes to link configuration containers
 
 This example demonstrates how to use an immutable configuration container with plain Docker means. It uses Docker volumes under the hood to link together the configuration container with the application container.
 

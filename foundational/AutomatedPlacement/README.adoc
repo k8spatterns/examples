@@ -1,10 +1,10 @@
-## Automated Placement
+== Automated Placement
 
 
 This example illustrates the ways how the placement of scheduled pods can be influenced.
 For this examples we assume that you have Minikube installed and running as described in link:../../INSTALL.adoc#minikube[here].
 
-### Node Selector
+=== Node Selector
 
 The simplest way to influence the scheduling process is to use a `nodeSelector`.
 
@@ -38,7 +38,7 @@ NAME                READY   STATUS    RESTARTS   AGE
 random-generator    1/1     Running   0          65s
 ----
 
-### Node Affinity
+=== Node Affinity
 
 Let's now use Node affinity rules for scheduling our Pod:
 
@@ -57,7 +57,7 @@ kubectl label node minikube numberCores=4
 
 Does the Pod starts up now ? What if you choose 2 instead of 4 for the number of cores ?
 
-### Pod Affinity
+=== Pod Affinity
 
 To test Pod affinity we need to install a Pod to which our Pod can be connected.
 We are trying to create both Pods with
@@ -91,7 +91,7 @@ confidential-high   1/1     Running   0          9m39s
 pod-affinity        1/1     Running   0          9m39s
 ----
 
-### Taints and Tolerations
+=== Taints and Tolerations
 
 For testing taints and tolerations, we first have to taint our Minikube node, so that by default no Pods are scheduled on it:
 
