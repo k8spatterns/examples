@@ -28,7 +28,7 @@ link:foundational/DeclarativeDeployment/README.adoc[Declarative Deployment]::
   Rolling and fixed update of the random generator Deployment from version 1.0 to 2.0.
 link:foundational/HealthProbe/README.adoc[Health Probe]::
   Liveness and Readiness probes for the random generator.
-link:foundational/LifeCycleConformance/README.adoc[Life Cycle Conformance]::
+link:foundational/ManagedLifecycle/README.adoc[Managed Lifecycle]::
   `postStart` and `preStop` hooks demonstrated with the random generator application.
 
 === Behavorial Patterns
@@ -39,7 +39,7 @@ link:behavorial/ScheduledJob/README.adoc[Scheduled Job]::
   Reuses the link:behavorial/BatchJob/README.adoc[Batch Job] example, but runs it periodically at a configured schedule
 link:behavorial/DaemonService/README.adoc[Daemon Service]::
   _TBD_
-link:behavorial/SingletionService/README.adoc[Singleton Service]::
+link:behavorial/SingletonService/README.adoc[Singleton Service]::
   _TBD_
 link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
   Using the Downward API for setting environment variables and mount resource fields as files with the random-generator service.

@@ -1,4 +1,4 @@
-## Life Cycle Conformance
+## Managed Lifecycle
 
 For this simple example, you need access to a Kubernetes installation.
 Anyone as described in link:../../INSTALL.adoc[INSTALL] is good enough.
