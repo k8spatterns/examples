@@ -1,4 +1,4 @@
-== Scheduled Job
+== Periodic Job
 
 Our Cron Job example builds on top of the link:../BatchJob/README.adoc[Batch Job] example above, to the basic setuup is the same:
 

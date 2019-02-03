@@ -35,7 +35,7 @@ link:foundational/AutomatedPlacement/README.adoc[Automated Placement]::
 
 link:behavorial/BatchJob/README.adoc[Batch Job]::
   Generate thousand of randum numbers into a file with a batch job
-link:behavorial/ScheduledJob/README.adoc[Scheduled Job]::
+link:behavorial/PeriodicJob/README.adoc[Periodic Job]::
   Reuses the link:behavorial/BatchJob/README.adoc[Batch Job] example, but runs it periodically at a configured schedule
 link:behavorial/DaemonService/README.adoc[Daemon Service]::
   Sample maintenance script for maintenance jobs on every node of a cluster [*]
