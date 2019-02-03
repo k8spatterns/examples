@@ -78,5 +78,5 @@ link:advanced/Operator/README.adoc[Operator]::
   Operator based on the ConfigMap watch link:advanced/Controller/README.adoc[controller] and introduces a CRD ConfigWatcher which connects a ConfigMap with a set of Pods to restart in case of a config change.
 link:advanced/ImageBuilder/README.adoc[Image Builder]::
   Setup a link:advanced/ImageBuilder/openshift/README.adoc[chained build] on OpenShift and use link:advanced/ImageBuilder/knative/README.adoc[Knative build] for doing builds within the cluster.
-link:advanced/ElasticScale/README.adoc[ElasticScale]::
+link:advanced/ElasticScale/README.adoc[Elastic Scale]::
   Horizontal and vertical scaling examples with the random-generator Service [*]
