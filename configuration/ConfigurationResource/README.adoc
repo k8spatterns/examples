@@ -1,1 +1,21 @@
-## Configuration Resource
+== Configuration Resource
+
+IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
+
+[source, bash]
+----
+kubectl create -f configmap.yml
+kubectl create -f pod.yml
+kubectl create -f service.yml
+
+port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
+curl -s http://$(minikube ip):$port
+----
+
+=== More Information
+
+* https://github.com/k8spatterns/examples/tree/master/configuration/ConfigurationResource[Configuration Resource example]
+* https://kubernetes.io/docs/tasks/configure-pod-container/configmap/[ConfigMap Documentation]
+* https://kubernetes.io/docs/concepts/configuration/secret/[Secrets Documentation]
+* https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo[gitRepo Volumes]
+* https://github.com/kubernetes/kubernetes/issues/19781[Size restriction of a ConfigMap]

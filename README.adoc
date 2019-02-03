@@ -62,7 +62,7 @@ link:structural/Adapter/README.adoc[Adapter]::
 link:configuration/EnvVarConfiguration/README.adoc[EnvVar Configuration]::
   Simple example how to use environment variables literally and from ConfigMaps and Secrets for our random-generator service. [*]
 link:configuration/ConfigurationResource/README.adoc[Configuration Resource]::
-  _TBD_
+  Example how to configure the random-generator Spring Boot application with a ConfigMap [*]
 link:configuration/ConfigurationTemplate/README.adoc[Configuration Template]::
   Example how to use a template configuration `standalone.xml` which is processed with a template processed and filled with data from ConfigMap before a Wildfly server is started.
 link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]::
