@@ -4,19 +4,19 @@
 
 This GitHub project contains the examples from the "Kubernetes Patterns" book by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß]
 
-IMPORTANT: We are currently ramping up the book to be published by an established publisher. The announcement should happen soon, so please stay tuned ....
+IMPORTANT: You can't buy the book currently, but we have news very soon, please stay tuned ....
 
-Installation instructions for the examples' prerequisites are summarized in link:INSTALL.adoc[INSTALL].
-By default, you just need access to a vanilla Kubernetes installation, like Minikube.
+Installation instructions for the examples' prerequisites are summarised in link:INSTALL.adoc[INSTALL].
+By default, you need access to a vanilla Kubernetes installation, like Minikube.
 If addons are required, the example description explains this additional requirement.
 
 For feedback, issues or questions in general, please use the https://github.com/bibryam/k8spatterns/issues[issue tracker] to open issues.
-Also we love contributions like spelling fixes, bug fixes, improvements, ... Please open Pull Requests, we are happy to review them !
+Also, we love contributions like spelling fixes, bug fixes, improvements, ... Please open Pull Requests, we are happy to review them!
 
 == Patterns
 
-All example are categorized according to the Book's patterns catergory.
-Each of the examples is contained in an extra directory per pattern and is self contained. footnote:[Examples marked with an "*" are functional but still lack the full instruction set for running the examples. If you feel adventurous, please try out the provided resource files yourself. Happy to take also PRs, did we already mention that we love contributions ? ;)]
+All example are categorised according to the Book's patterns category.
+Each of the examples is contained in an extra directory per pattern and is self-contained. footnote:[Examples marked with an "*" are functional but still, lack the full instruction set for running the examples. If you feel adventurous, please try out the provided resource files yourself. Happy to take also PRs, did we already mention that we love contributions? ;)]
 
 === Foundational Patterns
 
@@ -34,13 +34,13 @@ link:foundational/AutomatedPlacement/README.adoc[Automated Placement]::
 === Behavorial Patterns
 
 link:behavorial/BatchJob/README.adoc[Batch Job]::
-  Generate thousand of randum numbers into a file with a batch job
+  Generate thousands of random numbers into a file with a batch job
 link:behavorial/PeriodicJob/README.adoc[Periodic Job]::
   Reuses the link:behavorial/BatchJob/README.adoc[Batch Job] example, but runs it periodically at a configured schedule
 link:behavorial/DaemonService/README.adoc[Daemon Service]::
   Sample maintenance script for maintenance jobs on every node of a cluster [*]
 link:behavorial/SingletonService/README.adoc[Singleton Service]::
-  Example of a PodDisruptionBudget for controlling volontary disruptions [*]
+  Example of a PodDisruptionBudget for controlling voluntary disruptions [*]
 link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
   Using the Downward API for setting environment variables and mount resource fields as files with the random-generator service.
 link:behavorial/ServiceDiscovery/README.adoc[Service Discovery]::
@@ -60,13 +60,13 @@ link:structural/Adapter/README.adoc[Adapter]::
 === Configuration Patterns
 
 link:configuration/EnvVarConfiguration/README.adoc[EnvVar Configuration]::
-  Simple example how to use environment variables literally and from ConfigMaps and Secrets for our random-generator service. [*]
+  A simple example of how to use environment variables literally and from ConfigMaps and Secrets for our random-generator service. [*]
 link:configuration/ConfigurationResource/README.adoc[Configuration Resource]::
   Example how to configure the random-generator Spring Boot application with a ConfigMap [*]
 link:configuration/ConfigurationTemplate/README.adoc[Configuration Template]::
   Example how to use a template configuration `standalone.xml` which is processed with a template processed and filled with data from ConfigMap before a Wildfly server is started.
 link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]::
-  Several examples how to use immutable configuration containers for application configuration. This includes examples for the plain Docker case and for Kubernetes.
+  Several examples of how to use immutable configuration containers for application configuration. This includes examples for the plain Docker case and for Kubernetes.
 
 === Advanced Patterns
 
