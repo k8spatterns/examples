@@ -184,6 +184,7 @@ Also don't forget the check the logs, too !
 
 === More Information
 
+* https://github.com/k8spatterns/examples/tree/master/foundational/PredictableDemands[Predictable Demands example]
 * https://attractivechaos.github.io/plb/[Programming language benchmarks]
 * http://kubernetes.io/docs/user-guide/configmap/[Using ConfigMap]
 * http://kubernetes.io/docs/user-guide/config-best-practices/[Best Practices for Configuration]

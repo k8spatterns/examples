@@ -1,0 +1,37 @@
+apiVersion: scheduling.k8s.io/v1beta1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 1000000
+globalDefault: false
+description: This is a very high priority Pod class
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-generator
+spec:
+  containers:
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
+    env:
+    - name: PATTERN
+      valueFrom:
+        # First Hard requirement for a config map to exist.
+        configMapKeyRef:
+          name: random-generator-config
+          key: pattern
+      # Enabling logging into the mounted volume
+    - name: LOG_FILE
+      value: /logs/random.log
+    volumeMounts:
+      - mountPath: "/logs"
+        name: log-volume
+    # Putt the pod in this priority class
+    priorityClassName: high-priority
+  volumes:
+    - name: log-volume
+      # Second hard requirement is that the specified persitent volume claim
+      # exists and is bound.
+      persistentVolumeClaim:
+        claimName: random-generator-log
