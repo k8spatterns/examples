@@ -1,0 +1,28 @@
+# .Resource limits
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-generator
+  labels:
+    app: random-generator
+spec:
+  containers:
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
+    env:
+    # Literal environment variable
+    - name: LOG_FILE
+      value: /tmp/random.log
+    # Pick up configuration from a config map
+    - name: PATTERN
+      valueFrom:
+        configMapKeyRef:
+          name: random-generator-config
+          key: pattern
+    # Pick up configuration from a config map
+    - name: SEED
+      valueFrom:
+        secretKeyRef:
+          name: random-generator-secret
+          key: seed
