@@ -1,8 +1,9 @@
 == Elastic Scale
 
-v1.13.1
+IMPORTANT: The instructions have not been written/finished, but you can already try out the resource files provided here. They might not fully work yet, but should be fixed soonish. The Instructions will be added soon, too.
 
-
+[source, bash]
+----
 minikube addons enable metrics-server
 
 kubectl create -f random-generator-deploy.yml
@@ -10,3 +11,19 @@ kubectl create -f random-generator-deploy.yml
 kubectl autoscale deployment random-generator --min=1 --max=5 --cpu-percent=10
 
 curl -s http://$(minikube ip):$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort}) | jq .
+----
+
+=== More information
+
+* https://github.com/k8spatterns/examples/tree/master/advanced/ElasticScale[ElasticScale example]
+* https://www.youtube.com/watch?v=Y4vnYaqhS74[Rightsize Your Pods with Vertical Pod Autoscaling]
+* https://medium.com/magalix/kubernetes-autoscaling-101-cluster-autoscaler-horizontal-pod-autoscaler-and-vertical-pod-2a441d9ad231[Kubernetes Autoscaling 101]
+* https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/[Horizontal Pod Autoscaler]
+* https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/[Horizontal Pod Autoscaler Walkthrough]
+* https://github.com/kubernetes/metrics/[Kubernetes Metrics API and Clients]
+* https://cloud.google.com/kubernetes-engine/docs/concepts/verticalpodautoscaler[Vertical Pod Autoscaling]
+* https://cloud.google.com/kubernetes-engine/docs/how-to/vertical-pod-autoscaling[Configuring Vertical Pod Autoscaling]
+* https://github.com/kubernetes/community/blob/master/contributors/design-proposals/autoscaling/vertical-pod-autoscaler.md[Vertical Pod Autoscaler Proposal]
+* https://kubernetes.io/blog/2016/07/autoscaling-in-kubernetes/[Cluster Autoscaling in Kubernetes]
+* https://medium.com/@NetflixTechBlog/performance-under-load-3e6fa9a60581[Adaptive Concurrency Limits]
+* https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md[Cluster Autoscaler FAQ]

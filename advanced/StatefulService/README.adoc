@@ -1,1 +1,37 @@
-## Stateful Service
+== Stateful Service
+
+IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
+
+[source, bash]
+----
+minikube start --mount --mount-string="$(pwd)/logs:/example"
+
+kubectl create -f service.yml
+kubectl create -f pv.yml
+
+kubectl create -f statefulset.yml
+
+kubectl create -f service-nodeport.yml
+port=$(kubectl get svc random-generator-np -o jsonpath={.spec.ports[0].nodePort})
+
+curl -s http://$(minikube ip):$port
+
+curl -s http://$(minikube ip):$port/logs
+
+kubectl delete pod rg-0 rg-1
+
+curl -s http://$(minikube ip):$port/logs
+
+----
+
+=== More information
+
+* https://github.com/k8spatterns/examples/tree/master/advanced/StatefulService[StatefulService example]
+* https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/[StatefulSet Basics]
+* https://kubernetes.io/docs/concepts/workloads/controllers/statefulset[StatefulSets]
+* https://kubernetes.io/docs/tutorials/stateful-application/cassandra/[Deploying Cassandra with Stateful Sets]
+* https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/[Running ZooKeeper, A Distributed System Coordinator]
+* https://kubernetes.io/docs/concepts/services-networking/service/#headless-services[Headless Services]
+* https://kubernetes.io/docs/tasks/run-application/force-delete-stateful-set-pod/[Force Delete StatefulSet Pods]
+* https://medium.com/@marko.luksa/graceful-scaledown-of-stateful-apps-in-kubernetes-2205fc556ba9[Graceful scaledown of stateful apps in Kubernetes]
+* https://www.youtube.com/watch?v=EuJoAKTCCXg[Configuring and Deploying Stateful Applications]
