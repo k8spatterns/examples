@@ -16,7 +16,7 @@ Also we love contributions like spelling fixes, bug fixes, improvements, ... Ple
 == Patterns
 
 All example are categorized according to the Book's patterns catergory.
-Each of the examples is contained in an extra directory per pattern and is self contained. footnote:[Examples marked with an "*"" are functional but still lack the full instruction set for running the examples. If you feel adventurous, please try out the provided resource files yourself. Happy to take also PRs, did we already mention that we love contributions ? ;)]
+Each of the examples is contained in an extra directory per pattern and is self contained. footnote:[Examples marked with an "*" are functional but still lack the full instruction set for running the examples. If you feel adventurous, please try out the provided resource files yourself. Happy to take also PRs, did we already mention that we love contributions ? ;)]
 
 === Foundational Patterns
 
