@@ -1,1 +1,29 @@
-## Ambassador
+== Ambassador
+
+IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
+
+[source, bash]
+----
+kubectl create -f pod.yml
+
+kubectl create -f service.yml
+
+
+port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
+curl -s http://$(minikube ip):$port
+
+{"random":1345536975,"id":"d822e648-0f41-4c4f-ae3a-1ced14d2b4a2"}%
+
+kubectl logs -f random-generator -c ambassador &
+
+==========================================
+Starting up random-generator Ambassador
+Listening at http://localhost:9009
+==========================================
+Message received for processing:
+>>> ID: d822e648-0f41-4c4f-ae3a-1ced14d2b4a2 -- Duration: 35318 -- Random: 355610385
+Message received for processing:
+>>> ID: d822e648-0f41-4c4f-ae3a-1ced14d2b4a2 -- Duration: 10080 -- Random: 294941020
+Message received for processing:
+>>> ID: d822e648-0f41-4c4f-ae3a-1ced14d2b4a2 -- Duration: 21987 -- Random: 1345536975
+----

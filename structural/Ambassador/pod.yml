@@ -1,0 +1,25 @@
+# DeploymentConfig for starting up the random-generator
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-generator
+  labels:
+    app: random-generator
+spec:
+  containers:
+  # ------------------------------------------------
+  # Main application
+  - image: k8spatterns/random-generator:1.0
+    name: main
+    env:
+    # URL to the port our ambassador is listening.
+    - name: LOG_URL
+      value: http://localhost:9009
+    ports:
+    # Application running on port 8080
+    - containerPort: 8080
+      protocol: TCP
+  # ------------------------------------------------
+  # Ambassador used for logging out
+  - image: k8spatterns/random-generator-log-ambassador
+    name: ambassador
