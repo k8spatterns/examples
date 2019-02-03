@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: www
+  labels:
+    app: www
+spec:
+  initContainers:
+  - name: download
+    image: axeclbr/git
+    # Clone an HTML page to be served
+    command:
+    - git
+    - clone
+    - https://github.com/mdn/beginner-html-site-scripted
+    - /var/lib/data
+    # Shared volume with main container
+    volumeMounts:
+    - mountPath: /var/lib/data
+      name: source
+  containers:
+  # Simple static HTTP server for serving these pages
+  - name: run
+    image: docker.io/centos/httpd
+    ports:
+    - containerPort: 80
+    # Shared volume with main container
+    volumeMounts:
+    - mountPath: /var/www/html
+      name: source
+  volumes:
+  - emptyDir: {}
+    name: source

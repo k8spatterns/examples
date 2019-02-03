@@ -1,0 +1,19 @@
+== Init Container (random-genertor example)
+
+[source, bash]
+----
+kubctl create -f deployment.yml
+
+k get pods -w
+NAME                                READY   STATUS     RESTARTS   AGE
+random-generator-6c8f6bb79c-jc6nf   0/1     Init:0/1   0          4s
+random-generator-6c8f6bb79c-jc6nf   0/1     PodInitializing   0   61s
+random-generator-6c8f6bb79c-jc6nf   1/1     Running   0           62s
+
+kubectl create -f service.yml
+
+kubectl get service
+
+port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
+curl -s http://$(minikube ip):$port/logs | head -10
+----

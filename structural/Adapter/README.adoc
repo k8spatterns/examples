@@ -1,3 +1,8 @@
 == Adapter
 
-* Prometheus adapter with `nc` for the random-generator service, transforming the log to a Prometheus related format
+IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
+
+
+=== More Information
+
+* https://www.youtube.com/watch?v=Ph3t8jIt894[Container patterns for modular distributed system design]

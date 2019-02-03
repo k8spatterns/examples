@@ -13,9 +13,28 @@ spec:
       labels:
         app: random-generator
     spec:
+      initContainers:
+      # Same image as main container, but used for calling the batch CLI
+      - image: k8spatterns/random-generator:1.0
+        name: init
+        command:
+        - java
+        # Use / as classpath to pick up the class file
+        - -classpath
+        - /
+        # Class running batch job
+        - RandomRunner
+        # 1. Arg: File to store data (on a PV)
+        - /logs/random.log
+        # 2. How many iterations
+        - "100000"
+        # Shared volume with main container. Use for initializing the batch file
+        volumeMounts:
+        - mountPath: /logs
+          name: log-volume
       containers:
       # ------------------------------------------------
-      # Main application
+      # Main container sharing the /logs dir with the init container
       - image: k8spatterns/random-generator:1.0
         name: random-generator
         env:
@@ -26,22 +45,6 @@ spec:
         # Application running on port 8080
         - containerPort: 8080
           protocol: TCP
-        volumeMounts:
-        - mountPath: /logs
-          name: log-volume
-      # ------------------------------------------------
-      # Prometheus adapter
-      - image: k8spatterns/random-generator-exporter
-        name: prometheus-adapter
-        env:
-        # Logfile  to pick up by exporter script
-        - name: LOG_FILE
-          value: /logs/random.log
-        ports:
-        # Expose prometheus metrics via that port
-        - containerPort: 9889
-          protocol: TCP
-        # Mount shared volume for accessing the logs
         volumeMounts:
         - mountPath: /logs
           name: log-volume

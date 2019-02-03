@@ -28,7 +28,7 @@ spec:
         # Class running batch job
         - RandomRunner
         # 1. Arg: File to store data (on a PV)
-        - /logs/random-generator.log
+        - /logs/random.log
         # 2. How many iterations
         - "10000"
         volumeMounts:

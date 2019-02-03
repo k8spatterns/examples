@@ -1,1 +1,27 @@
-## Init Container
+== Init Container
+
+IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
+
+[source, bash]
+----
+kubctl create -f pod.yml
+
+kubectl get pods -w
+NAME   READY   STATUS            RESTARTS   AGE
+www    0/1     Init:0/1          0          8s
+www    0/1     PodInitializing   0          10s
+www    1/1     Running           0          12s
+
+kubectl create -f service.yml
+
+port=$(kubectl get svc www -o jsonpath={.spec.ports[0].nodePort})
+curl -s http://$(minikube ip):$port
+----
+
+=== More Information
+
+* https://github.com/k8spatterns/examples/tree/master/structural/InitContainer[Init Container example]
+* https://kubernetes.io/docs/concepts/workloads/pods/init-containers/[Init Containers]
+* https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-initialization/#creating-a-pod-that-has-an-init-container[Configuring Pod Initialization]
+* http://blog.javascriptroom.com/2013/01/21/the-initializer-pattern/[The Initializer Pattern in JavaScript]
+* https://developer.apple.com/library/content/documentation/General/Conceptual/CocoaEncyclopedia/Initialization/Initialization.html[Object Initialization in Swift]

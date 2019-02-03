@@ -124,6 +124,11 @@ function pod {
   kubectl get pod -o name | grep -v "Terminating" | grep $1 | sed -e "s/^pods\///"
 }
 
+# Get the nodePort of first port mapping of a service
+function svc_node_port {
+  kubectl get svc $1 -o jsonpath={.spec.ports[0].nodePort}
+}
+
 # Change the current context (e.g. 'k8s_context minikube')
 function k8s_context {
    kubectl config use-context $1
