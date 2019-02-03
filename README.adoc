@@ -44,7 +44,7 @@ link:behavorial/SingletonService/README.adoc[Singleton Service]::
 link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
   Using the Downward API for setting environment variables and mount resource fields as files with the random-generator service.
 link:behavorial/ServiceDiscovery/README.adoc[Service Discovery]::
-  Various ways how to access our random-generator REST service
+  Various ways how to access our random-generator REST service [*]
 
 === Structural Patterns
 
