@@ -58,7 +58,7 @@ link:structural/Adapter/README.adoc[Adapter]::
 === Configuration Patterns
 
 link:configuration/EnvvarConfiguration/README.adoc[EnvVar Configuration]::
-  _TBD_
+  Simple example how to use environment variables literally and from ConfigMaps and Secrets for our random-generator service. [*]
 link:configuration/ConfigurationResource/README.adoc[Configuration Resource]::
   _TBD_
 link:configuration/ConfigurationTemplate/README.adoc[Configuration Template]::
