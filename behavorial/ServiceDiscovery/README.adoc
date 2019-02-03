@@ -1,0 +1,30 @@
+== Service Discovery
+
+IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
+
+[source, bash]
+----
+# Base deployment with 4 replicas
+kubectl create -f deployment.yml
+
+# Service with ClusterIP
+kubectl create -f service.yml
+
+# Service with NodePort
+kubectl create -f service-with-nodeport.yml
+
+....
+
+
+----
+
+=== More Information
+
+* https://github.com/k8spatterns/examples/tree/master/behavorial/ServiceDiscovery[Service Discovery example]
+* https://kubernetes.io/docs/concepts/services-networking/service/[Kubernetes Services]
+* https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/[DNS for Services and Pods]
+* https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/[Debug Services]
+* https://kubernetes.io/docs/tutorials/services/[Using Source IP]
+* https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip[Create an External Load Balancer]
+* https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0[Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what?]
+* https://kubernetes.io/docs/concepts/services-networking/ingress/[Ingress]

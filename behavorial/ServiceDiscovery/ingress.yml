@@ -1,0 +1,8 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: random-generator
+spec:
+  backend:
+    serviceName: random-generator
+    servicePort: 8080

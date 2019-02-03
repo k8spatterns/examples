@@ -43,6 +43,8 @@ link:behavorial/SingletonService/README.adoc[Singleton Service]::
   Example of a PodDisruptionBudget for controlling volontary disruptions [*]
 link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
   Using the Downward API for setting environment variables and mount resource fields as files with the random-generator service.
+link:behavorial/ServiceDiscovery/README.adoc[Service Discovery]::
+  Various ways how to access our random-generator REST service
 
 === Structural Patterns
 
