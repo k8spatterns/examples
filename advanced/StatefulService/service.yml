@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: random-generator
+spec:
+  clusterIP: None
+  selector:
+    app: random-generator
+  ports:
+  - name: http
+    port: 8080

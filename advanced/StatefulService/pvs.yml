@@ -1,0 +1,28 @@
+# Persistent volume mapping a hostPath. Works only on 1-node clusters like Minikube
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: log-1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Mi
+  # Storageclass is important here otherwise the PVC won't bind
+  storageClassName: standard
+  hostPath:
+    # Mount by Minikube from local directory during 'minikube start'
+    path: /example/1
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: log-2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Mi
+  storageClassName: standard
+  hostPath:
+    path: /example/2

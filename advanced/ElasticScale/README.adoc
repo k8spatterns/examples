@@ -1,1 +1,12 @@
-## Elastic Scale
+== Elastic Scale
+
+v1.13.1
+
+
+minikube addons enable metrics-server
+
+kubectl create -f random-generator-deploy.yml
+
+kubectl autoscale deployment random-generator --min=1 --max=5 --cpu-percent=10
+
+curl -s http://$(minikube ip):$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort}) | jq .

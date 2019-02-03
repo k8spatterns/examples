@@ -71,7 +71,7 @@ link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]::
 === Advanced Patterns
 
 link:advanced/StatefulService/README.adoc[Stateful Service]::
-  _TBD_
+  StatefulSet example for our random-generator [*]
 link:advanced/Controller/README.adoc[Controller]::
   Simple, pure shell based controller which watches ConfigMap resources for changes and restarts `Pods` by using a label selector provided as annotation. An additional link:advanced/Controller/expose-controller/README.adoc[example controller] exposes an Ingress route when it detects an `exposeService` label attached to the service.
 link:advanced/Operator/README.adoc[Operator]::

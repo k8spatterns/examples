@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rg
+spec:
+  serviceName: random-generator
+  replicas: 2
+  selector:
+    matchLabels:
+      app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      - image: k8spatterns/random-generator:1.0
+        name: random-generator
+        env:
+        - name: LOG_FILE
+          value: /logs/random.log
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
+        - name: logs
+          mountPath: /logs
+  volumeClaimTemplates:
+  - metadata:
+      name: logs
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Mi
