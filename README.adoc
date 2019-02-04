@@ -4,7 +4,7 @@
 
 This GitHub project contains the examples from the "Kubernetes Patterns" book by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß]
 
-IMPORTANT: You can't buy the book currently, but we have news very soon, please stay tuned ....
+IMPORTANT: You can't buy the book currently, but we have news very soon. Please stay tuned ....
 
 Installation instructions for the examples' prerequisites are summarised in link:INSTALL.adoc[INSTALL].
 By default, you need access to a vanilla Kubernetes installation, like Minikube.
@@ -28,6 +28,8 @@ link:foundational/HealthProbe/README.adoc[Health Probe]::
   Liveness and Readiness probes for the random generator.
 link:foundational/ManagedLifecycle/README.adoc[Managed Lifecycle]::
   `postStart` and `preStop` hooks demonstrated with the random generator application.
+link:behavorial/ServiceDiscovery/README.adoc[Service Discovery]::
+  Various ways how to access our random-generator REST service [*]
 link:foundational/AutomatedPlacement/README.adoc[Automated Placement]::
   Example with node selector, pod and node affinity, taint and tolerations demonstrated.
 
@@ -43,8 +45,6 @@ link:behavorial/SingletonService/README.adoc[Singleton Service]::
   Example of a PodDisruptionBudget for controlling voluntary disruptions [*]
 link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
   Using the Downward API for setting environment variables and mount resource fields as files with the random-generator service.
-link:behavorial/ServiceDiscovery/README.adoc[Service Discovery]::
-  Various ways how to access our random-generator REST service [*]
 
 === Structural Patterns
 
