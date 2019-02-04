@@ -1,0 +1,35 @@
+
+
+* Ensure that minikube is stopped.
+
+Then
+
+[source,bash]
+----
+minikube addons enable registry
+minikube start --mount-string="$(pwd):/build"
+----
+
+
+[source,yaml]
+----
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:latest
+    args:
+    - "--dockerfile=Dockerfile"
+    - "--context=dir:///build"
+    - "--destination=registry:5000/k8spatterns/kubectl-proxy:kaniko"
+    volumeMounts:
+    - name: build-dir
+      mountPath: /build
+  restartPolicy: Never
+  volumes:
+  - name: build-dir
+    hostPath: /build
+----
