@@ -1,8 +1,10 @@
 == Predictable Demands
 
+ifndef::skipInstall[]
 For this example we recommend to use a Minikube installation described link:../../INSTALL.adoc#minikube[here].
 In order to play a bit with memory limits, we assume that you use 2GB memory for your Minikube VM (which is also the default).
 You can adapt the memory of the Minikube VM with `--memory`.
+endif::skipInstall[]
 
 To access the PersistentVolume used in this demo, let's mount a local directory into the Minikube VM that we later then use a PersistentVolume mounted into the Pod:
 
