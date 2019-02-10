@@ -2,17 +2,54 @@
 
 IMPORTANT: The instructions have not been written/finished, but you can already try out the resource files provided here. They might not fully work yet, but should be fixed soonish. The Instructions will be added soon, too.
 
+.Horizontal Pod Autoscaler
 [source, bash]
 ----
+# Start Minikiube with 8GB of RAM
+minikube start --memory 4096
+
+# Enable metrics-server for measuring
 minikube addons enable metrics-server
 
-kubectl create -f random-generator-deploy.yml
+# Create deployment for out random service
+kubectl create -f deployment.yml
 
-kubectl autoscale deployment random-generator --min=1 --max=5 --cpu-percent=10
+# For V1 HPA
+kubectl autoscale deployment random-generator --min=1 --max=10 --cpu-percent=50
 
-curl -s http://$(minikube ip):$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort}) | jq .
+# Same for V2
+kubectl create -f deployment.yml
+
+# Put some load on the system
+port=$(kubectl get svc random-generator-np -o jsonpath={.spec.ports[0].nodePort})
+while true; do curl -s http://$(minikube ip):port?burn=10000 >/dev/null; done
+
+# In other terminal:
+watch kubectl get pods,deploy,hpa
+
+# Delete HPA again
+kubectl delete hpa random-generator
 ----
 
+
+.Vertical Pod Autoscaler
+[source, bash]
+----
+# Check that HPA is deleted
+
+# Install VPA according to https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler
+
+# Deploy app if not already deployed
+kubectl create -f deployment.yml
+
+# Apply VPA resource
+kubectl create -f vpa.yml
+
+# Check VPA recommendations
+kubectl describe vpa random-generator
+
+
+----
 === More information
 
 * https://github.com/k8spatterns/examples/tree/master/advanced/ElasticScale[ElasticScale example]
@@ -24,6 +61,7 @@ curl -s http://$(minikube ip):$(kubectl get svc random-generator -o jsonpath={.s
 * https://cloud.google.com/kubernetes-engine/docs/concepts/verticalpodautoscaler[Vertical Pod Autoscaling]
 * https://cloud.google.com/kubernetes-engine/docs/how-to/vertical-pod-autoscaling[Configuring Vertical Pod Autoscaling]
 * https://github.com/kubernetes/community/blob/master/contributors/design-proposals/autoscaling/vertical-pod-autoscaler.md[Vertical Pod Autoscaler Proposal]
+* https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler[Vertical Pod Autoscaler GitHub Repo]
 * https://kubernetes.io/blog/2016/07/autoscaling-in-kubernetes/[Cluster Autoscaling in Kubernetes]
 * https://medium.com/@NetflixTechBlog/performance-under-load-3e6fa9a60581[Adaptive Concurrency Limits]
 * https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md[Cluster Autoscaler FAQ]
