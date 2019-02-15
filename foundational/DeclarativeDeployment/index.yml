@@ -1,0 +1,22 @@
+pattern: Declarative Deployment
+base: foundational/DeclarativeDeployment
+examples:
+- description: A recreate (or fixed) Deployment
+  path: recreate.yml
+- description: A rolling update Deployment
+  path: rolling-update.yml
+- description: Service and Ingress objects for accessing the example Deployment
+  path: service-and-ingress.yml
+links:
+- url: https://kubernetes.io/docs/tasks/run-application/rolling-update-replication-controller/
+  title: Rolling Update
+- url: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+  title: Deployments
+- url: http://kubernetes.io/docs/user-guide/deploying-applications/
+  title: Deploying Applications
+- url: http://martinfowler.com/bliki/BlueGreenDeployment.html
+  title: Blue-Green Deployment
+- url: https://martinfowler.com/bliki/CanaryRelease.html
+  title: Canary Release
+- url: https://www.openshift.com/promotions/devops-with-openshift.html
+  title: DevOps with OpenShift]

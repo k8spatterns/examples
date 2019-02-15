@@ -1,0 +1,36 @@
+pattern: Automated Placement
+base: foundational/AutomatedPlacement
+examples:
+- description: Pod with node affinity
+  path: node-affinity.yml
+- description: Selector example which only picks the node
+  path: node-selector.yml
+- description: Pod with pod affinity
+  path: pod-affinity.yml
+- description: Tolerations for tolerating tainted nodes
+  path: tolerations.yml
+links:
+- url: https://kubernetes.io/docs/user-guide/node-selection
+  title: Assigning Pods to Nodes
+- url: http://kubernetes.io/docs/admin/multiple-zones
+  title: Running in Multiple Zones
+- url: https://blog.openshift.com/node-placement-scheduling-explained
+  title: Node Placement and Scheduling Explained
+- url: https://kubernetes.io/docs/concepts/configuration/assign-pod-node
+  title: Assigning Pods to Nodes
+- url: https://kubernetes.io/docs/admin/disruptions
+  title: Pod Disruption Budget by Kubernetes
+- url: https://kubernetes.io/docs/admin/rescheduler
+  title: Guaranteed Scheduling For Critical Add-On Pods
+- url: https://docs.okd.io/latest/admin_guide/scheduling/scheduler.html
+  title: The Kubernetes Scheduler
+- url: https://github.com/kubernetes/community/blob/master/contributors/devel/scheduler_algorithm.md
+  title: Scheduler Algorithm
+- url: https://kubernetes.io/docs/admin/multiple-schedulers
+  title: Configuring Multiple Schedulers
+- url: https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node-allocatable.md
+  title: Node Allocatable Resources
+- url: https://github.com/kubernetes-incubator/descheduler
+  title: Descheduler for Kubernetes
+- url: https://www.youtube.com/watch?v=nWGkvrIPqJ4
+  title: Everything You Ever Wanted to Know About Resource Scheduling, But Were Afraid to Ask

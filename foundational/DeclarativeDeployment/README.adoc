@@ -9,7 +9,7 @@ First, install the application in version 1 by using the given deployment descri
 
 [source, bash]
 ----
-kubectl create -f rolling_update.yml
+kubectl create -f rolling-update.yml
 ----
 
 This will deploy 3 replicas of the `random-generator` and configures a `RollingUpdate` update strategy (which would be also the default).
@@ -18,7 +18,7 @@ In order to be able to access our application, lets create a Service and Ingress
 
 [source, bash]
 ----
-kubectl create -f service_and_ingress.yml
+kubectl create -f service-and-ingress.yml
 ----
 
 The Service is of type `NodePort`, so even if you don't have an ingress controller installed you can access the random generator via the node port that you can find out via `kubectl get svc random-generator`
