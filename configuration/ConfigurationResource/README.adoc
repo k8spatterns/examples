@@ -9,7 +9,11 @@ kubectl create -f pod.yml
 kubectl create -f service.yml
 
 port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
-curl -s http://$(minikube ip):$port
+curl -s http://$(minikube ip):$port/info
+
+# Check also for env variables which has been set via envFrom
+curl -s http://$(minikube ip):$port/info | \
+   jq '.env | with_entries(select(.key | startswith("CONFIG_")))'
 ----
 
 === More Information

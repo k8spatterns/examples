@@ -1,4 +1,4 @@
-# .Resource limits
+# Environment variables picked up from a ConfigMap
 ---
 apiVersion: v1
 kind: Pod
@@ -21,6 +21,12 @@ spec:
         configMapKeyRef:
           name: random-generator-config
           key: PATTERN
+    # Use 'envFrom' to pick up multiple enviroment variables from a config map
+    envFrom:
+    - configMapRef:
+        name: random-generator-config
+        optional: false
+      prefix: CONFIG_
     volumeMounts:
     - name: config-volume
       mountPath: /config
