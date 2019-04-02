@@ -116,7 +116,7 @@ kubectl logs random-generator-with-template-pod-0ae221 -c build-step-image-build
 
 === Deploy application
 
-When you have build the random-generatot with one of the methods above, you can deploy it easily.
+When you have build the random-generator with one of the methods above, you can deploy it easily.
 Unfortunately, for picking up images, Kubernetes (or at least Minikube) doesn't support service DNS lookups in the `image:` field of a container specification.
 
 So we need to insert the IP adress directly which you can do while deploying, like in:

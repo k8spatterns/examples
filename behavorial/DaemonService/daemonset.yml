@@ -13,9 +13,6 @@ spec:
       labels:
         app: random-refresher
     spec:
-      # Only use nodes with the label 'feature=hw-rng' enabled
-      nodeSelector:
-        feature: hw-rng
       # Also run on the the master even it's tainted
       tolerations:
       - key: node-role.kubernetes.io/master
@@ -28,7 +25,11 @@ spec:
         command:
         - sh
         - -c
-        - "while true; do java -cp / RandomRunner /host_dev/random 100000; sleep 30; done"
+        - >-
+          while true; do
+            java -cp / RandomRunner /host_dev/random 100000;
+            sleep 30;
+          done
         # Mount host's /dev directory
         volumeMounts:
         - mountPath: /host_dev

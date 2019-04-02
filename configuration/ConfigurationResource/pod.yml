@@ -30,8 +30,13 @@ spec:
     volumeMounts:
     - name: config-volume
       mountPath: /config
+    - name: secret-volume
+      mountPath: /secret
   volumes:
-  # Volume is mounted directly from a config map
+  - name: secret-volume
+    secret:
+      secretName: my-secret
   - name: config-volume
     configMap:
       name: random-generator-config
+  # Volume is mounted directly from a config map
