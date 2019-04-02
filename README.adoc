@@ -2,6 +2,8 @@
 
 = Kubernetes Patterns - Examples
 
+[![Creative Commons License](https://i.creativecommons.org/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
+
 This GitHub project contains the examples from _Kubernetes Patterns - Reusable Elements for Designing Cloud-Native Applications_ http://hyperurl.co/kubernetes-patterns[book] by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß]
 
 Installation instructions for the examples' prerequisites are summarised in link:INSTALL.adoc[INSTALL].
@@ -78,3 +80,6 @@ link:advanced/ImageBuilder/README.adoc[Image Builder]::
   Setup a link:advanced/ImageBuilder/openshift/README.adoc[chained build] on OpenShift and use link:advanced/ImageBuilder/knative/README.adoc[Knative build] for doing builds within the cluster.
 link:advanced/ElasticScale/README.adoc[Elastic Scale]::
   Horizontal and vertical scaling examples with the random-generator Service [*]
+
+
+This work is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/")"
