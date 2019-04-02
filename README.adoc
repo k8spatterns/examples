@@ -2,7 +2,7 @@
 
 = Kubernetes Patterns - Examples
 
-This GitHub project contains the examples from the "Kubernetes Patterns" http://shop.oreilly.com/product/0636920242598.do[book] by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß]
+This GitHub project contains the examples from _Kubernetes Patterns - Reusable Elements for Designing Cloud-Native Applications_ http://hyperurl.co/kubernetes-patterns[book] by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß]
 
 Installation instructions for the examples' prerequisites are summarised in link:INSTALL.adoc[INSTALL].
 By default, you need access to a vanilla Kubernetes installation, like Minikube.
