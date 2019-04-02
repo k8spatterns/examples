@@ -2,7 +2,7 @@
 
 = Kubernetes Patterns - Examples
 
-[![Creative Commons License](https://i.creativecommons.org/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
+image:https://i.creativecommons.org/l/by/4.0/88x31.png[Creative Commons License, role="right", link="https://creativecommons.org/licenses/by/4.0/"]
 
 This GitHub project contains the examples from _Kubernetes Patterns - Reusable Elements for Designing Cloud-Native Applications_ http://hyperurl.co/kubernetes-patterns[book] by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß]
 
@@ -82,4 +82,4 @@ link:advanced/ElasticScale/README.adoc[Elastic Scale]::
   Horizontal and vertical scaling examples with the random-generator Service [*]
 
 
-This work is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/")"
+This work is licensed under a https://creativecommons.org/licenses/by/4.0/[Creative Commons Attribution 4.0 International License]
