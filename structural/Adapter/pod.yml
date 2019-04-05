@@ -3,6 +3,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: random-generator
+  labels:
+    app: random-generator
 spec:
   containers:
   # ------------------------------------------------
