@@ -1,19 +1,18 @@
 == Periodic Job
 
-Our Cron Job example builds on top of the link:../BatchJob/README.adoc[Batch Job] example above, to the basic setuup is the same:
+Our Cron Job example builds on top of the link:../BatchJob/README.adoc[Batch Job] example above, to the basic setup is the same:
 
-* A Minikube installation avaiable, ideally with link:../../INSTALL.adoc#minikube[Minikube]
+* A Minikube installation available, ideally with link:../../INSTALL.adoc#minikube[Minikube]
 * Minikube started with `minikube start --mount --mount-string="$(pwd)/logs:/example"` to mount the local `logs/` into the Minikube VM
 
-
-Then create the PersistenVolume and PersistenVolumeClaim with
+Then create the PersistentVolume and PersistentVolumeClaim with
 
 [source, bash]
 ----
 kubectl create -f pv-and-pvc.yml
 ----
 
-but you don't have to do it, if you already have your Minikube still running from the _Batch Job_example footnote:[If you reuse the Batch Job example, don't forget that the `random.log` is generated in the `logs/` directory over there.]
+but you don't have to do it, if you already have your Minikube still running from the _Batch Job_ example footnote:[If you reuse the Batch Job example, don't forget that the `random.log` is generated in the `logs/` directory over there.]
 
 Now create the CronJob which fires every three minutes:
 

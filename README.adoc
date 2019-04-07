@@ -41,7 +41,7 @@ link:behavorial/BatchJob/README.adoc[Batch Job]::
 link:behavorial/PeriodicJob/README.adoc[Periodic Job]::
   Reuses the link:behavorial/BatchJob/README.adoc[Batch Job] example, but runs it periodically at a configured schedule
 link:behavorial/DaemonService/README.adoc[Daemon Service]::
-  Sample maintenance script for maintenance jobs on every node of a cluster [*]
+  Sample maintenance script for maintenance jobs on every node of a cluster
 link:behavorial/SingletonService/README.adoc[Singleton Service]::
   Example of a PodDisruptionBudget for controlling voluntary disruptions [*]
 link:behavorial/SelfAwareness/README.adoc[Self Awareness]::

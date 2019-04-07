@@ -21,7 +21,7 @@ spec:
       - image: k8spatterns/random-generator:1.0
         name: random-generator
         # A somewhat useless command to demonstrate the concept running
-        # on every node. This commands writer 10000 entries to /dev/random every 30s
+        # on every node. This commands writes 10000 entries to /dev/random every 30s
         command:
         - sh
         - -c

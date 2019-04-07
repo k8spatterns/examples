@@ -1,6 +1,33 @@
 == Daemon Service
 
-IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
+In this example we learn how to create a _Daemon Service_ for allowing to run infrastructure-focused Pods on specific nodes.
+
+This examples assumes a Kubernetes installation available.
+In this case its best played through with Minikube as we need some support for PVs.
+Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for how to install Minikube.
+
+This example used our `random-generator` application for seeding `/dev/random` periodically by writing 100000 random number every time to `/dev/random`.
+
+To be honest, this a make up example which should never be used for any application as the generated random number are not really random.
+
+NOTE: You could achieve a similar effect with a _Periodic Job_ and and appropriate `nodeSelector`. However, a _Daemon Service_ is still more safe for such kind of a task, as it also works without changes also for nodes that will be added later.
+
+Nevertheless, let's create a DaemonSet with
+
+[source, bash]
+----
+kubectl create -f ./daemonset.yml
+----
+
+You can now check the generates pods with
+
+[source, bash]
+----
+kubectl get pods
+----
+
+You see one Pod per node of your cluster.
+So for Minikube it should be a single pod and you can check the logs as ususal.
 
 
 === More Information

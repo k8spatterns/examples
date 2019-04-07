@@ -1,4 +1,5 @@
 pattern: Automated Placement
+category: foundational
 base: foundational/AutomatedPlacement
 examples:
 - description: Pod with node affinity
