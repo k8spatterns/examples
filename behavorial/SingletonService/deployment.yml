@@ -4,7 +4,10 @@ kind: Deployment
 metadata:
   name: random-generator
 spec:
+  # Six replicas to start
   replicas: 4
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: random-generator
