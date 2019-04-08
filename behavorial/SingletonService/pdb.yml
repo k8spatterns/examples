@@ -10,4 +10,4 @@ spec:
       # Used for counting active Pods for which this PDB is used
       app: random-generator
   # At least two need to be available all the time
-  minAvailable: 2
+  minAvailable: 4

@@ -2,19 +2,23 @@
 
 In this example we see see how a PodDisruptionBudget works.
 As the other examples we  assumes a Kubernetes installation available.
-Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for the installation options or how you can use an online Kubernetes playground.
+Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for the installation how you can use an online Kubernetes playground.
+We can't use Minikube in this example because we need a 'real' cluster from where we can drain a node to see the effect of a PodDisruptionBudget.
 
-
-
-For this example we are examing  the influence of a PodDisruptionBudget during a deployment update.
-For this we are doing various `Fixed` deployments of our `random-generator` application, switching back and forth between version 1.0 and 2.0.
-
-First, let's create a Deployment with four Pods of version 1.0
+First, let's create a Deployment with six Pods:
 
 [source, bash]
 ----
 kubectl create -f https://k8spatterns.io/SingletonService/deployment.yml
 ----
+
+We can check on which nodes the Pods are running with
+
+[source, bash]
+----
+kubectl get pods -o=custom-columns=NAME:.metadata.name,NODE:.spec.nodeName
+----
+
 
 For the rest of the example we are watching the Pods in the console by putting the following command into the background
 
@@ -34,11 +38,6 @@ kubectl set image deployment random-generator random-generator=k8spatterns/rando
 You will remark that first all 1.0 Pods are stopped before the new Pods with version 2.0 are started.
 
 Now let's introduce a PodDisruptionBudget with the following commands.
-
-[source, bash]
-----
-kubectl create -f https://k8spatterns.io/SingletonService/pdb.yml
-----
 
 This will ensure that always two Pods are running.
 We can check this by switching back to version 1.0 of our image and watching the Pods stopping and starting
