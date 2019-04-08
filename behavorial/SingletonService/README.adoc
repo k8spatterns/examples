@@ -36,7 +36,6 @@ kubectl drain --ignore-daemonsets node01 >/dev/null 2>&1 &
 
 We do the removing of the node in the background, so that we can watch how the Pods are relocated:
 
-
 [source, bash]
 ----
 watch kubectl get pods -o=custom-columns=NAME:.metadata.name,NODE:.spec.nodeName
@@ -58,37 +57,3 @@ and restore the Deployment with
 kubectl scale deployment random-generator --replicas 0
 kubectl scale deployment random-generator --replicas 6
 ----
-
-
-
-
-
-For the rest of the example we are watching the Pods in the console by putting the following command into the background
-
-[source, bash]
-----
-kubectl get pods -w &
-----
-
-
-Let's switch to version 2.0:
-
-[source, bash]
-----
-kubectl set image deployment random-generator random-generator=k8spatterns/random-generator:2.0
-----
-
-You will remark that first all 1.0 Pods are stopped before the new Pods with version 2.0 are started.
-
-Now let's introduce a PodDisruptionBudget with the following commands.
-
-This will ensure that always two Pods are running.
-We can check this by switching back to version 1.0 of our image and watching the Pods stopping and starting
-
-kubectl set image deployment random-generator random-generator=k8spatterns/random-generator:1.0
-
-
-
-The PDB use Pod selector which maches on the labels `app=random-generator`
-
-Let's create such Pods with
