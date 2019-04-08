@@ -19,6 +19,49 @@ We can check on which nodes the Pods are running with
 kubectl get pods -o=custom-columns=NAME:.metadata.name,NODE:.spec.nodeName
 ----
 
+For being sure that always four Pods are running, we create a PodDisruptionBudget with
+
+[source, bash]
+----
+kubectl create -f https://k8spatterns.io/SingletonService/pdb.yml
+----
+
+Now let's drain a node and see how the Pods are relocated.
+Let's say that the second node is called `node01` (that's the case for a Katakoda setup)
+
+[source, bash]
+----
+kubectl drain --ignore-daemonsets node01 >/dev/null 2>&1 &
+----
+
+We do the removing of the node in the background, so that we can watch how the Pods are relocated:
+
+
+[source, bash]
+----
+watch kubectl get pods -o=custom-columns=NAME:.metadata.name,NODE:.spec.nodeName
+----
+
+As you can see, there are always at least four Pods running on both nodes until eventually all six Pods are running on the master node.
+
+You can undo the drain operation with
+
+[source, bash]
+----
+kubectl patch node node01 -p '{"spec":{"unschedulable":false}}'
+----
+
+and restore the Deployment with
+
+[source, bash]
+----
+kubectl scale deployment random-generator --replicas 0
+kubectl scale deployment random-generator --replicas 6
+----
+
+
+
+
 
 For the rest of the example we are watching the Pods in the console by putting the following command into the background
 
@@ -49,11 +92,3 @@ kubectl set image deployment random-generator random-generator=k8spatterns/rando
 The PDB use Pod selector which maches on the labels `app=random-generator`
 
 Let's create such Pods with
-
-
-[source, bash]
-----
-kubectl patch node k8s-node-1 -p '{"spec":{"unschedulable":false}}'
-
-kubectl get pods -o=custom-columns=NAME:.metadata.name,NODE:.spec.nodeName
-----
