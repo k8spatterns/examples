@@ -1,0 +1,19 @@
+version: 2.1
+
+jobs:
+  # Update Website
+  website:
+    docker:
+    - image: circleci/golang:1.11.1-stretch
+    steps:
+    - checkout
+    - run: go run .circleci/update_website.go -pattern-source .
+
+workflows:
+  version: 2
+  k8spatterns.io:
+    jobs:
+    - website:
+        filters:
+          branches:
+            only: master
