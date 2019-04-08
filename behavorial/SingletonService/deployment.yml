@@ -21,12 +21,16 @@ spec:
         env:
         # Tell random-generator to wait 5 seconds when starting up
         - name: DELAY_STARTUP
-          value: "5"
+          value: "10"
         livenessProbe:
           httpGet:
             path: /actuator/health
             port: 8080
           initialDelaySeconds: 10
+        readinessProbe:
+          # We are checking for a file created by our app when its ready
+          exec:
+            command: [ "stat", "/opt/random-generator-ready" ]
         ports:
         - containerPort: 8080
           protocol: TCP
