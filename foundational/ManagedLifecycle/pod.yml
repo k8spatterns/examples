@@ -21,7 +21,7 @@ spec:
           command:
           - sh
           - -c
-          - sleep 30 && echo "Wake up!" > /postStart_done
+          - sleep 30 && echo "Wake up!" > /opt/postStart-done
       # Call out to the /shutdown endpoint. Check logs for the result
       preStop:
         httpGet:

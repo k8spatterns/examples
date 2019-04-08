@@ -16,7 +16,7 @@ Nevertheless, let's create a DaemonSet with
 
 [source, bash]
 ----
-kubectl create -f ./daemonset.yml
+kubectl create -f https://k8spatterns.io/DaemonService/daemonset.yml
 ----
 
 You can now check the generates pods with

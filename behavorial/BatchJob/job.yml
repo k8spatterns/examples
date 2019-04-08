@@ -22,9 +22,6 @@ spec:
         name: random-generator
         command:
         - java
-        # Use / as classpath to pick up the class file
-        - -classpath
-        - /
         # Class running batch job
         - RandomRunner
         # 1. Arg: File to store data (on a PV)

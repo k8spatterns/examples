@@ -27,7 +27,7 @@ spec:
         - -c
         - >-
           while true; do
-            java -cp / RandomRunner /host_dev/random 100000;
+            java RandomRunner /host_dev/random 100000;
             sleep 30;
           done
         # Mount host's /dev directory

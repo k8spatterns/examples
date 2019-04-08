@@ -42,4 +42,4 @@ spec:
           initialDelaySeconds: 15
         readinessProbe:
           exec:
-            command: [ "stat", "/random-generator-ready" ]
+            command: [ "stat", "/opt/random-generator-ready" ]

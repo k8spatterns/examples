@@ -1,4 +1,4 @@
-# DeploymentConfig for starting up the random-generator
+# Deployment for random-generator service for starting up the random-generator
 apiVersion: apps/v1
 kind: Deployment
 metadata:
