@@ -4,7 +4,6 @@ kind: Deployment
 metadata:
   name: random-generator
 spec:
-  # Six replicas to start
   replicas: 4
   strategy:
     type: Recreate
@@ -22,3 +21,9 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
+      # Allow scheduling also on the master nodes, which typically is tainted
+      # for no-schedule
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule

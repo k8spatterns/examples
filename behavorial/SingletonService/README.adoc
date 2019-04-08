@@ -43,10 +43,7 @@ kubectl create -f https://k8spatterns.io/SingletonService/pdb.yml
 This will ensure that always two Pods are running.
 We can check this by switching back to version 1.0 of our image and watching the Pods stopping and starting
 
-[source, bash]
-----
 kubectl set image deployment random-generator random-generator=k8spatterns/random-generator:1.0
-----
 
 
 
@@ -55,5 +52,9 @@ The PDB use Pod selector which maches on the labels `app=random-generator`
 Let's create such Pods with
 
 
+[source, bash]
+----
+kubectl patch node k8s-node-1 -p '{"spec":{"unschedulable":false}}'
 
-* ???
+kubectl get pods -o=custom-columns=NAME:.metadata.name,NODE:.spec.nodeName
+----
