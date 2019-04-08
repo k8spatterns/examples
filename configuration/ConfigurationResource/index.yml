@@ -1,0 +1,10 @@
+pattern: Configuration Resource
+category: configuration
+base: configuration/ConfigurationResource
+examples:
+- description:
+  path: configmap.yml
+- description:
+  path: pod.yml
+- description:
+  path: service.yml

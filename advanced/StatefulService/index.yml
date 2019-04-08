@@ -1,0 +1,12 @@
+pattern: Stateful Service
+category: advanced
+base: advanced/StatefulService
+examples:
+- description:
+  path: statefulset.yml
+- description:
+  path: pvs.yml
+- description:
+  path: service.yml
+- description:
+  path: service-nodeport.yml

@@ -1,0 +1,14 @@
+pattern: Image Builder
+category: advanced
+base: advanced/ImageBuilder/knative
+examples:
+- description:
+  path: build-with-jib.yml
+- description:
+  path: build-with-template.yml
+- description:
+  path: maven-kaniko-buildtemplate.yml
+- description:
+  path: random-generator-deploy.yml
+- description:
+  path: registry.yml

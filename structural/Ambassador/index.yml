@@ -1,0 +1,8 @@
+pattern: Ambassador
+category: structural
+base: structural/Ambassador
+examples:
+- description:
+  path: pod.yml
+- description:
+  path: service.yml

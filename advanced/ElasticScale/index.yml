@@ -1,0 +1,10 @@
+pattern: Elastic Scale
+category: advanced
+base: advanced/ElasticScale
+examples:
+- description:
+  path: deployment.yml
+- description:
+  path: vpa.yml
+- description:
+  path: hpa.yml

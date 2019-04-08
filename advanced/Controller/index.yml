@@ -1,0 +1,8 @@
+pattern: Controller
+category: advanced
+base: advanced/Controller
+examples:
+- description:
+  path: config-watcher-controller.yml
+- description:
+  path: web-app.yml

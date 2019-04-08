@@ -1,0 +1,16 @@
+pattern: Service Discovery
+category: behavorial
+base: behavorial/ServiceDiscovery
+examples:
+- description:
+  path: service-with-nodeport.yml
+- description:
+  path: ingress-with-dispatch.yml
+- description:
+  path: service-with-loadbalancer.yml
+- description:
+  path: deployment.yml
+- description:
+  path: ingress.yml
+- description:
+  path: service.yml

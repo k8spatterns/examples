@@ -1,0 +1,6 @@
+pattern: Sidecar
+category: structural
+base: structural/Sidecar
+examples:
+- description:
+  path: web-app.yml

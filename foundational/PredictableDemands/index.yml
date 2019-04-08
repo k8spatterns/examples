@@ -1,0 +1,14 @@
+pattern: Predictable Demands
+category: foundational
+base: foundational/PredictableDemands
+examples:
+- description:
+  path: pv-and-pvc.yml
+- description:
+  path: deployment.yml
+- description:
+  path: configmap.yml
+- description:
+  path: pod.yml
+- description:
+  path: pod-with-priority-class.yml

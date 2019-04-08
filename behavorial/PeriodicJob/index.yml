@@ -1,0 +1,8 @@
+pattern: Periodic Job
+category: behavorial
+base: behavorial/PeriodicJob
+examples:
+- description:
+  path: pv-and-pvc.yml
+- description:
+  path: cron-job.yml

@@ -1,0 +1,8 @@
+pattern: Adapter
+category: structural
+base: structural/Adapter
+examples:
+- description:
+  path: pod.yml
+- description:
+  path: service.yml

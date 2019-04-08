@@ -1,0 +1,6 @@
+pattern: Configuration Template
+category: configuration
+base: configuration/ConfigurationTemplate
+examples:
+- description:
+  path: wildfly.yml

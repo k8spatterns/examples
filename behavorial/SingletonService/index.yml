@@ -1,0 +1,8 @@
+pattern: Singleton Service
+category: behavorial
+base: behavorial/SingletonService
+examples:
+- description:
+  path: deployment.yml
+- description:
+  path: pdb.yml

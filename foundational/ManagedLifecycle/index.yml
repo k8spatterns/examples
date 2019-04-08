@@ -1,0 +1,6 @@
+pattern: Managed Lifecycle
+category: foundational
+base: foundational/ManagedLifecycle
+examples:
+- description:
+  path: pod.yml

@@ -1,0 +1,12 @@
+pattern: Operator
+category: advanced
+base: advanced/Operator
+examples:
+- description:
+  path: config-watcher-crd.yml
+- description:
+  path: web-app.yml
+- description:
+  path: config-watcher-sample.yml
+- description:
+  path: config-watcher-operator.yml

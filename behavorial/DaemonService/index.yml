@@ -1,0 +1,6 @@
+pattern: Daemon Service
+category: behavorial
+base: behavorial/DaemonService
+examples:
+- description:
+  path: daemonset.yml

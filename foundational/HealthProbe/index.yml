@@ -1,0 +1,6 @@
+pattern: Health Probe
+category: foundational
+base: foundational/HealthProbe
+examples:
+- description:
+  path: deployment.yml

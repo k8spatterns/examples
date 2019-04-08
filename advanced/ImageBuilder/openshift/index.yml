@@ -1,0 +1,10 @@
+pattern: Image Builder
+category: advanced
+base: advanced/ImageBuilder/openshift
+examples:
+- description:
+  path: random-generator-build.yml
+- description:
+  path: random-generator-deploy.yml
+- description:
+  path: random-generator-multi-stage-docker.yml

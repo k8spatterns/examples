@@ -1,0 +1,6 @@
+pattern: Self Awareness
+category: behavorial
+base: behavorial/SelfAwareness
+examples:
+- description:
+  path: pod.yml

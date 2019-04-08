@@ -1,0 +1,8 @@
+pattern: Init Container
+category: structural
+base: structural/InitContainer
+examples:
+- description:
+  path: pod.yml
+- description:
+  path: service.yml

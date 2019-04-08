@@ -1,0 +1,8 @@
+pattern: Batch Job
+category: behavorial
+base: behavorial/BatchJob
+examples:
+- description:
+  path: pv-and-pvc.yml
+- description:
+  path: job.yml
