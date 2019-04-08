@@ -6,12 +6,17 @@ spec:
   selector:
     app: random-generator
   ports:
+  # Random service is reachable on port 8080
   - name: random
     port: 8080
     protocol: TCP
     targetPort: 8080
+  # Export prometheus conform data over port 9889
   - name: prometheus
     port: 9889
     protocol: TCP
     targetPort: 9889
+  # Type NodePort for being able to directly access the service from outside the cluster
+  # Use "kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort}" to find out
+  # the dynamically assigned port
   type: NodePort
