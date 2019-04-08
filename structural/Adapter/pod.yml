@@ -1,4 +1,6 @@
-# DeploymentConfig for starting up the random-generator
+# Example for the Adapter patterns, which transform custom metrics
+# stored on the file system into a Prometheus conformant export
+# on port 9889
 apiVersion: v1
 kind: Pod
 metadata:
