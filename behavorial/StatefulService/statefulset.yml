@@ -18,13 +18,13 @@ spec:
         name: random-generator
         env:
         - name: LOG_FILE
-          value: /logs/random.log
+          value: /opt/logs/random.log
         ports:
         - containerPort: 8080
           name: http
         volumeMounts:
         - name: logs
-          mountPath: /logs
+          mountPath: /opt/logs
   volumeClaimTemplates:
   - metadata:
       name: logs

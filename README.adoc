@@ -43,7 +43,7 @@ link:behavorial/DaemonService/README.adoc[Daemon Service]::
 link:behavorial/SingletonService/README.adoc[Singleton Service]::
   Example of a PodDisruptionBudget for controlling voluntary disruptions
 link:behavorial/StatefulService/README.adoc[Stateful Service]::
-  StatefulSet example for our random-generator [*]
+  StatefulSet example for our random-generator
 link:behavorial/ServiceDiscovery/README.adoc[Service Discovery]::
   Various ways how to access our random-generator REST service [*]
 link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
