@@ -74,7 +74,7 @@ link:configuration/ConfigurationTemplate/README.adoc[Configuration Template]::
 === Advanced Patterns
 
 link:advanced/Controller/README.adoc[Controller]::
-  Simple, pure shell based controller which watches ConfigMap resources for changes and restarts `Pods` by using a label selector provided as annotation. An additional link:advanced/Controller/expose-controller/README.adoc[example controller] exposes an Ingress route when it detects an `exposeService` label attached to the service.
+  Simple, pure shell based controller which watches ConfigMap resources for changes and restarts Pods by using a label selector provided as annotation. An additional link:advanced/Controller/expose-controller/README.adoc[example controller] exposes an Ingress route when it detects an `exposeService` label attached to the service.
 link:advanced/Operator/README.adoc[Operator]::
   Operator based on the ConfigMap watch link:advanced/Controller/README.adoc[controller] and introduces a CRD ConfigWatcher which connects a ConfigMap with a set of Pods to restart in case of a config change.
 link:advanced/ElasticScale/README.adoc[Elastic Scale]::
