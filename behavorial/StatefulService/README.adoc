@@ -101,27 +101,10 @@ and then, from within the Pod check the DNS entry for the headless Service:
 
 [source, bash]
 ----
-
+dig SRV random-generator.default.svc.cluster.local
 ----
 
-
-
-
-
-```
-Delete the Pods to see how they are recreated again and get attached back th
-
-[source, bash]
-----
-kubectl delete pod rg-0 rg-1
-----
-
-and finally check the logs again
-
-[source, bash]
-----
-curl -s http://$(minikube ip):$port/logs
-----
+You will find all the internal IP adresses of the StatefulSet's Pod in the answer.
 
 === More information
 
