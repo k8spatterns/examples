@@ -9,5 +9,4 @@ spec:
   ports:
   - port: 8080
     targetPort: 8080
-    nodePort: 30036
     protocol: TCP
