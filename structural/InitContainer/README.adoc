@@ -1,22 +1,60 @@
 == Init Container
 
-IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
+In this example we will see a simple _Init Container_ in action.
+As in the other examples we assume that you have a running Kubernetes cluster to your avail.
+Checkout link:../../INSTALL.adoc[INSTALL] documentation for some options to access a Kubernetes cluster.
+
+In this example we are creating a Pod with an init container and a main container:
+
+* The _Init Container_ will start first and checks out a https://github.com/mdn/beginner-html-site-scripted[GitHub repository] containing a static example web site.
+* The application container started after the _Init Container_ has finished will then serve these pages over port 80
+
+Let's create this bare Pod into the current namespace with:
 
 [source, bash]
 ----
-kubctl create -f pod.yml
+kubectl create -f https://k8spatterns.io/InitContainer/pod.yml
+----
 
+Check the startup of the pod by watching the pod by executing the following command right after the creation of your Pod:
+
+[source, bash]
+----
 kubectl get pods -w
+----
+
+You will see some output like
+
+----
 NAME   READY   STATUS            RESTARTS   AGE
 www    0/1     Init:0/1          0          8s
 www    0/1     PodInitializing   0          10s
 www    1/1     Running           0          12s
-
-kubectl create -f service.yml
-
-port=$(kubectl get svc www -o jsonpath={.spec.ports[0].nodePort})
-curl -s http://$(minikube ip):$port
 ----
+
+Finally, let's check how we can access the data that had been retrieved by the _Init Container_.
+For this we create a `nodePort` Service with
+
+[source, bash]
+----
+kubectl create -f https://k8spatterns.io/InitContainer/service.yml
+----
+
+This will open the a port on every node of which we can access the static HTTP server.
+
+With a little Json path foo we can extract that dynamically assigned port and curl the web page or open it in a web browser:
+
+[source, bash]
+----
+port=$(kubectl get svc www -o jsonpath={.spec.ports[0].nodePort})
+# If using Minishift:
+ip=$(minikube ip)
+# or set ip to your real cluster's address (e.g. obtained from `kubectl cluster-info`)
+curl -s http://$ip:$port
+----
+
+If this access doesn't work it could be that your cluster doesn't allow access to your node's ports directly.
+In this case either use e.g. Minikube which allows that or use a different service access as described in the pattern "Service Discovery".
 
 === More Information
 

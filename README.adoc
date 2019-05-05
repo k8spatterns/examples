@@ -52,7 +52,7 @@ link:behavorial/SelfAwareness/README.adoc[Self Awareness]::
 === Structural Patterns
 
 link:structural/InitContainer/README.adoc[Init Container]::
-  Initialize a HTTP server's HTML source from a remote git repository [*]
+  Initialize a HTTP server's HTML source from a remote git repository
 link:structural/Sidecar/README.adoc[Sidecar]::
   Git polling example for a sidecar
 link:structural/Adapter/README.adoc[Adapter]::
