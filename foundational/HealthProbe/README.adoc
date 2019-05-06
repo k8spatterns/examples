@@ -2,18 +2,17 @@
 
 For this example we need a Kubernetes installation as described in link:../../INSTALL.adoc[INSTALLATION.adoc].
 
-For our example for this pattern we are reusing our https://github.com/k8spatterns/random-generator[random-generator] which also includes support for health checks.
+Here we are reusing our https://github.com/k8spatterns/random-generator[random-generator] which also includes support for health checks.
 
-To apply a Deployment with liveness and readiness check enables, use
+To apply a Deployment with liveness and readiness check enabled, use
 
 [source, bash]
 ----
-kubectl create -f deployment.yml
+kubectl create -f https://k8spatterns.io/HealthProbe/deployment.yml
 ----
 
 This deployment introduces an artificial pause of 20 seconds before the application becomes ready.
 To monitor the readiness and liveness states you best open an extra terminal with running
-
 
 [source, bash]
 ----
@@ -24,7 +23,7 @@ random-generator-5856b5f774-54h6b   1/1     Running       0          38s
 ----
 
 The example apps expose to endpoints with which you can switch the state of the readiness and liveness checks.
-For simplicity reasons, we haven't installed a Service or Ingress (but of course, you are free to do so of course !)
+For simplicity reasons, we haven't installed a Service or Ingress (but of course, you are free to do so!)
 
 Instead we are using a simple port-forwarding directly to the pod to trigger the toggles:
 
@@ -34,29 +33,23 @@ Instead we are using a simple port-forwarding directly to the pod to trigger the
 kubectl port-forward $(pod random-generator) 8080:8080 &
 ----
 
-Now you can switch the readiness/liveness checks:
+Now you can switch on/off the readiness/liveness checks and see how the cluster manages your pods:
 
 [source, bash]
 ----
-# Check liveness
+# Check liveness probe by querying the actuator
 curl -s http://localhost:8080/actuator/health | jq .
-{
-  "status": "UP"
-}
 
-# Switch liveness checks
+# Toggle liveness check to off
 curl -s http://localhost:8080/toggle-live
 
-# Check liveness again
+# Check liveness probe again
 curl -s http://localhost:8080/actuator/health | jq .
-{
-  "status": "DOWN"
-}
 
-# Wait a bit and watch the pods. What happens after 2-3 mins ?
+# Watch the pods and wait a bit. What happens after 2-3 mins ?
 kubectl get pods -w
 
-# Switch readiness off
+# Now switch readiness off
 curl -s http://localhost:8080/toggle-ready
 
 # Watch the pods for 1-2 mins

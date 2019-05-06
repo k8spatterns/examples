@@ -25,7 +25,8 @@ spec:
     - mountPath: /logs
       name: log-volume
   # ------------------------------------------------
-  # Prometheus adapter
+  # Prometheus adapter. You find the source to this image
+  # in the "image/" directory.
   - image: k8spatterns/random-generator-exporter
     name: adapter
     env:

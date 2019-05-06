@@ -2,6 +2,65 @@
 
 IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
 
+In this example we will see how we can expose a the metrics created by the random generator REST service in a Prometheus conformant format.
+
+By intention the metrics created by the the random-generator service is written is an own format which can't be used by Prometheus directly.
+Also the metrics are not exposed via a network port but is written into the filesystem.
+We are using an _Adapter_ sidecar container to convert and expose data written in that custom proprietary format over HTTP so that it can be scraped by Prometheus.
+
+Let's see how this works.
+
+We are using a bare Pod for simplicities sake (in real world scenarios this would be of course e.g. a Deployment).
+
+Please have a look into the `pod.yml` descriptor which
+
+* Create two containers: One is our `random-generator` the other is the _Adapter_, `k8spatterns/random-generator-exporter`. This is a simple Perl script (yeah, Perl ;) which does the transformation. You find the Dockerfile and script for this image in the link::image/[image] directory.
+* Create a volume which is shared between the main application container and the adapter. The main container writes the metrics file into this shared directory, and the Prometheus _Adapter_ picks it up when queried over HTTP
+
+The Pod can be created with
+
+[source, bash]
+----
+kubectl create -f https://k8spatterns.io/Adapter/pod.yml
+----
+
+For easy access of random generator, let's create a Service:
+
+[source, bash]
+----
+kubectl create -f https://k8spatterns.io/Adapter/service.yml
+----
+
+This Service uses a `nodePort` to expose it on every node of the cluster.
+For Minikube this works nicely.
+However, if your cluster nodes are not exposed, you might either use our `kubectl port-forward` hack used in other examples or use a full ingress or loadbalancer exposed route as described in the _Service Discovery_ pattern.
+
+Let's assume that you are using Minikube for now, so that we can access the
+Then let's access our Service with
+
+[source, bash]
+----
+port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
+curl http://$(minikube ip):$port
+----
+
+When we now jump into the Pod we can examine the generated metrics file
+
+[source, bash]
+----
+kubectl exec -it random-generator -c main bash
+cat /logs/random.log
+----
+
+NOTE: You could also have entered the `adapter` container which mounts the same directory at `/logs/`, too
+
+The metrics extracted from that data can now be accessed in a Prometheus conformant way:
+
+[source, bash]
+----
+prom_port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[1].nodePort})
+curl http://$(minikube ip):$prom_port
+----
 
 === More Information
 
