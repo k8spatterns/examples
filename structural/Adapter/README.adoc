@@ -1,7 +1,5 @@
 == Adapter
 
-IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
-
 In this example we will see how we can expose a the metrics created by the random generator REST service in a Prometheus conformant format.
 
 By intention the metrics created by the the random-generator service is written is an own format which can't be used by Prometheus directly.

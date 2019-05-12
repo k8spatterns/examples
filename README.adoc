@@ -58,7 +58,7 @@ link:structural/Sidecar/README.adoc[Sidecar]::
 link:structural/Adapter/README.adoc[Adapter]::
   Adapter for exporting timing information from the sample random-generator application in a Prometheus format
 link:structural/Ambassador/README.adoc[Ambassador]::
-  Ambassador for moving on the log of the random-generator [*]
+  Ambassador for moving on the log of the random-generator
 
 === Configuration Patterns
 
