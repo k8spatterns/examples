@@ -1,18 +1,53 @@
 == Configuration Resource
 
-IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
+For trying out this example you need to have access to a Kubernetes cluster, e.g. by choosing one of the options from link:../../INSTALL.adoc#minikube[INSTALL].
+
+Our sample [random-generator] REST service can be configured with environment variables and an `application.properties` configuration file.
+We will now provide this configuration via a ConfigMap.
+
+For this, let's create the ConfigMap with:
 
 [source, bash]
 ----
-kubectl create -f configmap.yml
-kubectl create -f pod.yml
-kubectl create -f service.yml
+kubectl create -f https://k8spatterns.io/ConfigurationResource/configmap.yml
+----
 
+The following Pod declaration will now put up this ConfigMap for being used as environment variables and mounted as files in a directory `/config`.
+
+Please check out the comments in https://k8spatterns.io/ConfigurationResource/pod.yml[pod.yml] which provide some more explanations.
+
+Let's create that Pod with:
+
+[source, bash]
+----
+kubectl create -f https://k8spatterns.io/ConfigurationResource/pod.yml
+----
+
+Like in the other examples we expose a nodePort service for accessing our service:
+
+[source, bash]
+----
+kubectl create -f https://k8spatterns.io/ConfigurationResource/service.yml
+----
+
+Now let's access the service where we again assume that your cluster node's have an external IP address which can be directly contacted from your desktop.
+
+The `/info` endpoint will return the configuration data that has been picked up by the random-generator Pod:
+
+[source, bash]
+----
 port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
-curl -s http://$(minikube ip):$port/info
+# Use Minikube's IP or any external accessible node IP from your cluster
+ip=$(minikube ip)
+curl -s http://$ip:$port/info | jq .
+----
 
+In order to filter on the environment variables which have been bulk-exposed with a `CONFIG_` prefix in an `envFrom` section, use:
+
+[source, bash]
+----
 # Check also for env variables which has been set via envFrom
-curl -s http://$(minikube ip):$port/info | \
+curl -s http://$ip:$port/info | \
    jq '.env | with_entries(select(.key | startswith("CONFIG_")))'
 ----
 

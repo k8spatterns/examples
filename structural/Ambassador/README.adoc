@@ -1,6 +1,6 @@
 == Ambassador
 
-Let's again assume that you access to a Kubernetes cluster by chosing one of the options from link:../../INSTALL.adoc#minikube[INSTALL].
+For trying out this example you need to have access to a Kubernetes cluster, e.g. by choosing one of the options from link:../../INSTALL.adoc#minikube[INSTALL].
 
 In this example we are creating a simple ambassador, which abstracts away a logging backend.
 The main `random-generator` service will log each incoming request by sending the generated data to an URL which is specified via the environment variable `LOG_URL`.
