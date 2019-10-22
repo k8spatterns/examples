@@ -1,0 +1,19 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: random-generator
+  namespace: knative-sample
+spec:
+  runLatest:
+    configuration:
+      revisionTemplate:
+        spec:
+          container:
+            image: k8spatterns/random-generator:1.0
+            livenessProbe:
+              httpGet:
+                path: /actuator/health
+                port: 8080
+            readinessProbe:
+              exec:
+                command: [ "stat", "/opt/random-generator-ready" ]

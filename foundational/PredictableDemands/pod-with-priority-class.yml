@@ -27,7 +27,7 @@ spec:
     volumeMounts:
       - mountPath: "/logs"
         name: log-volume
-    # Putt the pod in this priority class
+    # Put the pod in this priority class
     priorityClassName: high-priority
   volumes:
     - name: log-volume

@@ -38,7 +38,7 @@ Let's verify that this service can reached from within the cluster:
 
 [source, bash]
 ----
-# Jump into one of the pods. Select firt Pod as you get
+# Jump into one of the pods. Select first Pod as you get
 # from "kubectl get pods"
 pod=$(kubectl get pods -o name | grep random | head -1 | sed  's|.*/||')
 kubectl exec -it $pod bash
@@ -87,7 +87,7 @@ kubectl apply -f https://k8spatterns.io/ServiceDiscovery/service-with-loadbalanc
 
 If your cluster provides a loadbalancer you will get the loadbalancers IP when looking at it with `kubectl get service`. Otherwise the field `EXTERNAL IP` will stay in status _<pending>_.
 
-NOTE: As mentioned previously, for Minikube, start `minikube tunnel` to add some routing from your localhost to the Minkube IP.
+NOTE: As mentioned previously, for Minikube, start `minikube tunnel` to add some routing from your localhost to the Minikube IP.
 
 When Kubernetes has assigned an external IP address to your service (check with `kubectl get service`), you can query it via this IP address and the Service's port:
 
