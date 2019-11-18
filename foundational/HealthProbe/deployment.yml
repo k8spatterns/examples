@@ -1,4 +1,4 @@
-# DeploymentConfig for starting up the random-generator
+# Deployment for starting up the random-generator with liveness and readiness probes
 apiVersion: apps/v1
 kind: Deployment
 metadata:
