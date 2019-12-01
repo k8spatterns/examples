@@ -30,7 +30,7 @@ Instead we are using a simple port-forwarding directly to the pod to trigger the
 [source, bash]
 ----
 # Port forward to Pod. "pod" is an alias to pick the full name of the pod (see INSTALL.adoc)
-kubectl port-forward $(pod random-generator) 8080:8080 &
+kubectl port-forward deployment/random-generator 8080:8080 &
 ----
 
 Now you can switch on/off the readiness/liveness checks and see how the cluster manages your pods:
