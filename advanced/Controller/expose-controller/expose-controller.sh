@@ -13,6 +13,9 @@ k8s_ingress_url=$base/apis/extensions/v1beta1/$ns/ingresses
 echo "::: Starting to wait for events"
 curl -N -s -k $k8s_service_url?watch=true | while read event
 do
+  # Sanitize new lines
+  event=$(echo $event | tr '\r\n' ' ')
+
   # Event type
   type=$(echo $event | jq -r '.type')
   # Annotation "expose" on service
