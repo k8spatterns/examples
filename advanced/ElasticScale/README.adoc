@@ -8,8 +8,9 @@ IMPORTANT: The instructions have not been written/finished, but you can already 
 # Start Minikiube with 8GB of RAM
 minikube start --memory 4096
 
-# Enable metrics-server for measuring
+# Enable metrics-server and heapster for measuring
 minikube addons enable metrics-server
+minikube addons enable heapster
 
 # Create deployment for out random service
 kubectl create -f deployment.yml
@@ -18,10 +19,10 @@ kubectl create -f deployment.yml
 kubectl autoscale deployment random-generator --min=1 --max=10 --cpu-percent=50
 
 # Same for V2
-kubectl create -f deployment.yml
+kubectl create -f hpa.yml
 
 # Put some load on the system
-port=$(kubectl get svc random-generator-np -o jsonpath={.spec.ports[0].nodePort})
+port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
 while true; do curl -s http://$(minikube ip):port?burn=10000 >/dev/null; done
 
 # In other terminal:

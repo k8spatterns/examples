@@ -14,6 +14,13 @@ To access the PersistentVolume used in this demo, let's mount a local directory 
 minikube start --mount --mount-string="$(pwd)/logs:/example"
 ----
 
+Alternatively, you can mount the directory on the fly in the background
+
+[source,bash]
+----
+minikube mount $(pwd)/logs:/example
+----
+
 This makes this directory available within the Minikube VM at the path `/example`.
 
 Let's create now the PersistentVolume along with a PVC which can be mounted into our Job later:

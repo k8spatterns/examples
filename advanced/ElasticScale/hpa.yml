@@ -1,15 +1,10 @@
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  creationTimestamp: "2019-02-09T17:18:38Z"
   name: random-generator
-  namespace: default
-  resourceVersion: "796"
-  selfLink: /apis/autoscaling/v2beta2/namespaces/default/horizontalpodautoscalers/random-generator
-  uid: bd57a211-2c8e-11e9-86e0-080027613e7d
 spec:
   scaleTargetRef:
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1
     kind: Deployment
     name: random-generator
   maxReplicas: 20

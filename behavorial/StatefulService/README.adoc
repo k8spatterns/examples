@@ -1,8 +1,6 @@
 == Stateful Service
 
-IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
-
-In this example we will examine how a _Statefule Service_ can implemented with the help of a StatefulSet resource.
+In this example we will examine how a _Stateful Service_ can implemented with the help of a StatefulSet resource.
 
 This example assumes a Kubernetes installation available.
 For the moment we are using Minikube as we need some support for PersistentVolumes.
@@ -14,6 +12,13 @@ To access the PersistentVolume used in this demo, let's mount a local directory 
 ----
 minikube start --mount --mount-string="$(pwd)/logs:/tmp/example"
 ----
+
+Alternatively start the mount after your minikube is running
+[source, bash]
+----
+minikube mount $(pwd)/logs:/tmp/example
+----
+
 
 This makes this directory available within the Minikube VM at the path `/tmp/example`.
 
