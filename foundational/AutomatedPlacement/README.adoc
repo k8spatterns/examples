@@ -19,7 +19,7 @@ You will notice that this Pod does not get scheduled, because the `nodeSelector`
 
 [source, bash]
 ----
-kubectl describe pod random-generator
+kubectl describe pod node-selector
 ....
 Events:
   Type     Reason            Age              From               Message
