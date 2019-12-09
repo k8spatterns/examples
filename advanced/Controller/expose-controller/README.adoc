@@ -27,8 +27,8 @@ kubectl create configmap expose-controller-script --from-file=./expose-controlle
 
 In order to deploy the controlller a `Deployment` creates a pod with two containers:
 
-* One Kubernetes API proxy which exposes the Kubernetes API on localhost with port 8001. The image for `k8spatterns/kubeapi-proxy` is defined in this link:kubeapi-proxy/Dockerfile[Dockerfile].
-* The main container which executes the script from the configmap. It is based on a single Alpine base image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] included. The Dockerfile for this image `k8spattern/curl-jq` can be found link:curl-jq/Dockerfile[here].
+* One Kubernetes API proxy which exposes the Kubernetes API on localhost with port 8001. The image for `k8spatterns/kubeapi-proxy` is defined in this link:../../images/kubeapi-proxy.dockerfile[Dockerfile].
+* The main container which executes the script from the configmap. It is based on a single Alpine base image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] included. The Dockerfile for this image `k8spattern/curl-jq` can be found link:../../images/curl-jq.dockerfile[here].
 
 To create this deployment just call:
 
@@ -77,5 +77,5 @@ open https://$(minikube ip)/mdn
 
 This example uses two straightforward Docker images which you can find in the subdirectories:
 
-* link:curl-jq[k8spatterns/curl-jq] which is an https://hub.docker.com/_/alpine/[alpine] Image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] added
-* link:kubeapi-proxy[k8spatterns/kubeapi-proxy] is an alpine Linux with a local `kubectl` installed and `kubectl proxy` started with the proper CA and token mounted. The original version https://github.com/luksa/kubernetes-in-action/tree/master/Chapter08/kubectl-proxy[kubectl-proxy] is from https://github.com/luksa[Marko Lukša] who introduced this proxy in his awesome book https://www.manning.com/books/kubernetes-in-action[Kubernetes in Action]. Highly recommended!
+* link:../../images/curl-jq.dockerfile[k8spatterns/curl-jq] which is an https://hub.docker.com/_/alpine/[alpine] Image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] added
+* link:../../images/kubeapi-proxy.dockerfile[k8spatterns/kubeapi-proxy] is an alpine Linux with a local `kubectl` installed and `kubectl proxy` started with the proper CA and token mounted. The original version https://github.com/luksa/kubernetes-in-action/tree/master/Chapter08/kubectl-proxy[kubectl-proxy] is from https://github.com/luksa[Marko Lukša] who introduced this proxy in his awesome book https://www.manning.com/books/kubernetes-in-action[Kubernetes in Action]. Highly recommended!
