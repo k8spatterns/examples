@@ -23,8 +23,11 @@ As a first step, we have to install the CRD along with a role to allow to modify
 
 [source, bash]
 ----
-# Register ConfigWatcher CRD
+# Register ConfigWatcher CRD (Kubernetes >= 1.16)
 kubectl create -f config-watcher-crd.yml
+
+# For Kubernetes < 1.16 use
+# kubectl create -f config-watcher-crd-v1beta1.yml
 
 # Verify that the CRD is registered
 $ kubectl get crd
