@@ -51,7 +51,7 @@ delete_pods_with_selector() {
   local pods=$(curl -s $base/api/v1/${ns}/pods?labelSelector=$selector | \
                jq -r .items[].metadata.name)
 
-  # Delete all pods that matcehed
+  # Delete all pods that matched
   for pod in $pods; do
     # Delete but also check exit code
     exit_code=$(curl -s -X DELETE -o /dev/null -w "%{http_code}" $base/api/v1/${ns}/pods/$pod)
