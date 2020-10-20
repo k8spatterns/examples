@@ -67,7 +67,7 @@ We can also look at the logs created
 
 [source, bash]
 ----
-curl -s http://$(minikube ip):$port/logs | jq .
+curl -s http://$(minikube ip):$port/logs
 ----
 
 As you can see, the logs differ from call to call as it depends which endpoint you are hitting with this request.
