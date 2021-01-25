@@ -3,7 +3,7 @@
 For this simple example, you need access to a Kubernetes installation.
 Anyone as described in link:../../INSTALL.adoc[INSTALL] is good enough.
 
-Our sample https://github.com/k8spatterns/random-generator[random-genertore] application provides a `/shutdown` endpoint which we use to log its call during shutdown of a Pod.
+Our sample https://github.com/k8spatterns/random-generator[random-generator] application provides a `/shutdown` endpoint which we use to log its call during shutdown of a Pod.
 
 But lets create the Pod first:
 
