@@ -10,7 +10,7 @@ To access the PersistentVolume used in this demo, let's mount a local directory 
 
 [source, bash]
 ----
-minikube start --mount --mount-string="$(pwd)/logs:/example"
+minikube start --mount --mount-string="$(pwd)/logs:/example" --memory 2g
 ----
 
 This makes this directory available within the Minikube VM at the path `/example`.
@@ -181,7 +181,7 @@ kubectl patch deploy random-generator --type=json -p $patch
 ----
 
 If you check your Pods now with `kubectl get pods` and `kubectl describe`, do you see what you expect ?
-Also don't forget the check the logs, too !
+Also don't forget to check the logs, too !
 
 === More Information
 
