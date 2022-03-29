@@ -15,7 +15,7 @@ Apply our simple example https://github.com/k8spatterns/random-generator[random-
 kubectl create -f node-selector.yml
 ----
 
-You will notice that this Pod does not get scheduled, because the `nodeSelector` can find any node with the label `disktype=ssd`:
+You will notice that this Pod does not get scheduled, because the `nodeSelector` can't find any node with the label `disktype=ssd`:
 
 [source, bash]
 ----
