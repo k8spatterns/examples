@@ -3,8 +3,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  # Use a generated name so that dis descriptor can be applied
-  # multiple times for each run
+  # Use a generated name so that this descriptor can be 
+  # used multiple times with "kubectl create" without conflicts 
+  # because of jobs having the same names
   generateName: random-generator-
   labels:
     app: random-generator
