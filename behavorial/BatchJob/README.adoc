@@ -17,7 +17,7 @@ minikube start --mount --mount-string="$(pwd)/logs:/example"
 Alternatively, you can mount the directory on the fly in the background
 
 [source,bash]
-----
+---
 minikube mount $(pwd)/logs:/example
 ----
 
@@ -39,7 +39,7 @@ kubectl create -f job.yml
 
 This Job will create multiple Pods to create the number.
 Each Pod will run for creating 10000 entries into `logs/random.log`.
-The Job is confiured to run the Pod 5 times, with 3 max running in parallel.
+The Job is configured to run the Pod 5 times, with 3 max running in parallel.
 That will take some minutes, but at the end you should have 50000 entries in the log file.
 
 You can check the Job's status with
