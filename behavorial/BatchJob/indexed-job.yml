@@ -8,6 +8,8 @@ metadata:
   # used multiple times with "kubectl create" without conflicts 
   # because of jobs having the same names
   generateName: file-split-
+  labels:
+    app: random-generator
 spec:
   # Completion mode needs to be set to "Indexed"
   completionMode: Indexed

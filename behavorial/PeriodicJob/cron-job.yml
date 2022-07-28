@@ -1,4 +1,4 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: random-generator
@@ -7,7 +7,7 @@ spec:
   schedule: "*/3 * * * *"
   jobTemplate:
     spec:
-      # Templae for the job to generate
+      # Template for the job to generate
       template:
         spec:
           containers:
