@@ -2,7 +2,7 @@
 # Simple image for exposing the log file created by random-exporter
 
 # Yes, I know. But still the best language for quick and small system related tasks
-FROM perl
+FROM perl:slim-threaded-buster
 
 # Default
 ENV LOG_FILE=/logs/random-generator.log
