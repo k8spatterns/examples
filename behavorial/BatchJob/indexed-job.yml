@@ -21,31 +21,16 @@ spec:
       name: file-split
     spec:
       containers:
-      - image: library/perl
+      - image: alpine
         name: split
         command:
-        - "perl"
-        # -n: Loop over all lines, but don't print by default
-        # -e: Execute the following argument as Perl code
-        - "-ne"
+        - "sh"
+        - "-c"
         - |
-          BEGIN {
-            # Extract environmwnt variable $JOB_COMPLETION_INDEX
-            # set is set for our Indexed job by its controller
-            $idx = $ENV{JOB_COMPLETION_INDEX};
-            # Open output file with the idx as a suffix (no error handling)
-            open($fh,">","/logs/random-${idx}.txt");
-          };
-          # Print out the current line ($_) to the output file
-          # if in the specified range. This code will
-          # be executed for every line, with $. set to the actual line number.
-          print $fh $_ if $. >= $idx * 10000 && $. < ($idx+1) * 10000;
-          END {
-            # Close file after the loop
-            close($fh)
-          }
-        # Operate on this file
-        - /logs/random.log
+          start=$(expr $JOB_COMPLETION_INDEX \* 10000)
+          end=$(expr $JOB_COMPLETION_INDEX \* 10000 + 10000)
+          awk "NR>=$start && NR<$end" /logs/random.log \
+              > /logs/random-$JOB_COMPLETION_INDEX.txt
         volumeMounts:
         - mountPath: /logs
           name: log-volume
