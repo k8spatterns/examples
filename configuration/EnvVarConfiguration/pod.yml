@@ -1,4 +1,4 @@
-# .Resource limits
+# Example Pod to demonstrate the usage of environment variables
 ---
 apiVersion: v1
 kind: Pod
@@ -10,19 +10,37 @@ spec:
   containers:
   - image: k8spatterns/random-generator:1.0
     name: random-generator
+    # Import all entries of a ConfigMap as env vars, and add a prefix
+    # RANDOM_ to every var
     env:
     # Literal environment variable
     - name: LOG_FILE
       value: /tmp/random.log
-    # Pick up configuration from a config map
-    - name: PATTERN
-      valueFrom:
-        configMapKeyRef:
-          name: random-generator-config
-          key: pattern
-    # Pick up configuration from a config map
+    # Pick up configuration from a secret
     - name: SEED
       valueFrom:
         secretKeyRef:
           name: random-generator-secret
           key: seed
+    # Pick up all configuration from a config map
+    - name: PORT
+      value: "8181"
+    # Get the Pod's IP address via the Downward API
+    - name: IP                             
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    # Build an URL from already defined variables. $(CONTEXT) is not defined yet
+    # and will be left unresolved
+    - name: MY_URL
+      value: "https://$(IP):$(PORT)/$(CONTEXT)"
+    # Refer to an env var RANDOM_PATTERN from the secret imported above
+    - name: DESCRIPTION
+      value: "Welcome to $(RANDOM_PATTERN) !"
+    # Path is defined here, but too late for being resolved in MY_URL
+    - name: CONTEXT
+      value: "login/"
+    envFrom:
+    - configMapRef:
+        name: random-generator-config
+      prefix: RANDOM_

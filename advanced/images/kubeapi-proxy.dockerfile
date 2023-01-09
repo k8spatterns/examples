@@ -1,6 +1,6 @@
 # Image: k8spatterns/kubeapi-proxy
 FROM alpine
-ENV KUBECTL_VERSION=v1.9.1
+ENV KUBECTL_VERSION=v1.25.2
 RUN apk update \
  && apk add curl \
  && curl -L -O https://dl.k8s.io/${KUBECTL_VERSION}/kubernetes-client-linux-amd64.tar.gz \

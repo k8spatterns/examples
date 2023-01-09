@@ -7,7 +7,9 @@ First, lets create a ConfigMap and a Secert with one entry, respecively:
 
 [source, bash]
 ----
-kubectl create configmap random-generator-config --from-literal=pattern=EnvVarConfiguration
+kubectl create configmap random-generator-config \
+    --from-literal=PATTERN=EnvVarConfiguration \
+    --from-literal="ILLEG.AL=Invalid Envvar name"
 
 kubectl create secret generic random-generator-secret --from-literal=seed=11232156346
 ----
