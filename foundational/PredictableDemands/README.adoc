@@ -181,7 +181,7 @@ kubectl patch deploy random-generator --type=json -p $patch
 ----
 
 If you check your Pods now with `kubectl get pods` and `kubectl describe`, do you see what you expect ?
-Also don't forget the check the logs, too !
+Also don't forget to check the logs, too !
 
 === More Information
 
