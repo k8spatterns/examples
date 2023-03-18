@@ -18,5 +18,5 @@ jobs:
     - name: Update Website
       run: go run .github/update_website.go -pattern-source .
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.K8SPATTERN_GITHUB_TOKEN }}
 
