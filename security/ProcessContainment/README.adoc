@@ -1,1 +1,118 @@
-== ProcessContainment
+== Process Containment
+
+ifndef::skipInstall[]
+We recommend using a Minikube installation for this example. Please refer to the link:../../INSTALL.adoc#minikube[installation instructions] for details.
+endif::skipInstall[]
+
+In this example, we'll demonstrate how to create a more secure Pod adhering to the principle of least privilege using process containment techniques discussed in the pattern Process Containment. We'll also provide step-by-step instructions for applying the configurations and verifying their effectiveness.
+
+
+=== Run as Non-Root
+
+Let's create a simple Pod that runs as non-root.
+For this create the Pod from `non-root-pod.yaml` with
+
+[source,bash]
+----
+kubectl apply -f https://k8spatterns.io/ProcessContainment/non-root-pod.yaml
+-----
+
+Let's check the UID under which the container is running:
+
+[source,bash]
+----
+kubectl exec -it non-root-pod -- id
+-----
+
+The output should show a UID other than 0.
+
+=== Drop capabilities
+
+To check how we can limit container capabilities for minimizing the potential damage in case of a security breach, let's apply the next example
+
+[source,bash]
+----
+kubectl apply -f https://k8spatterns.io/ProcessContainment/drop-caps-pod.yaml
+----
+
+Verify that the container has only the 'NET_BIND_SERVICE' capability:
+
+[source,bash]
+----
+kubectl exec -it secure-app -- sh -c 'cat /proc/1/status | grep CapEff'
+----
+
+The output should show the hexadecimal value of the 'NET_BIND_SERVICE' capability.
+
+=== Read-Only Root Filesystem
+
+The following example that we apply make the containers' root filesystem read-only. This prevents unauthorized write operations and further reduces the attack surface:
+
+[source,bash]
+----
+kubectl apply -f https://k8spatterns.io/ProcessContainment/read-only-fs-pod.yaml
+----
+
+To ensure that the configuration is effective, run the following command:
+
+[source,bash]
+----
+kubectl exec -it secure-app -- sh -c 'touch /test-file'
+----
+
+The output should show an error indicating that the filesystem is read-only.
+
+=== Security Policies
+
+Now lets check how we can enforce security policies using Kubernetes Pod Security Admission (PSA) controller. We'll create a namespace that rejects any Pods that don't satisfy the baseline standard and generates a warning for Pods that don't meet the restricted standards requirements.
+
+
+[source, bash]
+----
+kubectl apply -f https://k8spatterns.io/ProcessContainment/baseline-namespace.yaml
+----
+
+Now deploy a Pod to the namespace that meets the baseline standard: Deploy a Pod to the baseline-namespace that satisfies the baseline security standard. You can use the previous example, which satisfies the baseline standard:
+
+
+[source, bash]
+----
+kubectl apply -f https://k8spatterns.io/ProcessContainment/read-only-fs-pod.yaml \
+  -n baseline-namespace
+----
+
+The Pod should be successfully created in the baseline-namespace.
+
+Now let's deploy a Pod to the namespace that doesn't meet the baseline standard: Now, attempt to deploy a Pod that violates the baseline standard (e.g., by running as root).
+
+[source, bash]
+----
+kubectl apply -f https://k8spatterns.io/ProcessContainment/root-pod.yaml \
+    -n baseline-namespace
+----
+
+The Pod should be rejected by the PSA controller due to the violation of the baseline standard.
+
+Finally, let's Deploy a Pod to the namespace that doesn't meet the restricted standard: Deploy a Pod that satisfies the baseline standard but not the restricted standard. You should see a warning for violating the restricted standard but the Pod will still be created. Use the following YAML file named `restricted-warning-pod.yaml`:
+
+
+[source, bash]
+----
+kubectl apply -f https://k8spatterns.io/ProcessContainment/restricted-warning-pod.yaml \
+  -n baseline-namespace
+----
+
+The Pod should be created in the baseline-namespace with a warning for violating the restricted standard.
+
+=== More Information
+
+* https://oreil.ly/Seeg_[Process Containment Example]
+* https://oreil.ly/e7lKN[Configure a Security Context for a Pod or Container]
+* https://oreil.ly/S8ac9[Pod Security Admission]
+* https://oreil.ly/2xzlg[Pod Security Standards]
+* https://oreil.ly/FnVMh[Enforce Pod Security Standards with Namespace Labels]
+* https://oreil.ly/QnhLj[Admission Controllers Reference: PodSecurity]
+* https://oreil.ly/GkHt7[Linux Capabilities]
+* https://oreil.ly/IkMnH[Introduction to Security Contexts and SCCs]
+* https://oreil.ly/f04Xj[10 Kubernetes Security Context Settings You Should Understand]
+* https://oreil.ly/pbAqs[Security Risk Analysis Tool for Kubernetes Resources]

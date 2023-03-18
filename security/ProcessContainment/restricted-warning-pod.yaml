@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: restricted-warning-pod
+spec:
+  securityContext:
+    runAsNonRoot: true
+  containers:
+  - name: random
+    image: k8spatterns/random:1.0
+    securityContext:
+      capabilities:
+        drop: [ 'ALL' ]
+        add: ['NET_BIND_SERVICE']

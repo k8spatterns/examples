@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: drop-caps
+spec:
+  containers:
+  - name: random
+    image: k8spatterns/random:1.0
+    securityContext:
+      capabilities:
+        # Drop all capabilities except that you allow to bind to a port
+        drop: [ 'ALL' ]
+        add: ['NET_BIND_SERVICE']

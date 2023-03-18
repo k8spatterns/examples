@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: baseline-namespace
+  labels:
+    # Enforce the baseline standard
+    pod-security.kubernetes.io/enforce: baseline
+    # Version of the security-standard requirements to use (optional)
+    pod-security.kubernetes.io/enforce-version: v1.25
+    # Warn about Pods that violate the restricted standard
+    pod-security.kubernetes.io/warn: restricted
+    # Version of the security-standard requirements to use for warnings (optional)
+    pod-security.kubernetes.io/warn-version: v1.25           
