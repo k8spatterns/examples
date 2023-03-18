@@ -1,0 +1,22 @@
+name: Update Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  website:
+    runs-on: ubuntu-latest
+    container:
+      image: golang:latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Update Website
+      run: go run .github/update_website.go -pattern-source .
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
