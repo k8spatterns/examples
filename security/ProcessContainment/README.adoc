@@ -15,14 +15,14 @@ For this create the Pod from `non-root-pod.yaml` with
 [source,bash]
 ----
 kubectl apply -f https://k8spatterns.io/ProcessContainment/non-root-pod.yaml
------
+----
 
 Let's check the UID under which the container is running:
 
 [source,bash]
 ----
 kubectl exec -it non-root-pod -- id
------
+----
 
 The output should show a UID other than 0.
 
