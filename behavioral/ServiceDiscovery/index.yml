@@ -1,6 +1,6 @@
 pattern: Service Discovery
-category: behavorial
-base: behavorial/ServiceDiscovery
+category: behavioral
+base: behavioral/ServiceDiscovery
 examples:
 - description:
   path: service-with-nodeport.yml

@@ -1,6 +1,6 @@
 pattern: Batch Job
-category: behavorial
-base: behavorial/BatchJob
+category: behavioral
+base: behavioral/BatchJob
 examples:
 - description:
   path: pv-and-pvc.yml

@@ -1,6 +1,6 @@
 pattern: Stateful Service
-category: behavorial
-base: behavorial/StatefulService
+category: behavioral
+base: behavioral/StatefulService
 examples:
 - description:
   path: statefulset.yml

@@ -1,6 +1,6 @@
 pattern: Singleton Service
-category: behavorial
-base: behavorial/SingletonService
+category: behavioral
+base: behavioral/SingletonService
 examples:
 - description:
   path: deployment.yml
