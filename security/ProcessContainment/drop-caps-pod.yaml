@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: random
-    image: k8spatterns/random:1.0
+    image: k8spatterns/random-generator:1.0
     securityContext:
       capabilities:
         # Drop all capabilities except that you allow to bind to a port

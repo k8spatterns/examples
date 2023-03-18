@@ -8,7 +8,7 @@ spec:
     runAsNonRoot: true
   containers:
   - name: random
-    image: k8spatterns/random:1.0
+    image: k8spatterns/random-generator:1.0
     # You could also put runAsNonRoot into container's securityContext 
     # securityContext:
     #   runAsNonRoot: true

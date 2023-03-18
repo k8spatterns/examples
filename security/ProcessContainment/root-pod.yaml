@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: app
-    image: k8spatterns/random:1.0
+    image: k8spatterns/random-generator:1.0
     securityContext:
       # Start as a root user
       runAsUser: 0

@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: random
-    image: k8spatterns/random:1.0
+    image: k8spatterns/random-generator:1.0
     securityContext:
       # Set the container's root filesystem as read-only
       readOnlyRootFilesystem: true  

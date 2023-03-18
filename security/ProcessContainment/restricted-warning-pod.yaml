@@ -7,7 +7,7 @@ spec:
     runAsNonRoot: true
   containers:
   - name: random
-    image: k8spatterns/random:1.0
+    image: k8spatterns/random-generator:1.0
     securityContext:
       capabilities:
         drop: [ 'ALL' ]
