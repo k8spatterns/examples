@@ -16,4 +16,4 @@ workflows:
     - website:
         filters:
           branches:
-            only: master
+            only: main
