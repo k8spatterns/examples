@@ -214,3 +214,17 @@ You should receive an "RBAC: access denied" response or a similar access denial 
 
 === More Information
 
+* https://oreil.ly/gwU-y[Network Segmentation Example]
+* https://oreil.ly/P5r0X[Network Policies]
+* https://oreil.ly/qR0O9[The Kubernetes Network Model]
+* https://oreil.ly/NhrWK[Kubernetes Network Policy Recipes]
+* https://oreil.ly/BzlSd[Using Network Policies]
+* https://oreil.ly/r-dn7[Why You Should Test Your Kubernetes Network Policies]
+* https://oreil.ly/_5cWc[Using the eBPF Superpowers to Generate Kubernetes Security Policies]
+* https://oreil.ly/5VbP4[Using Advise Network-Policy] with Inspektor Gadget
+* https://oreil.ly/-jKvO[You and Your Security Profiles; Generating Security Policies with the Help of eBPF]
+* https://oreil.ly/r-4pI[kube-iptables-tailer]
+* https://oreil.ly/9lqlu[Creating Policies from Verdicts]
+* https://oreil.ly/69M7s[Istio: Authorization Policy]
+* https://oreil.ly/bLq35[Istio: Authentication Policies]
+* https://oreil.ly/X00FG[SIG Multitenancy Working Group]
