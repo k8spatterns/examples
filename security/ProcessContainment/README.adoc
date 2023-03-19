@@ -21,12 +21,12 @@ If you apply this, you will see an error like this:
 
 [source]
 ----
- kubectl get pod/non-root-pod
+ kubectl get pod/non-root
 NAME           READY   STATUS                       RESTARTS   AGE
-non-root-pod   0/1     CreateContainerConfigError   0          12s
+non-root       0/1     CreateContainerConfigError   0          12s
 
 $ kubectl describe pod/non-root-pod
-Name:             non-root-pod
+Name:             non-rootd
 Namespace:        default
 ... 
 Events:
@@ -109,14 +109,20 @@ Caused by: java.io.IOException: Read-only file system
 ...
 ----
 
-In order to fix this issue, we need to mount an empty directory volume at `/tmp`. This work
+In order to fix this issue, we need to mount an empty directory volume at `/tmp`. To do so, use the following Pod definitions:
+
+
+[source, bash]
+----
+kubectl apply -f https://k8spatterns.io/ProcessContainment/read-only-fs-tmp-mount.yaml
+----
 
 
 To ensure that the configuration is effective, run the following command:
 
 [source,bash]
 ----
-kubectl exec -it read-only-fs -- sh -c 'touch /test-file'
+kubectl exec -it read-only-fs-tmp-mount -- sh -c 'touch /test-file'
 ----
 
 The output should show an error indicating that the filesystem is read-only.
