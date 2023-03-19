@@ -175,14 +175,14 @@ kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-ser
 ----
 Now, create an `AuthorizationPolicy` resource that denies all traffic by default:
 
-[source,yaml]
+[source,shell]
 ----
 kubectl apply -f https://k8spatterns.io/NetworkSegmentation/authorization-policy-deny-all.yml
 ----
 
 Next, create another `AuthorizationPolicy` that allows traffic to the `/metrics` endpoint for the `random-generator` application. Save the content below in a file called `allow-metrics.yaml`:
 
-[source,yaml]
+[source,shell]
 ----
 kubectl apply -f https://k8spatterns.io/NetworkSegmentation/authorization-policy-allow-metrics.yml
 ----
