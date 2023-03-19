@@ -9,7 +9,7 @@ In this example, we'll demonstrate how to create a more secure Pod adhering to t
 
 === Run as Non-Root
 
-Let's create a simple Pod that runs as non-root.
+Let's create a simple Pod that tries to run as non-root.
 For this create the Pod from `non-root-pod.yaml` with
 
 [source,bash]
@@ -17,14 +17,41 @@ For this create the Pod from `non-root-pod.yaml` with
 kubectl apply -f https://k8spatterns.io/ProcessContainment/non-root-pod.yaml
 ----
 
+If you apply this, you will see an error like this:
+
+[source]
+----
+ kubectl get pod/non-root-pod
+NAME           READY   STATUS                       RESTARTS   AGE
+non-root-pod   0/1     CreateContainerConfigError   0          12s
+
+$ kubectl describe pod/non-root-pod
+Name:             non-root-pod
+Namespace:        default
+... 
+Events:
+  Type     Reason     Age               From               Message
+  ----     ------     ----              ----               -------
+  ... 
+  Warning  Failed     2s (x3 over 18s)  kubelet            Error: container has runAsNonRoot and image will run as root (pod: "non-root-pod_default(b1afb6bd-2380-4b80-a54b-89913cef1dcb)", container: random)
+----
+
+This happens because `k8spatterns/random-generator:1.0` is setup to run with UID 0. In order to fix this, we could either change the image (which is the recommended fix) or set the user id explicitely with `runAsUser` with
+
+
+[source, bash]
+----
+kubectl apply -f https://k8spatterns.io/ProcessContainment/non-root-with-uid-pod.yaml
+----
+
 Let's check the UID under which the container is running:
 
 [source,bash]
 ----
-kubectl exec -it non-root-pod -- id
+kubectl exec -it non-root-pod-with-uid -- id
 ----
 
-The output should show a UID other than 0.
+The output should show a UID of 10000 as given in the descriptor.
 
 === Drop capabilities
 

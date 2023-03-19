@@ -6,8 +6,10 @@ examples:
   path: baseline-namespace.yaml
 - description: Pod that drops capabilities
   path: drop-caps-pod.yaml
-- description: Pod running as non-root
+- description: Pod running as non-root that will fail
   path: non-root-pod.yaml
+- description: Pod running as non-root with UID 10000
+  path: non-root-with-uid-pod.yaml
 - description: Pod that set the root filesystem to read-only
   path: read-only-fs-pod.yaml
 - description: Pod that causes warning when deployed in a baseline security policy
