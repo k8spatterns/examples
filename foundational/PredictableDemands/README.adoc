@@ -6,7 +6,7 @@ We recommend using a Minikube installation for this example. Please refer to the
 To play with memory limits, we assume you use the default 2GB memory for your Minikube VM. You can adjust this value with the `--memory` flag.
 endif::skipInstall[]
 
-To access the PersistentVolume used in this demo, mount a local directory into the Minikube VM with the following command:
+To access the PersistentVolume used in this demo, mount a local directory `logs/` into the Minikube VM with the following command:
 
 [source, bash]
 ----
@@ -55,7 +55,7 @@ Let's now create the PersistentVolume and PVC:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/PredictableDemands/pv-and-pvc.yml
+kubectl apply -f https://k8spatterns.io/PredictableDemands/pv-and-pvc.yml
 ----
 
 When we create the PV and PVC we are already one step further:
@@ -81,7 +81,7 @@ Now you can create the ConfigMap:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/PredictableDemands/configmap.yml
+kubectl apply -f https://k8spatterns.io/PredictableDemands/configmap.yml
 ----
 
 and the pod will be finally up:
@@ -93,23 +93,33 @@ NAME               READY   STATUS    RESTARTS   AGE
 random-generator   1/1     Running   0          3s
 ----
 
-You can send an HTTP request to the service to check if everything is working correctly. As we haven't installed a Service, let's use port-forwarding and `curl` to check the output:
+You can send an HTTP request to the service to check if everything is working correctly. As we haven't installed a Service, let's run `curl` within the cluster to check the output:
 
 [source, bash]
 ----
-# Port forward to Pod
-kubectl port-forward pod/random-generator 8080:8080 &
+# Set the IP address to check
+POD_IP=$(kubectl get pod -l app=random-generator -o jsonpath='{.items[0].status.podIP}')
 
-# Send a request to our service
-curl -s http://localhost:8080 | jq .
+# Send a request to our app from an internal ad-hoc Pod
+kubectl run -itq --rm --image=k8spatterns/curl-jq --restart=Never curl -- http://${POD_IP}:8080 | jq .
+----
 
+This will result in an output like this:
+
+[source]
+----
 {
   "random": 79003229,
   "pattern": "Predictable Demands",
   "id": "d88cc0e5-c7f2-4e98-8073-ed76151b5218",
   "version": "1.0"
 }
+----
 
+The log file that the application writes to the persistent volume should appear in our locally mounted directory:
+
+[source, bash]
+----
 # Check whether the log has been written locally
 cat ./logs/random.log
 
@@ -121,9 +131,6 @@ Now that our hard requirements (ConfigMap, PVC) are fulfilled our the applicatio
 If you are done, it's a good idea to cleanup:
 [source, bash]
 ----
-# Killt the 'kubectl port-forward' first
-kill %1
-
 # Delete the plain pod
 kubectl delete pod/random-generator
 
@@ -147,9 +154,11 @@ You can easily check this with
 
 [source, bash]
 ----
-# The 'pod' alias is explained in INSTALL.adoc
-kubectl logs $(pod random-generator) | grep "=== "
+kubectl logs -l app=random-generator | grep "=== "
+----
 
+[source]
+----
 i.k.examples.RandomGeneratorApplication  : === Max Heap Memory:  96 MB
 i.k.examples.RandomGeneratorApplication  : === Used Heap Memory: 37 MB
 i.k.examples.RandomGeneratorApplication  : === Free Memory:      13 MB
@@ -157,7 +166,6 @@ i.k.examples.RandomGeneratorApplication  : === Processors:       1
 ----
 
 Let's now try to change our limits and requests with smaller and larger values.
-
 
 [source, bash]
 ----

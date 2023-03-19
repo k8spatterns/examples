@@ -1,9 +1,10 @@
-# .Resource limits
----
+# Resource limits
 apiVersion: v1
 kind: Pod
 metadata:
   name: random-generator
+  labels:
+    app: random-generator
 spec:
   containers:
   - image: k8spatterns/random-generator:1.0
@@ -11,7 +12,7 @@ spec:
     env:
     - name: PATTERN
       valueFrom:
-        # First Hard requirement for a config map to exist.
+        # First hard requirement for a config map to exist.
         configMapKeyRef:
           name: random-generator-config
           key: pattern
