@@ -1,0 +1,18 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-metrics
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      has-metrics: "true"
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespace: "default"
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/metrics/*"]

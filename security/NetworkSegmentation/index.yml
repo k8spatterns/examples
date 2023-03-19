@@ -6,8 +6,15 @@ examples:
   path: deny-all-networkpolicy.yml
 - description: Deployment for testing
   path: random-generator-deployment.yml
+- description: Service for the random-generator application
+  path: random-generator-service.yml
 - description: "Allow incoming access for clients with 'random-client: true'"
   path: allow-access-networkpolicy.yml
 - description: Allow internal egress only, with one exception
   path: allow-internal-egress-only.yml
+- description: Deny all L7 traffic to all Pods
+  path: authorization-policy-deny-all.yml
+- description: Allow traffic to the metrics endpoint
+  path: authorization-policy-allow-metrics.yml
+
 

@@ -135,3 +135,82 @@ Can you guess which one goes through and which have a timeout after 5s ?
 For many more example and real world use cases of NetworkPolicies checkout the https://github.com/ahmetb/kubernetes-network-policy-recipes[Kubernetes Network Policy Recipes], which is really a great resource for NetworkPolicy setups
 
 == Authorization Policies
+
+For the following examples Istio as a service mesh needs to be installed. For minikube this ist best to create an instance with enough memory and cpu power:
+
+[source, bash]
+----
+minikube start --memory=8192 --cpus=4
+----
+
+Next you need to install the lastest version of the `istioctl` binary.
+Either by downloading it from https://github.com/istio/istio/releases or, if you are a `brew` user, with `brew install istioctl`.
+
+To finish the installation call
+
+[source, bash]
+----
+istioctl install --set profile=demo
+----
+
+and enable the default namespace by adding a label:
+
+[source, bash]
+----
+kubectl label namespace default istio-injection=enabled
+----
+
+First, ensure that our random generator application is deployed:
+
+[source,bash]
+----
+kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-deployment.yml
+----
+
+This creates a Deployment with one Pod. In addition add a Service "random-generator" in front of the Pods and map the Pod port 8080 to port 80 for the Service
+
+[source,bash]
+----
+kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-service.yml
+----
+Now, create an `AuthorizationPolicy` resource that denies all traffic by default:
+
+[source,yaml]
+----
+kubectl apply -f https://k8spatterns.io/NetworkSegmentation/authorization-policy-deny-all.yml
+----
+
+Next, create another `AuthorizationPolicy` that allows traffic to the `/metrics` endpoint for the `random-generator` application. Save the content below in a file called `allow-metrics.yaml`:
+
+[source,yaml]
+----
+kubectl apply -f https://k8spatterns.io/NetworkSegmentation/authorization-policy-allow-metrics.yml
+----
+
+In order to veriy our setup, fire up a `curl` container that waits for ever so that we can exec into it later on:
+
+[source,bash]
+----
+kubectl run curl --image=curlimages/curl --restart=Never --command -- sleep infinity
+----
+
+Now, use `curl` to make a request to the metrics enpoind via the service positive example request:
+
+[source,shell]
+----
+kubectl exec curl -- curl -sm 5 http://random-generator/metrics
+----
+
+You should receive the metrics data as a response.
+
+For a negative example, try to access an unauthorized endpoint:
+
+[source,shell]
+----
+kubectl exec curl -- curl -sm 5 http://random-generator/
+----
+
+You should receive an "RBAC: access denied" response or a similar access denial message.
+
+=== More Information
+

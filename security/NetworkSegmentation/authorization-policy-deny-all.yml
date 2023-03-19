@@ -1,0 +1,11 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: deny-all
+  namespace: default
+spec:
+  # Apply to everything
+  selector: {}
+  # Deny all access
+  action: DENY
+  rules: [{}]
