@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-access-to-random
+spec:
+  podSelector:
+    matchLabels:
+      app: random-generator
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: random-client
+    ports:
+    - protocol: TCP
+      port: 8080
+

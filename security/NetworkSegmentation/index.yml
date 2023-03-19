@@ -6,3 +6,8 @@ examples:
   path: deny-all-networkpolicy.yml
 - description: Deployment for testing
   path: random-generator-deployment.yml
+- description: Allow incoming access for clients with 'random-client: true'
+  path: allow-access-networkpolicy.yml
+- description: Allow internal egress only, with one exception
+  path: allow-internal-egress-only.yml
+
