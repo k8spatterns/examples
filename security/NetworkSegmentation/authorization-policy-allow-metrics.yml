@@ -2,17 +2,18 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: allow-metrics
-  namespace: default
 spec:
+  # Match all pods that have a lbel "has-metrics
   selector:
     matchLabels:
       has-metrics: "true"
   action: ALLOW
   rules:
+  # Allow for all Pods that want to acess the "/actuator/health" endpoint
   - from:
     - source:
-        namespace: "default"
+        namespaces: [ "default" ]
     to:
     - operation:
         methods: ["GET"]
-        paths: ["/metrics/*"]
+        paths: ["/actuator/health"]

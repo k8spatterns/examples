@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: random-generator
+        has-metrics: "true"
     spec:
       containers:
       - name: random-generator

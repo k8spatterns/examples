@@ -173,7 +173,7 @@ This creates a Deployment with one Pod. In addition add a Service "random-genera
 ----
 kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-service.yml
 ----
-Now, create an `AuthorizationPolicy` resource that denies all traffic by default:
+Now, create an `AuthorizationPolicy` resource that denies all traffic in all namespaces by default:
 
 [source,shell]
 ----
@@ -198,7 +198,7 @@ Now, use `curl` to make a request to the metrics enpoind via the service positiv
 
 [source,shell]
 ----
-kubectl exec curl -- curl -sm 5 http://random-generator/metrics
+kubectl exec curl -- curl -s http://random-generator/actuator/health
 ----
 
 You should receive the metrics data as a response.
