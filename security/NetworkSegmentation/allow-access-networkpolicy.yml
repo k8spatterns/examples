@@ -13,7 +13,7 @@ spec:
         # All Pods that carry "role: random-client" as label are allowed to access 
         # our deployment
         matchLabels:
-          app: random-client
+          role: random-client
     ports:
     - protocol: TCP
       port: 8080

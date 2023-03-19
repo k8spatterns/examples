@@ -117,7 +117,7 @@ To verify, whether our egress policies work, let's try the following three curl:
 
 [source,bash]
 ----
-kubectl exec curl-random -- curl -sn 5 $RANDOM_GENERATOR_POD_IP:8080
+kubectl exec curl-random -- curl -sm 5 $RANDOM_GENERATOR_POD_IP:8080
 ----
 
 [source,bash]
@@ -127,7 +127,7 @@ kubectl exec curl-random -- curl -sm 5 https://github.com
 
 [source,bash]
 ----
-kubectl exec curl-random -- curl -sm 5 https://api.chucknorris.io | jq .
+kubectl exec curl-random -- curl -sm 5 https://api.chucknorris.io/jokes/random | jq .
 ----
 
 Can you guess which one goes through and which have a timeout after 5s ?
