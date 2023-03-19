@@ -89,15 +89,15 @@ Now create another curl client, but this time with a label `random-client` that 
 
 [source,bash]
 ----
-kubectl run random-client --image=curlimages/curl --labels=random-client=true \
-                         --restart=Never --command -- sleep infinity
+kubectl run curl-random --image=curlimages/curl --labels=role=random-client \
+                        --restart=Never --command -- sleep infinity
 ----
 
 Finally, Attempt to access the random generator service from the curl-access container:
 
 [source,bash]
 ----
-kubectl exec random-client -- curl -s $RANDOM_GENERATOR_POD_IP:8080
+kubectl exec curl-random -- curl -s $RANDOM_GENERATOR_POD_IP:8080
 ----
 
 You should receive a random number as the output again, indicating successful access to the random-generator service.
@@ -117,17 +117,17 @@ To verify, whether our egress policies work, let's try the following three curl:
 
 [source,bash]
 ----
-kubectl exec random-client -- curl -sn 5 $RANDOM_GENERATOR_POD_IP:8080
+kubectl exec curl-random -- curl -sn 5 $RANDOM_GENERATOR_POD_IP:8080
 ----
 
 [source,bash]
 ----
-kubectl exec random-client -- curl -sm 5 https://github.com
+kubectl exec curl-random -- curl -sm 5 https://github.com
 ----
 
 [source,bash]
 ----
-kubectl exec random-client -- curl -sm 5 https://api.chucknorris.io | jq .
+kubectl exec curl-random -- curl -sm 5 https://api.chucknorris.io | jq .
 ----
 
 Can you guess which one goes through and which have a timeout after 5s ?

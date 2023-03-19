@@ -4,11 +4,14 @@ metadata:
   name: allow-access-to-random
 spec:
   podSelector:
+    # Policy applies to the random-generator app
     matchLabels:
       app: random-generator
   ingress:
   - from:
     - podSelector:
+        # All Pods that carry "role: random-client" as label are allowed to access 
+        # our deployment
         matchLabels:
           app: random-client
     ports:
