@@ -1,25 +1,25 @@
 == Predictable Demands
 
 ifndef::skipInstall[]
-For this example we recommend to use a Minikube installation described link:../../INSTALL.adoc#minikube[here].
-In order to play a bit with memory limits, we assume that you use 2GB memory for your Minikube VM (which is also the default).
-You can adapt the memory of the Minikube VM with `--memory`.
+We recommend using a Minikube installation for this example. Please refer to the link:../../INSTALL.adoc#minikube[installation instructions] for details.
+
+To play with memory limits, we assume you use the default 2GB memory for your Minikube VM. You can adjust this value with the `--memory` flag.
 endif::skipInstall[]
 
-To access the PersistentVolume used in this demo, let's mount a local directory into the Minikube VM that we later then use a PersistentVolume mounted into the Pod:
+To access the PersistentVolume used in this demo, mount a local directory into the Minikube VM with the following command:
 
 [source, bash]
 ----
-minikube start --mount --mount-string="$(pwd)/logs:/example"
+minikube start --mount --mount-string="$(pwd)/logs:/example" --memory 2G
 ----
 
-This makes this directory available within the Minikube VM at the path `/example`.
+The directory is now available within the Minikube VM at the path /example.
 
-For this (and many other demos) we are using a simple https://github.com/k8spatterns/random-generator[random number service], which is a simple REST service exposing a random number and can be found also in the image `k8spatterns/random-generator:1.0` on Docker Hub
+For this example, we will use the https://github.com/k8spatterns/random-generator[random number service], a simple REST service that returns just a random number.  This service is contained in the image `k8spatterns/random-generator:1.0` from Docker Hub.
 
 === Hard requirements
 
-We will set up this image that it will write a log file in a PV and get some configuration data from a ConfigMap.
+We will set up this image that it will write a log file in a PersistentVolume and get some configuration data from a ConfigMap.
 
 Now lets try to create the Pod
 
@@ -28,7 +28,7 @@ Now lets try to create the Pod
 kubectl create -f https://k8spatterns.io/PredictableDemands/pod.yml
 ----
 
-When we verify this with we immediately see, that pod doesn't start:
+The Pod will not start immediately because the PersistentVolumeClaim (PVC) is missing. Check the status with:
 
 [source, bash]
 ----
@@ -38,7 +38,7 @@ NAME               READY   STATUS    RESTARTS   AGE
 random-generator   0/1     Pending   0          3s
 ----
 
-The first reason is, that the PVC is missing as you can easily see when describing the pod:
+When you describe the pod, you can see that the PVC is missing:
 
 [source, bash]
 ----
@@ -71,13 +71,13 @@ Events:
   Warning  FailedScheduling  32s (x5 over 7m44s)  default-scheduler  persistentvolumeclaim "random-generator-log" not found
   Warning  FailedScheduling  15s (x6 over 15s)    default-scheduler  pod has unbound immediate PersistentVolumeClaims
   Normal   Scheduled         15s                  default-scheduler  Successfully assigned default/random-generator to minikube
-  Normal   Pulled            3s (x3 over 14s)     kubelet, minikube  Container image "k8spatterns/random-generator:1.0" already present on machine
+  Normal   Pulled            3s (x3 over 14s)      Pulling image "k8spatterns/random-generator:1.0"
   Warning  Failed            3s (x3 over 14s)     kubelet, minikube  Error: configmap "random-generator-config" not found
 ----
 
-The PVC could be bound, but not the ConfigMap is missing.
+The PVC could be bound, but the ConfigMap is still missing.
 
-Let's add this last missing piece:
+Now you can create the ConfigMap:
 
 [source, bash]
 ----
@@ -93,8 +93,7 @@ NAME               READY   STATUS    RESTARTS   AGE
 random-generator   1/1     Running   0          3s
 ----
 
-We can easily check this by sending an HTTP request.
-As we haven't installed a Service, lets poke a hole with a port-forward into the cluster and use curl to check the output:
+You can send an HTTP request to the service to check if everything is working correctly. As we haven't installed a Service, let's use port-forwarding and `curl` to check the output:
 
 [source, bash]
 ----
@@ -185,12 +184,18 @@ Also don't forget to check the logs, too !
 
 === More Information
 
-* https://github.com/k8spatterns/examples/tree/master/foundational/PredictableDemands[Predictable Demands example]
-* https://attractivechaos.github.io/plb/[Programming language benchmarks]
-* https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/[Configure a Pod to Use a ConfigMap]
-* https://kubernetes.io/docs/concepts/configuration/overview/[Configuration Best Practices]
-* https://kubernetes.io/docs/concepts/storage/persistent-volumes/[Persistent Volumes]
-* https://kubernetes.io/docs/concepts/policy/resource-quotas/[Resource Quotas]
-* https://cloud.google.com/blog/products/gcp/kubernetes-best-practices-resource-requests-and-limits/[Kubernetes best practices: Resource requests and limits]
-* https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/resource-qos.md[Resource Quality of Service in Kubernetes]
-* https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/memory-default-namespace/[Configure Default Memory Requests and Limits for a Namespace]
+* https://oreil.ly/HYIqJ[Predictable Demands Example]
+* https://oreil.ly/tib-D[Configure a Pod to Use a ConfigMap]
+* https://oreil.ly/8bKD5[Kubernetes Best Practices: Resource Requests and Limits]
+* https://oreil.ly/a37eO[Resource Management for Pods and Containers]
+* https://oreil.ly/RXQD1[Manage HugePages]
+* https://oreil.ly/ozlU1[Configure Default Memory Requests and Limits for a Namespace]
+* https://oreil.ly/fxRvs[Node-Pressure Eviction]
+* https://oreil.ly/FpUoH[Pod Priority and Preemption]
+* https://oreil.ly/x07OT[Configure Quality of Service for Pods]
+* https://oreil.ly/yORlL[Resource Quality of Service in Kubernetes]
+* https://oreil.ly/j_a8a[Resource Quotas]
+* https://oreil.ly/1bXfO[Limit Ranges]
+* https://oreil.ly/lkmMK[Process ID Limits and Reservations]
+* https://oreil.ly/Yk-Ag[Stop Using CPU Limits on Kubernetes]
+* https://oreil.ly/cdJkP[What Everyone Should Know About Kubernetes Memory Limits]

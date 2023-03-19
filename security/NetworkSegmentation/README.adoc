@@ -1,1 +1,65 @@
 == NetworkSegmentation
+
+ifndef::skipInstall[]
+We recommend using a Minikube installation for this example. Please refer to the link:../../INSTALL.adoc#minikube[installation instructions] for details.
+
+Before running these examples, you need to set up Minikube with a Container Network Interface (CNI) plugin that supports NetworkPolicies, such as Calico. Follow these steps to configure Minikube with Calico:
+
+[source, bash]
+----
+minikube start --network-plugin=cni --cni=calico
+----
+
+To verify that the Calico CNI plugin has been installed, use
+
+[source, bash]
+----
+kubectl get pods -n kube-system | grep calico
+----
+endif::skipInstall[]
+
+First, create a deployment of the random generator application with the following manifest:
+
+[source,bash]
+----
+kubectl apply -f https://k8spatterns.io/AccessControl/random-generator-deployment.yml
+----
+
+Deploy a curl container to test if the random generator service is reachable:
+
+[source,bash]
+----
+kubectl run curl --image=curlimages/curl --restart=Never --command -- sleep infinity
+----
+
+Get the IP address of the random-generator pod:
+
+[source,bash]
+----
+RANDOM_GENERATOR_POD_IP=$(kubectl get pod -l app=random-generator -o jsonpath='{.items[0].status.podIP}')
+echo $RANDOM_GENERATOR_POD_IP
+----
+
+You should be able to reach the our random-generator app from within the cluster. The following command should give you the usual JSON response including a random number:
+
+[source,bash]
+----
+kubectl exec curl -- curl -m 5 $RANDOM_GENERATOR_POD_IP:8080
+----
+
+Next, let's create the NetworkPolicy for denying all incoming traffic by applying
+
+[source,bash]
+----
+kubectl apply -f https://k8spatterns.io/AccessControl/deny-all-networkpolicy.yml
+----
+
+Let's now attempt to access the random generator service from the curl container
+
+[source,bash]
+----
+kubectl exec curl -- curl -m 5 $RANDOM_GENERATOR_POD_IP:8080
+----
+
+The request should time out due to the deny-all policy.
+

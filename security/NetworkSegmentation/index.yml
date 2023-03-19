@@ -1,0 +1,8 @@
+pattern: Network Segmentation
+category: 
+base: /NetworkSegmentation
+examples:
+- description:
+  path: deny-all-networkpolicy.yml
+- description:
+  path: random-generator-deployment.yml
