@@ -1,7 +1,7 @@
 == Process Containment
 
 ifndef::skipInstall[]
-We recommend using a Minikube installation for this example. Please refer to the link:../../INSTALL.adoc#minikube[installation instructions] for details.
+We recommend using a Minikube installation for this example. For details, please refer to the link:../../INSTALL.adoc#minikube[installation instructions].
 endif::skipInstall[]
 
 In this example, we'll demonstrate how to create a more secure Pod adhering to the principle of least privilege using process containment techniques discussed in the pattern Process Containment. We'll also provide step-by-step instructions for applying the configurations and verifying their effectiveness.
@@ -10,7 +10,7 @@ In this example, we'll demonstrate how to create a more secure Pod adhering to t
 === Run as Non-Root
 
 Let's create a simple Pod that tries to run as non-root.
-For this create the Pod from `non-root-pod.yaml` with
+For this, create the Pod from `non-root-pod.yaml` with
 
 [source,bash]
 ----
@@ -33,10 +33,10 @@ Events:
   Type     Reason     Age               From               Message
   ----     ------     ----              ----               -------
   ... 
-  Warning  Failed     2s (x3 over 18s)  kubelet            Error: container has runAsNonRoot and image will run as root (pod: "non-root-pod_default(b1afb6bd-2380-4b80-a54b-89913cef1dcb)", container: random)
+  Warning  Failed     2s (x3 over 18s)  kubelet            Error: container has runAsNonRoot and image will run as root (Pod: "non-root-pod_default(b1afb6bd-2380-4b80-a54b-89913cef1dcb)", container: random)
 ----
 
-This happens because `k8spatterns/random-generator:1.0` is setup to run with UID 0. In order to fix this, we could either change the image (which is the recommended fix) or set the user id explicitely with `runAsUser` with
+This error happens because `k8spatterns/random-generator:1.0` is set up to run with UID 0. To fix this, we could either change the image (which is the recommended fix) or set the user id explicitly with `runAsUser` with
 
 
 [source, bash]
@@ -51,18 +51,18 @@ Let's check the UID under which the container is running:
 kubectl exec -it non-root-with-uid -- id
 ----
 
-The output should show a UID of 10000 as given in the descriptor.
+The output should show a UID of 10000, as given in the descriptor.
 
 === Drop capabilities
 
-To check how we can limit container capabilities for minimizing the potential damage in case of a security breach, let's apply the next example
+Let's apply the following example to check how we can limit container capabilities to minimize potential damage in case of a security breach.
 
 [source,bash]
 ----
 kubectl apply -f https://k8spatterns.io/ProcessContainment/drop-caps-pod.yaml
 ----
 
-Verify that the container has only the 'NET_BIND_SERVICE' capability that allows a process to bind to TCP/UDP sockets below 1024, which are usually reserved for system services.
+Verify that the container has only the 'NET_BIND_SERVICE' capability that allows a process to bind to TCP/UDP sockets below 1024, usually reserved for system services.
 
 [source,bash]
 ----
@@ -73,14 +73,14 @@ The output should show the hexadecimal value of bitmask for the https://github.c
 
 === Read-Only Root Filesystem
 
-The following example that we apply make the containers' root filesystem read-only. This prevents unauthorized write operations and further reduces the attack surface:
+We apply the following example to make the containers' root filesystem read-only. This prevents unauthorized write operations and further reduces the attack surface:
 
 [source,bash]
 ----
 kubectl apply -f https://k8spatterns.io/ProcessContainment/read-only-fs-pod.yaml
 ----
 
-You will see that the Pod won't start
+You will see that the Pod won't start.
 
 [source]
 ----
@@ -89,7 +89,7 @@ NAME                    READY   STATUS                       RESTARTS      AGE
 read-only-fs            0/1     CrashLoopBackOff             4 (39s ago)   3m25s
 ----
 
-In the logs you see that Spring Boot requires write access to at least write access to the `/tmp` directoy, and because the root file system is set to read-only the startup fails:
+In the logs, you see that Spring Boot requires to be able to write to the `tmp` directory, and because the root file system is set to read-only, the startup fails:
 
 [source]
 ----
@@ -109,7 +109,7 @@ Caused by: java.io.IOException: Read-only file system
 ...
 ----
 
-In order to fix this issue, we need to mount an empty directory volume at `/tmp`. To do so, use the following Pod definitions:
+We need to mount an empty directory volume at `/tmp` to fix this issue. To do so, use the following Pod definitions:
 
 
 [source, bash]
@@ -129,7 +129,7 @@ The output should show an error indicating that the filesystem is read-only.
 
 === Security Policies
 
-Now lets check how we can enforce security policies using Kubernetes Pod Security Admission (PSA) controller. We'll create a namespace that rejects any Pods that don't satisfy the baseline standard and generates a warning for Pods that don't meet the restricted standards requirements. Check out the file for the annotation that has been added to enforce this.
+Now, let's check how we can enforce security policies using Kubernetes Pod Security Admission (PSA) controller. First, we'll create a namespace that rejects any Pods that don't satisfy the baseline standard and generates a warning for Pods that don't meet the requirements of the restricted standards. Next, check out the file for the annotation that has been added to enforce this.
 
 
 [source, bash]
@@ -137,7 +137,7 @@ Now lets check how we can enforce security policies using Kubernetes Pod Securit
 kubectl apply -f https://k8spatterns.io/ProcessContainment/baseline-namespace.yaml
 ----
 
-Now deploy a Pod to the namespace that meets the baseline and restricted policies. Let's use a well behaved Pod, which satisfies all the baseline and restricted standard:
+Now deploy a Pod to the namespace that meets the baseline and restricted policies. Let's use a well-behaved Pod which satisfies all the baseline and restricted standards:
 
 [source, bash]
 ----
@@ -150,19 +150,17 @@ Now, let's attempt to deploy a Pod that violates the baseline standard (e.g., by
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/privileged-pod.yaml \
-    -n baseline-namespace
+kubectl apply -n baseline-namespace -f https://k8spatterns.io/ProcessContainment/privileged-pod.yaml
 ----
 
-The Pod should be rejected by the PSA controller due to the violation of the baseline standard.
+The PSA controller should reject the Pod due to violating the baseline standard.
 
-Finally, let's deploy a Pod to the namespace that doesn't meet the restricted standard: Deploy a Pod that satisfies the baseline standard but not the restricted standard. You should see warnings for violating the restricted standard but the Pod will still be created. Use the following YAML file named `restricted-warning-pod.yaml`:
+Finally, let's deploy a Pod to the namespace that doesn't meet the restricted standard: Deploy a Pod that satisfies the baseline standard but not the restricted standard. You should see warnings for violating the restricted standard, but the Pod will still be created. Use the following YAML file named `restricted-warning-pod.yaml`:
 
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/restricted-warning-pod.yaml \
-  -n baseline-namespace
+kubectl apply -n baseline-namespace -f https://k8spatterns.io/ProcessContainment/restricted-warning-pod.yaml
 ----
 
 The Pod should be created in the baseline-namespace with a warning for violating the restricted standard.
@@ -179,3 +177,4 @@ The Pod should be created in the baseline-namespace with a warning for violating
 * https://oreil.ly/IkMnH[Introduction to Security Contexts and SCCs]
 * https://oreil.ly/f04Xj[10 Kubernetes Security Context Settings You Should Understand]
 * https://oreil.ly/pbAqs[Security Risk Analysis Tool for Kubernetes Resources]
+
