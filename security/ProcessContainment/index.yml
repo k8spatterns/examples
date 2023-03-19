@@ -13,7 +13,7 @@ examples:
 - description: Pod that set the root filesystem to read-only
   path: read-only-fs-pod.yaml
 - description: Pod that set the root filesystem to read-only and mount an empty directory under `/tmp`
-  path: read-only-fs-with-tmp-pod.yaml
+  path: read-only-fs-tmp-mount-pod.yaml
 - description: Pod that causes warning when deployed in a baseline security policy
   path: restricted-warning-pod.yaml
 - description: Pod running as root

@@ -26,7 +26,7 @@ NAME           READY   STATUS                       RESTARTS   AGE
 non-root       0/1     CreateContainerConfigError   0          12s
 
 $ kubectl describe pod/non-root-pod
-Name:             non-rootd
+Name:             non-root
 Namespace:        default
 ... 
 Events:
