@@ -21,7 +21,7 @@ If you apply this, you will see an error like this:
 
 [source]
 ----
- kubectl get pod/non-root
+$ kubectl get pod/non-root
 NAME           READY   STATUS                       RESTARTS   AGE
 non-root       0/1     CreateContainerConfigError   0          12s
 
@@ -33,7 +33,9 @@ Events:
   Type     Reason     Age               From               Message
   ----     ------     ----              ----               -------
   ... 
-  Warning  Failed     2s (x3 over 18s)  kubelet            Error: container has runAsNonRoot and image will run as root (Pod: "non-root-pod_default(b1afb6bd-2380-4b80-a54b-89913cef1dcb)", container: random)
+  Warning  Failed     2s (x3 over 18s)  kubelet            Error: container has runAsNonRoot and image will run as root
+                                                           (Pod: "non-root-pod_default(b1afb6bd-2380-4b80-a54b-89913cef1dcb)",
+                                                           container: random)
 ----
 
 This error happens because `k8spatterns/random-generator:1.0` is set up to run with UID 0. To fix this, we could either change the image (which is the recommended fix) or set the user id explicitly with `runAsUser` with
