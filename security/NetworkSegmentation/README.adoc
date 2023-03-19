@@ -3,11 +3,11 @@
 ifndef::skipInstall[]
 We recommend using a Minikube installation for this example. Please refer to the link:../../INSTALL.adoc#minikube[installation instructions] for details.
 
-Before running these examples, you need to set up Minikube with a Container Network Interface (CNI) plugin that supports NetworkPolicies, such as Calico. Follow these steps to configure Minikube with Calico:
+Before running these examples, you need to set up Minikube with a Container Network Interface (CNI) plugin that supports NetworkPolicies, such as Calico. Follow these steps to start and configure Minikube with Calico:
 
 [source, bash]
 ----
-minikube start --network-plugin=cni --cni=calico
+minikube start --cni=calico
 ----
 
 To verify that the Calico CNI plugin has been installed, use
@@ -44,7 +44,7 @@ You should be able to reach the our random-generator app from within the cluster
 
 [source,bash]
 ----
-kubectl exec curl -- curl -m 5 $RANDOM_GENERATOR_POD_IP:8080
+kubectl exec curl -- curl -sm 5 $RANDOM_GENERATOR_POD_IP:8080
 ----
 
 Next, let's create the NetworkPolicy for denying all incoming traffic by applying
