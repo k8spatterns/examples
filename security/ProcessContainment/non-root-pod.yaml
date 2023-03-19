@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: non-root-pod
+  name: non-root
 spec:
   securityContext:
     # Specify that all containers of this Pod are running as non-root

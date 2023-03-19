@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: read-only-fs-pod
+  name: read-only-fs
 spec:
   containers:
   - name: random

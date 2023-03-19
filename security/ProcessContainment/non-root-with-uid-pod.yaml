@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: non-root-pod-with-uid
+  name: non-root-with-uid
 spec:
   securityContext:
     # If the container image is created for running on UID 0, you have to

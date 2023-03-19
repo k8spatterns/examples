@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: restricted-warning-pod
+  name: restricted-warning
 spec:
   securityContext:
     runAsNonRoot: true

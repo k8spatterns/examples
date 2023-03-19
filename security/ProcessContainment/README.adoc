@@ -48,7 +48,7 @@ Let's check the UID under which the container is running:
 
 [source,bash]
 ----
-kubectl exec -it non-root-pod-with-uid -- id
+kubectl exec -it non-root-with-uid -- id
 ----
 
 The output should show a UID of 10000 as given in the descriptor.
@@ -62,14 +62,14 @@ To check how we can limit container capabilities for minimizing the potential da
 kubectl apply -f https://k8spatterns.io/ProcessContainment/drop-caps-pod.yaml
 ----
 
-Verify that the container has only the 'NET_BIND_SERVICE' capability:
+Verify that the container has only the 'NET_BIND_SERVICE' capability that allows a process to bind to TCP/UDP sockets below 1024, which are usually reserved for system services.
 
 [source,bash]
 ----
-kubectl exec -it secure-app -- sh -c 'cat /proc/1/status | grep CapEff'
+kubectl exec -it drop-caps -- sh -c 'cat /proc/1/status | grep CapEff'
 ----
 
-The output should show the hexadecimal value of the 'NET_BIND_SERVICE' capability.
+The output should show the hexadecimal value of bitmask for the https://github.com/torvalds/linux/blob/a3671bd86a9770e34969522d29bb30a1b66fd88a/include/uapi/linux/capability.h#L183[NET_BIND_SERVICE] capability which is 0x0400 (which means that the 10th bit is set: `1 << (CAP_NET_BIND_SERVICE % 32) = 1 << (10 % 32) = 1 << 10 = 0x0400`, see the https://man7.org/linux/man-pages/man7/capabilities.7.html[man 7 capabilities] for details.
 
 === Read-Only Root Filesystem
 
@@ -80,11 +80,43 @@ The following example that we apply make the containers' root filesystem read-on
 kubectl apply -f https://k8spatterns.io/ProcessContainment/read-only-fs-pod.yaml
 ----
 
+You will see that the Pod won't start
+
+[source]
+----
+$ kubectl get pods
+NAME                    READY   STATUS                       RESTARTS      AGE
+read-only-fs            0/1     CrashLoopBackOff             4 (39s ago)   3m25s
+----
+
+In the logs you see that Spring Boot requires write access to at least write access to the `/tmp` directoy, and because the root file system is set to read-only the startup fails:
+
+[source]
+----
+$ kubectl logs read-only-fs
+
+...
+07:48:04.633 [main] INFO io.k8spatterns.examples.RandomGeneratorApplication - No WAIT_FOR_POST_START configured
+
+...
+ :: Spring Boot ::        (v2.1.4.RELEASE)
+...
+
+org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to create tempDir. java.io.tmpdir is set to /tmp
+...
+Caused by: java.io.IOException: Read-only file system
+	at java.base/java.io.UnixFileSystem.createFileExclusively(Native Method)
+...
+----
+
+In order to fix this issue, we need to mount an empty directory volume at `/tmp`. This work
+
+
 To ensure that the configuration is effective, run the following command:
 
 [source,bash]
 ----
-kubectl exec -it secure-app -- sh -c 'touch /test-file'
+kubectl exec -it read-only-fs -- sh -c 'touch /test-file'
 ----
 
 The output should show an error indicating that the filesystem is read-only.
