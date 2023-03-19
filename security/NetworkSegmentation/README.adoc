@@ -5,14 +5,14 @@ We recommend using a Minikube installation for this example. Please refer to the
 
 Before running these examples, you need to set up Minikube with a Container Network Interface (CNI) plugin that supports NetworkPolicies, such as Calico. Follow these steps to start and configure Minikube with Calico:
 
-[source, bash]
+[source, shell]
 ----
 minikube start --cni=calico
 ----
 
 To verify that the Calico CNI plugin has been installed, use
 
-[source, bash]
+[source, shell]
 ----
 kubectl get pods -n kube-system | grep calico
 ----
@@ -22,21 +22,21 @@ endif::skipInstall[]
 
 First, create a deployment of the random generator application with the following manifest:
 
-[source,bash]
+[source,shell]
 ----
 kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-deployment.yml
 ----
 
 Deploy a curl container to test if the random generator service is reachable:
 
-[source,bash]
+[source,shell]
 ----
 kubectl run curl --image=curlimages/curl --restart=Never --command -- sleep infinity
 ----
 
 Get the IP address of the random-generator pod:
 
-[source,bash]
+[source,shell]
 ----
 RANDOM_GENERATOR_POD_IP=$(kubectl get pod -l app=random-generator -o jsonpath='{.items[0].status.podIP}')
 echo $RANDOM_GENERATOR_POD_IP
@@ -44,7 +44,7 @@ echo $RANDOM_GENERATOR_POD_IP
 
 You should be able to reach the our random-generator app from within the cluster. The following command should give you the usual JSON response including a random number:
 
-[source,bash]
+[source,shell]
 ----
 kubectl exec curl -- curl -s $RANDOM_GENERATOR_POD_IP:8080
 ----
@@ -53,14 +53,14 @@ kubectl exec curl -- curl -s $RANDOM_GENERATOR_POD_IP:8080
 
 Next, let's create the NetworkPolicy for denying all incoming traffic by applying
 
-[source,bash]
+[source,shell]
 ----
 kubectl apply -f https://k8spatterns.io/NetworkSegmentation/deny-all-networkpolicy.yml
 ----
 
 Let's now attempt to access the random generator service from the curl container
 
-[source,bash]
+[source,shell]
 ----
 kubectl exec curl -- curl -m 5 $RANDOM_GENERATOR_POD_IP:8080
 ----
@@ -73,21 +73,21 @@ Now let's reenable the access again to only the random-generator Deployment.
 
 For this, create a NetworkPolicy that label-matches our Deployment and allows access from all Pods that habe a label `random-client: "true"`:
 
-[source,bash]
+[source,shell]
 ----
 kubectl apply -f https://k8spatterns.io/NetworkSegmentation/allow-access-networkpolicy.yml
 ----
 
 You still should not be able to access the Pod from our original `curl` Pod. Check it out by using again this command, that should return with a timeout:
 
-[source,bash]
+[source,shell]
 ----
 kubectl exec curl -- curl -m 5 $RANDOM_GENERATOR_POD_IP:8080
 ----
 
 Now create another curl client, but this time with a label `random-client` that allows to pass the ingress NetworkPolicy
 
-[source,bash]
+[source,shell]
 ----
 kubectl run curl-random --image=curlimages/curl --labels=role=random-client \
                         --restart=Never --command -- sleep infinity
@@ -95,7 +95,7 @@ kubectl run curl-random --image=curlimages/curl --labels=role=random-client \
 
 Finally, Attempt to access the random generator service from the curl-access container:
 
-[source,bash]
+[source,shell]
 ----
 kubectl exec curl-random -- curl -s $RANDOM_GENERATOR_POD_IP:8080
 ----
@@ -108,24 +108,24 @@ Let's continue our journey and restrict the egress access for our curl in the Po
 
 For this, apply the following resource file that will only allows cluster-internal traffic, except for `api.chucknorris.io` (you might need to check the IP adresses in this resource file whether they are still pointing to `api.chucknorris.io`):
 
-[source,bash]
+[source,shell]
 ----
 kubectl apply -f https://k8spatterns.io/NetworkSegmentation/allow-internal-egress-only.yml
 ----
 
 To verify, whether our egress policies work, let's try the following three curl:
 
-[source,bash]
+[source,shell]
 ----
 kubectl exec curl-random -- curl -sm 5 $RANDOM_GENERATOR_POD_IP:8080
 ----
 
-[source,bash]
+[source,shell]
 ----
 kubectl exec curl-random -- curl -sm 5 https://github.com
 ----
 
-[source,bash]
+[source,shell]
 ----
 kubectl exec curl-random -- curl -sm 5 https://api.chucknorris.io/jokes/random | jq .
 ----
@@ -138,7 +138,7 @@ For many more example and real world use cases of NetworkPolicies checkout the h
 
 For the following examples Istio as a service mesh needs to be installed. For minikube this ist best to create an instance with enough memory and cpu power:
 
-[source, bash]
+[source, shell]
 ----
 minikube start --memory=8192 --cpus=4
 ----
@@ -148,28 +148,28 @@ Either by downloading it from https://github.com/istio/istio/releases or, if you
 
 To finish the installation call
 
-[source, bash]
+[source, shell]
 ----
 istioctl install --set profile=demo
 ----
 
 and enable the default namespace by adding a label:
 
-[source, bash]
+[source, shell]
 ----
 kubectl label namespace default istio-injection=enabled
 ----
 
 First, ensure that our random generator application is deployed:
 
-[source,bash]
+[source,shell]
 ----
 kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-deployment.yml
 ----
 
 This creates a Deployment with one Pod. In addition add a Service "random-generator" in front of the Pods and map the Pod port 8080 to port 80 for the Service
 
-[source,bash]
+[source,shell]
 ----
 kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-service.yml
 ----
@@ -189,7 +189,7 @@ kubectl apply -f https://k8spatterns.io/NetworkSegmentation/authorization-policy
 
 In order to veriy our setup, fire up a `curl` container that waits for ever so that we can exec into it later on:
 
-[source,bash]
+[source,shell]
 ----
 kubectl run curl --image=curlimages/curl --restart=Never --command -- sleep infinity
 ----
