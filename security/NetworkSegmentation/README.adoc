@@ -22,7 +22,7 @@ First, create a deployment of the random generator application with the followin
 
 [source,bash]
 ----
-kubectl apply -f https://k8spatterns.io/AccessControl/random-generator-deployment.yml
+kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-deployment.yml
 ----
 
 Deploy a curl container to test if the random generator service is reachable:
@@ -51,7 +51,7 @@ Next, let's create the NetworkPolicy for denying all incoming traffic by applyin
 
 [source,bash]
 ----
-kubectl apply -f https://k8spatterns.io/AccessControl/deny-all-networkpolicy.yml
+kubectl apply -f https://k8spatterns.io/NetworkSegmentation/deny-all-networkpolicy.yml
 ----
 
 Let's now attempt to access the random generator service from the curl container
