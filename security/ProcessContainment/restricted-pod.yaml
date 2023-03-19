@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: restricted
+spec:
+  containers:
+  - name: app
+    image: k8spatterns/random-generator:1.0    
+    # Minimal security context that matched the restricted profile
+    securityContext:
+      # Run as non-root user
+      runAsUser: 10000
+      runAsNonRoot: true
+      # Don't allow privilege escalation
+      allowPrivilegeEscalation: false
+      # Drop all extra capabilities
+      capabilities:
+        drop: [ 'ALL' ]
+      # Use a restricted seccomp profile
+      seccompProfile:
+        type: RuntimeDefault

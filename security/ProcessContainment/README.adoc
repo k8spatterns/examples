@@ -114,7 +114,7 @@ In order to fix this issue, we need to mount an empty directory volume at `/tmp`
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/read-only-fs-tmp-mount.yaml
+kubectl apply -f https://k8spatterns.io/ProcessContainment/read-only-fs-tmp-mount-pod.yaml
 ----
 
 
@@ -129,7 +129,7 @@ The output should show an error indicating that the filesystem is read-only.
 
 === Security Policies
 
-Now lets check how we can enforce security policies using Kubernetes Pod Security Admission (PSA) controller. We'll create a namespace that rejects any Pods that don't satisfy the baseline standard and generates a warning for Pods that don't meet the restricted standards requirements.
+Now lets check how we can enforce security policies using Kubernetes Pod Security Admission (PSA) controller. We'll create a namespace that rejects any Pods that don't satisfy the baseline standard and generates a warning for Pods that don't meet the restricted standards requirements. Check out the file for the annotation that has been added to enforce this.
 
 
 [source, bash]
@@ -137,28 +137,26 @@ Now lets check how we can enforce security policies using Kubernetes Pod Securit
 kubectl apply -f https://k8spatterns.io/ProcessContainment/baseline-namespace.yaml
 ----
 
-Now deploy a Pod to the namespace that meets the baseline standard: Deploy a Pod to the baseline-namespace that satisfies the baseline security standard. You can use the previous example, which satisfies the baseline standard:
-
-
-[source, bash]
-----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/read-only-fs-pod.yaml \
-  -n baseline-namespace
-----
-
-The Pod should be successfully created in the baseline-namespace.
-
-Now let's deploy a Pod to the namespace that doesn't meet the baseline standard: Now, attempt to deploy a Pod that violates the baseline standard (e.g., by running as root).
+Now deploy a Pod to the namespace that meets the baseline and restricted policies. Let's use a well behaved Pod, which satisfies all the baseline and restricted standard:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/root-pod.yaml \
+kubectl apply -n baseline-namespace -f https://k8spatterns.io/ProcessContainment/restricted-pod.yaml
+----
+
+The Pod should be successfully created in the baseline-namespace without any warnings.
+
+Now, let's attempt to deploy a Pod that violates the baseline standard (e.g., by running in privileged mode).
+
+[source, bash]
+----
+kubectl apply -f https://k8spatterns.io/ProcessContainment/privileged-pod.yaml \
     -n baseline-namespace
 ----
 
 The Pod should be rejected by the PSA controller due to the violation of the baseline standard.
 
-Finally, let's Deploy a Pod to the namespace that doesn't meet the restricted standard: Deploy a Pod that satisfies the baseline standard but not the restricted standard. You should see a warning for violating the restricted standard but the Pod will still be created. Use the following YAML file named `restricted-warning-pod.yaml`:
+Finally, let's deploy a Pod to the namespace that doesn't meet the restricted standard: Deploy a Pod that satisfies the baseline standard but not the restricted standard. You should see warnings for violating the restricted standard but the Pod will still be created. Use the following YAML file named `restricted-warning-pod.yaml`:
 
 
 [source, bash]

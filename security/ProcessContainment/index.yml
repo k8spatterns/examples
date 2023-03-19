@@ -16,5 +16,7 @@ examples:
   path: read-only-fs-tmp-mount-pod.yaml
 - description: Pod that causes warning when deployed in a baseline security policy
   path: restricted-warning-pod.yaml
-- description: Pod running as root
-  path: root-pod.yaml 
+- description: Pod that is fully compliant to the restricted profile
+  path: restricted-pod.yaml
+- description: Pod running in privileged mode
+  path: privileged-pod.yaml 
