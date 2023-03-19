@@ -1,8 +1,8 @@
 pattern: Network Segmentation
-category: 
-base: /NetworkSegmentation
+category: security
+base: security/NetworkSegmentation
 examples:
-- description:
+- description: Deny all ingress traffic
   path: deny-all-networkpolicy.yml
-- description:
+- description: Deployment for testing
   path: random-generator-deployment.yml
