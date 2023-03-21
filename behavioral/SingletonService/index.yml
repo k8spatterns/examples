@@ -2,7 +2,9 @@ pattern: Singleton Service
 category: behavioral
 base: behavioral/SingletonService
 examples:
-- description:
+- description: Deployment with 6 replicas
   path: deployment.yml
-- description:
+- description: PodDisruptionBudget to test
   path: pdb.yml
+- description: Kind configuration for a multinode cluster
+  path: kind-multinode.yml
