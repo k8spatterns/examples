@@ -6,7 +6,7 @@ In order to focus on the usage of the _Downward API_ we create just a Pod which 
 
 [source, bash]
 ----
-kubectl create -f pod.yml
+kubectl apply -f https://k8spatterns.io/SelfAwareness/pod.yml
 ----
 
 The sample https://github.com/k8spatterns/random-generator[random-generator] REST service exposes an endpoint `/info` which picks up this info and returns it in the response.
@@ -24,7 +24,12 @@ Next let's test this endpoint:
 
 [source, bash]
 ----
-curl -s localhost:8080/info | jq .
+curl -s http://localhost:8080/info | jq .
+----
+
+results in
+
+----
 {
   "memory.free": 23,
   "NODE_NAME": "minikube",
@@ -65,6 +70,8 @@ When you now re-run the `curl` command you will see how the `labels` entry in th
 
 === More Information
 
-* https://kubernetes.io/docs/tasks/configure-pod-container/downward-api-volume-expose-pod-information/[Using Downward API]
-* http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html[Instance Metadata and User Data]
-* http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-introspection.html[Amazon ECS Container Agent Introspection]
+* https://oreil.ly/fHu1O[Self Awareness Example]
+* https://oreil.ly/iCwPr[AWS EC2: Instance Metadata and User Data]
+* https://oreil.ly/qe2Gc[Expose Pod Information to Containers Through Files]
+* https://oreil.ly/bZrtR[Expose Pod Information to Containers Through Environment Variables]
+* https://oreil.ly/Jh4zf[Downward API: Available Fields]
