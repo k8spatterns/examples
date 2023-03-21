@@ -49,6 +49,8 @@ Let's verify that this service can reached from within the cluster:
 ----
 # Create a debug sattelite Pod that we jump into later
 kubectl run dbg --image=k8spatterns/curl-jq --command -- sleep infinity
+# Wait until Pod is up and running
+kubectl wait --for=condition=Ready pod/dbg
 # Jump into the debug pod
 kubectl exec -it dbg -- ash
 ----
