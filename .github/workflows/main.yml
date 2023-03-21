@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Update Website
-      run: go run .github/update_website.go -pattern-source ..
+      run: go run update_website.go -pattern-source ..
       working-directory: ./.github
       env:
         GITHUB_TOKEN: ${{ secrets.K8SPATTERN_GITHUB_TOKEN }}
