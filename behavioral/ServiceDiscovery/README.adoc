@@ -47,11 +47,9 @@ Let's verify that this service can reached from within the cluster:
 
 [source, bash]
 ----
-# Create a debug sattelite Pod that we jump into later
-kubectl run dbg --image=k8spatterns/curl-jq --command -- sleep infinity
-# Wait until Pod is up and running
-kubectl wait --for=condition=Ready pod/dbg
-# Jump into the debug pod
+# Create a debug sattelite Pod, wait until its ready and then jump into it
+kubectl run dbg --image=k8spatterns/curl-jq --command -- sleep infinity && \
+kubectl wait --for=condition=Ready pod/dbg && \
 kubectl exec -it dbg -- ash
 ----
 
@@ -75,6 +73,13 @@ You can also check whether, the service coordinates are exposed via environment 
 ----
 # Check for exposed service variables in our test Pod
 env | grep RANDOM
+----
+
+Let's jump out of the debug container with the following command (or `CTRL-D`)
+
+[source, bash]
+----
+exit
 ----
 
 === Service with type NodePort
