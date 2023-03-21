@@ -2,18 +2,25 @@
 
 IMPORTANT: The instructions have not been written/finished, but the resource file has been verified. Instructions will be added soon.
 
+In these examples we learn various ways how to discover and access services with _Service Discovery_.
 
-In this example we learn various ways how to discover and access services with _Service Discovery_.
+ifndef::skipInstall[]
+We are using a Minikube installation to run the examples. Please refer to the link:../../INSTALL.adoc#minikube[installation instructions] for details.
 
-As the other examples, this example also assumes that you have a Kubernetes installation to your avail.
+The examples here expect that you have an Ingress controller and a load balancer enabled. For Minikube, you can enable both with
 
-Check the link:../../INSTALL.adoc[INSTALL] for the options available.
+[source, bash]
+----
+minikube addons enable ingress
+----
 
-The examples below expect that you have an Ingress controller and a load balancer enabled.
-If you are using Minikube you can enable both features:
+and in a separate terminal start a https://minikube.sigs.k8s.io/docs/handbook/accessing/#loadbalancer-access[minikube tunnel]. The following call will start the tunnel in the foreground. You can stop it with `CTRL-C`.
 
-* Call `minikube addons enable ingress` to install an ingress controller.
-* Use `minikube tunnel` to expose services of type `LoadBalancer`. See the https://github.com/kubernetes/minikube/blob/master/docs/networking.md#loadbalancer-emulation-minikube-tunnel[Minikube documentation] for more details, but essentially you just call `minikube tunnel` in an extra terminal.
+[source, bash]
+----
+minikube tunnel
+----
+endif::skipInstall[]
 
 We are using our `random-generator` application as the deployment which we want to expose.
 
@@ -21,14 +28,14 @@ So, first we are exposing this service with 4 replicase with:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/ServiceDiscovery/deployment.yml
+kubectl apply -f https://k8spatterns.io/ServiceDiscovery/deployment.yml
 ----
 
 Now lets just create a simple service which dispatches to these four pods dynamically:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/ServiceDiscovery/service.yml
+kubectl apply -f https://k8spatterns.io/ServiceDiscovery/service.yml
 ----
 
 This service is of type `ClusteIP` so only reachable from within the cluster.
