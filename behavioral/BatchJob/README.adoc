@@ -1,11 +1,11 @@
 == Batch Job
 
 Let's create a batch job for generating thousands of random numbers.
-Our typical REST example at https://github.com/k8spatterns/random-generator[random-generator] also contains a plain Java class `RandomRunner`, which is suitable for batch processing.
+Our typical REST example at https://github.com/k8spatterns/random-generator[random-generator] also contains a plain Java class, `RandomRunner`, suitable for batch processing.
 
-This example assumes a Kubernetes installation available.
-In this case, it's best played with Minikube as we need some support for PVs.
-Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for how to install Minikube.
+This example assumes a Kubernetes installation is available.
+In this case, it's best played with Minikube, as we need some support for PVs.
+Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for installing Minikube.
 
 To access the PersistentVolume used in this demo, let's mount a local directory into the Minikube VM that we later then use for a PersistentVolume that is mounted into the Pod:
 
@@ -23,7 +23,7 @@ minikube mount $(pwd)/logs:/example
 
 This command makes this directory available within the Minikube VM at the path `/example`.
 
-Let's now create the PersistentVolume along with a PVC which can be mounted into our Job later:
+Let's now create the PersistentVolume along with a PVC, which can be mounted into our Job later:
 
 [source, bash]
 ----
@@ -49,14 +49,14 @@ You can check the Job's status with
 kubectl get jobs
 ----
 
-which should give something like
+Which should give something like
 
 ----
 NAME                     COMPLETIONS   DURATION   AGE
 random-generator-lnx4v   3/5           100s       100s
 ----
 
-Also, you can check with `kubetl get pods` that only 3 Pods will run simultaneously.
+Also, you can check with `kubectl get pods` that only 3 Pods will run simultaneously.
 
 If you want to run the Job a second time, call `kubectl create -f job.yml` again.
 The Job's name is auto-generated, so there won't be any name clash.
@@ -66,29 +66,30 @@ With `indexed-job.yml`, we split the file `logs/random.log` into five files with
 Each Pod will create one file by selecting a different range from the original file.
 Please see the comments within `indexed-job.yml` for more details.
 
-To run this split Job, run:
+To run this split Job, run the following:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/BatchJob/indexed-job.yml
+kubectl create -f https://k8spatterns.io/BatchJob/indexed-job.yml
 ----
 
-When the Job is finished, you will find files `logs/random-0.txt`, ..., `logs/random-4.txt` with the parts out of `logs/random.log`.
+When the Job is finished, you will find files `logs/random-0.txt`, ..., and `logs/random-4.txt` with the parts out of `logs/random.log`.
 
-Finally, you can delete all jobs with
+Finally, you can delete all jobs and all created Pods with
 
 [source, bash]
 ----
-kubectl delete jobs --label app=random-generator
+kubectl delete jobs -l app=random-generator
 ----
 
 === More Information
 
-* https://kubernetes.io/docs/concepts/jobs/run-to-completion-finite-workloads/[Run to Completion Finite Workloads]
-* https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/[Parallel Processing using Expansions]
-* https://kubernetes.io/docs/tasks/job/coarse-parallel-processing-work-queue/[Coarse Parallel Processing Using a Work Queue]
-* https://kubernetes.io/docs/tasks/job/fine-parallel-processing-work-queue/[Fine Parallel Processing Using a Work Queue]
-* https://kubernetes.io/docs/concepts/jobs/run-to-completion-finite-workloads/[Run to Completion Finite Workloads]
-* https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/[Parallel Processing using Expansions]
-* https://kubernetes.io/docs/tasks/job/coarse-parallel-processing-work-queue/[Coarse Parallel Processing Using a Work Queue]
-* https://kubernetes.io/docs/tasks/job/fine-parallel-processing-work-queue/[Fine Parallel Processing Using a Work Queue]
+* https://oreil.ly/PkVF0[Batch Job Example]
+* https://oreil.ly/I2Xum[Jobs]
+* https://oreil.ly/mNmhN[Parallel Processing Using Expansions]
+* https://oreil.ly/W5aqH[Coarse Parallel Processing Using a Work Queue]
+* https://oreil.ly/-8FBt[Fine Parallel Processing Using a Work Queue]
+* https://oreil.ly/2B2Nn[Indexed Job for Parallel Processing with Static Work Assignment]
+* https://oreil.ly/8dLDo[Spring Batch on Kubernetes: Efficient Batch Processing at Scale]
+* https://oreil.ly/YyYxy[JBeret Introduction]
+
