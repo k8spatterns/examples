@@ -1,8 +1,10 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: random-generator
 spec:
-  backend:
-    serviceName: random-generator
-    servicePort: 8080
+  defaultBackend:
+    service:
+      name: random-generator
+      port:
+        number: 8080

@@ -110,9 +110,11 @@ Now we can access our service from the _outside_ the cluster, namely from your d
 
 [source, bash]
 ----
-# Pick port from the service definition and curl
+# Pick URL from the service tunnel and curl it
 curl -s $(cat /tmp/random-url.txt) | jq .
 ----
+
+Stop the tunnel by bringing the tunnel back to the foreground with `fg` and then stop it with `CTRL-C`.
 
 === Service with type LoadBalancer
 
@@ -135,7 +137,7 @@ ip=$(kubectl get svc random-generator -o jsonpath={.status.loadBalancer.ingress[
 curl -s http://$ip:8080 | jq .
 ----
 
-==== Ingress
+=== Ingress
 
 Finally, let's have a look to an Ingress exposed Service.
 
@@ -156,22 +158,21 @@ kubectl apply -f https://k8spatterns.io/ServiceDiscovery/ingress.yml
 
 You can check the create Ingress object as usual with `kubectl get ingress`. Note, that you should now have an `ADDRESS` assigned if your cluster has an ingress controller running.
 
-On Minikube this can be done via `minikube addons enable ingress`.
-
-You can query now our internal Service over this Ingress with
+You can query now our internal Service over this Ingress via `localhost` port 80, which hits the tunnel that is still open via `minikube tunnel`.
 
 [source, bash]
 ----
-curl -s http://$(minikube ip)/
+curl -s http://localhost/
 ----
 
 === More Information
 
-* https://github.com/k8spatterns/examples/tree/master/behavorial/ServiceDiscovery[Service Discovery example]
-* https://kubernetes.io/docs/concepts/services-networking/service/[Kubernetes Services]
-* https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/[DNS for Services and Pods]
-* https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/[Debug Services]
-* https://kubernetes.io/docs/tutorials/services/[Using Source IP]
-* https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip[Create an External Load Balancer]
-* https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0[Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what?]
-* https://kubernetes.io/docs/concepts/services-networking/ingress/[Ingress]
+* https://oreil.ly/nagmD[Service Discovery Example]
+* https://oreil.ly/AEDi5[Kubernetes Service]
+* https://oreil.ly/WRT5H[DNS for Services and Pods]
+* https://oreil.ly/voVbw[Debug Services]
+* https://oreil.ly/mGjzg[Using Source IP]
+* https://oreil.ly/pzOiM[Create an External Load Balancer]
+* https://oreil.ly/Idv2c[Ingress]
+* https://oreil.ly/W4i8U[Kubernetes NodePort Versus LoadBalancer Versus Ingress? When Should I Use What?]
+* https://oreil.ly/fXicP[Kubernetes Ingress Versus OpenShift Route]
