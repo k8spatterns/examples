@@ -19,7 +19,7 @@ Alternatively, you can mount the directory on the fly in the background.
 [source,bash]
 ---
 minikube mount $(pwd)/logs:/example
-----
+---
 
 This command makes this directory available within the Minikube VM at the path `/example`.
 
