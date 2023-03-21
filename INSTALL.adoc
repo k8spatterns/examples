@@ -98,7 +98,7 @@ kind create cluster --name multinode-cluster --config kind-multinode.yaml
 Check the cluster status:: After the cluster is created, you can check its status using `kubectl`:
 [source,shell]
 ----
-kubectl cluster-info --context kind-multinode-cluster
+kubectl cluster-info
 ----
 
 When you're done with the cluster, you can delete it using the `kind delete cluster` command:
