@@ -92,18 +92,29 @@ After you left the Pod, lets switch to `NodePort` as service type
 kubectl apply -f https://k8spatterns.io/ServiceDiscovery/service-with-nodeport.yml
 ----
 
+You can check the assigned node port with
+
+[source, bash]
+----
+kubectl get svc random-generator
+----
+
+In order to access the URL we need to start another tunnel in the background and store the access URL in a temporary file
+
+[source, bash]
+----
+minikube service random-generator --url > /tmp/random-url.txt &
+----
+
 Now we can access our service from the _outside_ the cluster, namely from your desktop's shell:
 
 [source, bash]
 ----
 # Pick port from the service definition and curl
-port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
-curl -s http://$(minikube ip):$port | jq .
+curl -s $(cat /tmp/random-url.txt) | jq .
 ----
 
 === Service with type LoadBalancer
-
-NOTE: If you are not using Minikube, use the hostname/IP address of one of your cluster's node)
 
 [source, bash]
 ----
