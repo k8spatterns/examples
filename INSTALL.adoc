@@ -93,14 +93,14 @@ nodes:
 - role: worker
 ----
 
-. Create the cluster:
+.Create the cluster:
 
 Use the `kind create cluster` command with the `--config` flag to create the cluster using your configuration file:
 
 [source,shell]
 ----
 kind create cluster --name multinode-cluster --config kind-multinode.yaml
-----j
+----
 
 . Check the cluster status:
 
