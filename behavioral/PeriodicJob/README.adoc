@@ -26,7 +26,7 @@ Now create the CronJob which fires every three minutes:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/PeriodicJob/cron-jobs.yml
+kubectl create -f https://k8spatterns.io/PeriodicJob/cron-job.yml
 ----
 
 In this example we only use only one completion per Job (i.e. the default for a Job).
