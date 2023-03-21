@@ -9,7 +9,7 @@ First, install the application in version 1 by using the given deployment descri
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/DeclarativeDeployment/rolling-update.yml
+kubectl apply -f https://k8spatterns.io/DeclarativeDeployment/rolling-update.yml
 ----
 
 This will deploy 3 replicas of the `random-generator` and configures a `RollingUpdate` update strategy (which would be also the default).
@@ -18,23 +18,27 @@ In order to be able to access our application, lets create a Service that is exp
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/DeclarativeDeployment/service.yml
+kubectl apply -f https://k8spatterns.io/DeclarativeDeployment/service.yml
 ----
 
-The Service is of type `NodePort`, so even if you don't have an ingress controller installed you can access the random generator via the node port that you can find out via `kubectl get svc random-generator`
-
-Let's start now in a dedicated terminal window a loop which constantly accesses our Service. The following example assumes that you are using Minikube with ingress enabled.
+The Service is of type `LoadBalancer`, so in order to access this service, you need to tell minikube to expose this at a random port. For doing this run the following command in the background, storing the URL that is printed out in a temporary file:
 
 [source, bash]
 ----
+minikube service random-app --url > /tmp/random-url.txt &
+-----
+
+Let's start now in a dedicated terminal window a loop which constantly accesses our Service:
+
+[source, bash]
+----
+url=$(cat /tmp/random-url.txt)
 while true; do
-  curl -s http://random-generator.$(minikube ip).nip.io/info | jq '.version,.id'
+  curl -s $url/info | jq '.version,.id'
   echo ===========================
   sleep 1
 done
 ----
-
-Alternatively, you can also use the script `call_random_generator.sh` which does the same but via the Service's node port and can be used on e.g. the Kubernetes playgrounds footnote:[You can open multiple terminals on Katakoda with the '+' sign beside the terminal tabs].
 
 Now it's time to update to version 2.0.
 As mentioned in the book, you can it in several ways.
