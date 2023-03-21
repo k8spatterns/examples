@@ -22,6 +22,7 @@ spec:
             - /logs/random.log
             # 2. How many iterations
             - "10000"
+            # Mount directory to where to write the results
             volumeMounts:
             - mountPath: /logs
               name: log-volume

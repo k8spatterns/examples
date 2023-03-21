@@ -2,7 +2,7 @@ pattern: Periodic Job
 category: behavioral
 base: behavioral/PeriodicJob
 examples:
-- description:
+- description: Persistent volume and claim for storing the result of the periodic job
   path: pv-and-pvc.yml
-- description:
+- description: The cron job itself
   path: cron-job.yml

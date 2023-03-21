@@ -1,15 +1,23 @@
 == Periodic Job
 
-Our Cron Job example builds on top of the link:../BatchJob/README.adoc[Batch Job] example above, to the basic setup is the same:
+Our Cron Job example builds on top of the link:../BatchJob/README.adoc[Batch Job] example above.
 
-* A Minikube installation available, ideally with link:../../INSTALL.adoc#minikube[Minikube]
-* Minikube started with `minikube start --mount --mount-string="$(pwd)/logs:/example"` to mount the local `logs/` into the Minikube VM
+This example assumes a Kubernetes installation is available.
+In this case, it's best played with Minikube, as we need some support for PVs.
+Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for installing Minikube.
+
+To access the PersistentVolume used in this demo, let's mount a local directory into the Minikube VM that we later then use for a PersistentVolume that is mounted into the Pod:
+
+[source, bash]
+----
+minikube start --mount --mount-string="$(pwd)/logs:/example"
+----
 
 Then create the PersistentVolume and PersistentVolumeClaim with
 
 [source, bash]
 ----
-kubectl create -f pv-and-pvc.yml
+kubectl create -f https://k8spatterns.io/PeriodicJob/pv-and-pvc.yml
 ----
 
 but you don't have to do it, if you already have your Minikube still running from the _Batch Job_ example footnote:[If you reuse the Batch Job example, don't forget that the `random.log` is generated in the `logs/` directory over there.]
@@ -18,7 +26,7 @@ Now create the CronJob which fires every three minutes:
 
 [source, bash]
 ----
-kubectl create -f cron-jobs.yml
+kubectl create -f https://k8spatterns.io/PeriodicJob/cron-jobs.yml
 ----
 
 In this example we only use only one completion per Job (i.e. the default for a Job).
@@ -27,6 +35,8 @@ You can check the `logs/random.log` for the numbers generated, and also of cours
 
 === More Information
 
-* https://kubernetes.io/docs/concepts/jobs/cron-jobs/[Cron Jobs]
-* https://en.wikipedia.org/wiki/Cron[Cron]
-* https://crontab.cronhub.io/[Cron Expression Generator]((("", startref="BHper08")))
+* https://oreil.ly/yINcj[Periodic Job Example]
+* https://oreil.ly/9096p[CronJob]
+* https://oreil.ly/ZPavq[Cron]
+* https://oreil.ly/Oi3b5[Crontab Specification]
+* https://oreil.ly/xYymj[Cron Expression Generator]
