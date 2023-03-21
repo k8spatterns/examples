@@ -1,26 +1,26 @@
 == Self Awareness
 
-For this example any Kubernetes installation can be used, as described in link:../../INSTALL.adoc[INSTALL].
+Any Kubernetes installation can be used for this example, as described in the link:../../INSTALL.adoc[INSTALL].
 
-In order to focus on the usage of the _Downward API_ we create just a Pod which references own properties in the environment variables and mounts labels and annotations as files:
+To focus on the usage of the _Downward API_, we create just a Pod which references its properties in the environment variables and mounts labels and annotations as files:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/SelfAwareness/pod.yml
+kubectl create -f https://k8spatterns.io/SelfAwareness/pod.yml
 ----
 
-The sample https://github.com/k8spatterns/random-generator[random-generator] REST service exposes an endpoint `/info` which picks up this info and returns it in the response.
-For this simple example we don't provide a Service (but of course feel free to add one).
-Instead we are just using a port forwarding reverse proxy to access the REST endpoint:
+The sample https://github.com/k8spatterns/random-generator[random-generator] REST service exposes an endpoint `/info`, which picks up this info and returns it in the response.
+For this simple example, we don't provide a Service (but of course, feel free to add one).
+Instead, we are just using a port-forwarding reverse proxy to access the REST endpoint:
 
 [source, bash]
 ----
 kubectl port-forward random-generator 8080:8080 &
 ----
 
-We start it in the background so that we can stay in the same terminal windows.
+We start it in the background to stay in the same terminal windows.
 
-Next let's test this endpoint:
+Next, let's test this endpoint:
 
 [source, bash]
 ----
@@ -29,25 +29,45 @@ curl -s http://localhost:8080/info | jq .
 
 results in
 
+[source, json]
 ----
 {
-  "memory.free": 23,
+  "memory.free": 171,
   "NODE_NAME": "minikube",
-  "memory.used": 46,
-  "cpu.procs": 1,
-  "memory.max": 481,
+  "memory.used": 189,
+  "CPU.procs": 1,
+  "memory.max": 3014,
   "pattern": "Self Awareness",
-  "annotations": "kubernetes.io/config.seen=\"2019-02-01T19:33:51.438536517Z\"\nkubernetes.io/config.source=\"api\"",
-  "id": "103f3362-fe3f-4cdd-9d47-b2d1d06197a2",
-  "labels": "app=\"random-generator\"",
-  "POD_IP": "172.17.0.6",
-  "version": "1.0"
+  "annotations": "kubernetes.io/config.seen=\"2023-03-21T17:49:51.553809009Z\"\nkubernetes.io/config.source=\"api\"",
+  "id": "e79022b1-f586-44fb-8ecf-e1443f002441",
+  "POD_IP": "10.244.0.6",
+  "env": {
+    "KUBERNETES_PORT_443_TCP": "tcp://10.96.0.1:443",
+    "PATH": "/usr/local/openjdk-11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "KUBERNETES_PORT_443_TCP_ADDR": "10.96.0.1",
+    "KUBERNETES_PORT": "tcp://10.96.0.1:443",
+    "JAVA_HOME": "/usr/local/openjdk-11",
+    "KUBERNETES_PORT_443_TCP_PROTO": "tcp",
+    "LANG": "C.UTF-8",
+    "KUBERNETES_SERVICE_HOST": "10.96.0.1",
+    "KUBERNETES_SERVICE_PORT": "443",
+    "NODE_NAME": "minikube",
+    "PATTERN": "Self Awareness",
+    "HOSTNAME": "random-generator",
+    "KUBERNETES_PORT_443_TCP_PORT": "443",
+    "JAVA_VERSION": "11.0.16",
+    "KUBERNETES_SERVICE_PORT_HTTPS": "443",
+    "POD_IP": "10.244.0.6",
+    "HOME": "/root"
+  },
+  "version": "1.0",
+  "labels": "app=\"random-generator\""
 }
 ----
 
-Please not the entries for `POD_INFO`, `NODE_NAME`, `annotations` and `labels` and how they refer to Pod internal data.
+Please note the entries for `POD_INFO`, `NODE_NAME`, `annotations`, and `labels` and how they refer to Pod internal data.
 
-TO verify that an update of the label is reflected in the mounted volumes, use
+To verify that an update of the label is reflected in the mounted volumes, use
 
 [source, bash]
 ----
@@ -66,7 +86,7 @@ EOT
 kubectl patch pod random-generator --type=json -p=$patch
 ----
 
-When you now re-run the `curl` command you will see how the `labels` entry in the response chnges.
+When you now re-run the `curl` command, you will see how the `labels` entry in the response changes.
 
 === More Information
 
