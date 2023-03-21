@@ -10,7 +10,7 @@ You can start a three-node kind cluster with
 [source,shell]
 ----
 curl -s https://k8spatterns.io/SingletonService/kind-multinode.yml | \
-kind create cluster --name multinode --config -
+kind create cluster --config -
 ----
 
 To verify that the cluster is running, check the node:
@@ -42,18 +42,17 @@ kubectl create -f https://k8spatterns.io/SingletonService/pdb.yml
 ----
 
 Now let's drain a node and see how the Pods are relocated.
-The second node is called `multinode-worker`, like for the `kind` setup. But take any node from the output that is *not* the control-plane node.
+The second node is called `kind-worker`, like for the `kind` setup. But take any node from the output that is *not* the control-plane node.
 
 [source, bash]
 ----
-kubectl drain --ignore-daemonsets multinode-worker >/dev/null 2>&1 &
+kubectl drain --ignore-daemonsets kind-worker >/dev/null 2>&1 &
 ----
 
 We do the removal of the node in the background so that we can watch how the Pods are relocated:
 
 [source, bash]
 ----
-kubectl drain --ignore-daemonsets multinode-worker >/dev/null 2>&1 &
 watch kubectl get pods -o=custom-columns=NAME:.metadata.name,NODE:.spec.nodeName
 ----
 
@@ -63,7 +62,7 @@ You can undo the drain operation with
 
 [source, bash]
 ----
-kubectl uncordon multinode-worker
+kubectl uncordon kind-worker
 ----
 
 And restore the Deployment with
@@ -75,6 +74,13 @@ kubectl scale deployment random-generator --replicas 6
 ----
 
 This down-up-scale will distribute the Pods again over all nodes.
+
+To remove the kind cluster call
+
+[source, bash]
+----
+kind delete cluster
+----
 
 == More Information
 
