@@ -10,19 +10,10 @@ To access the PersistentVolume used in this demo, let's mount a local directory 
 
 [source, bash]
 ----
-minikube start --mount --mount-string="$(pwd)/logs:/tmp/example"
+minikube start --mount --mount-string="$(pwd)/logs:/example"
 ----
 
-Alternatively start the mount after your minikube is running
-[source, bash]
-----
-minikube mount $(pwd)/logs:/tmp/example
-----
-
-
-This makes this directory available within the Minikube VM at the path `/tmp/example`.
-
-NOTE: Some virtual machine drivers of Minikube doesn't support host mounts like this (like the `vmware` driver). You can verify this by entering the VM after startup with `minikube ssh` and check whether you see the local directories `1` and `2` in `ls /tmp/example/*`, too.
+This makes this directory available within the Minikube VM at the path `/example`.
 
 Let's create now two PersistentVolumes for the replicas of our StatefulSet later:
 
@@ -53,21 +44,29 @@ In order to access the service we are creating a regular Service exposed via `no
 [source, bash]
 ----
 kubectl create -f https://k8spatterns.io/StatefulService/service-nodeport.yml
-port=$(kubectl get svc random-generator-np -o jsonpath={.spec.ports[0].nodePort})
 ----
 
-`port` now holds the dynamically assigned port number which we can use to access the random-generator:
+To access the service on Minikue we need to start a tunnel to the VM and store the URL to the service in a text file that we pick up later
 
 [source, bash]
 ----
-curl -s http://$(minikube ip):$port | jq .
+minikube service random-generator --url > /tmp/random-url.txt &
+----
+
+Now we can access our service with:
+
+[source, bash]
+----
+# Pick the URL from the service tunnel and curl it
+url=$(cat /tmp/random-url.txt)
+curl -s $url | jq .
 ----
 
 We can also look at the logs created
 
 [source, bash]
 ----
-curl -s http://$(minikube ip):$port/logs
+curl -s $url/logs
 ----
 
 As you can see, the logs differ from call to call as it depends which endpoint you are hitting with this request.
@@ -113,12 +112,10 @@ You will find all the internal IP adresses of the StatefulSet's Pod in the answe
 
 === More information
 
-* https://github.com/k8spatterns/examples/tree/master/advanced/StatefulService[StatefulService example]
-* https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/[StatefulSet Basics]
-* https://kubernetes.io/docs/concepts/workloads/controllers/statefulset[StatefulSets]
-* https://kubernetes.io/docs/tutorials/stateful-application/cassandra/[Deploying Cassandra with Stateful Sets]
-* https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/[Running ZooKeeper, A Distributed System Coordinator]
-* https://kubernetes.io/docs/concepts/services-networking/service/#headless-services[Headless Services]
-* https://kubernetes.io/docs/tasks/run-application/force-delete-stateful-set-pod/[Force Delete StatefulSet Pods]
-* https://medium.com/@marko.luksa/graceful-scaledown-of-stateful-apps-in-kubernetes-2205fc556ba9[Graceful scaledown of stateful apps in Kubernetes]
-* https://www.youtube.com/watch?v=EuJoAKTCCXg[Configuring and Deploying Stateful Applications]
+* https://oreil.ly/aGoPv[Singleton Service Example]
+* https://oreil.ly/tb9aX[Leases]
+* https://oreil.ly/W1ABD[Specifying a Disruption Budget for Your Application]
+* https://oreil.ly/NU1aN[Leader Election in Go Client]
+* https://oreil.ly/ES8Ve[Dapr: Distributed Lock Overview]
+* https://oreil.ly/K8zI1[Creating Clustered Singleton Services on Kubernetes]
+* https://oreil.ly/tho5T[Akka: Kubernetes Lease]
