@@ -1,8 +1,10 @@
 pattern: Batch Job
 category: behavioral
 base: behavioral/BatchJob
-examples:
+examples: Create PV and PVC to store the results of the jobs
 - description:
   path: pv-and-pvc.yml
-- description:
+- description: Sample Job
   path: job.yml
+- description: Sample Job that uses an index
+  path: indexed-job.yml

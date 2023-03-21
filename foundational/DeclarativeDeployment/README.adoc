@@ -1,7 +1,8 @@
 == Declarative Deployment
 
 ifndef::skipInstall[]
-We recommend using a Minikube installation for this example. For details, please refer to the link:../../INSTALL.adoc#minikube[installation instructions].
+For this example we are using a Minikube installation for this example. For details, please refer to the link:../../INSTALL.adoc#minikube[installation instructions].
+endif::skipInstall[]
 
 Let's look at how we can get our https://github.com/k8spatterns/random-generator[random-generator] application from version 1 to version 2 with different update strategies.
 

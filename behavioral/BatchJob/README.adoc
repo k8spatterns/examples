@@ -7,7 +7,7 @@ This example assumes a Kubernetes installation available.
 In this case, it's best played with Minikube as we need some support for PVs.
 Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for how to install Minikube.
 
-To access the PersistentVolume used in this demo, let's mount a local directory into the Minikube VM that we later then use a PersistentVolume mounted into the Pod:
+To access the PersistentVolume used in this demo, let's mount a local directory into the Minikube VM that we later then use for a PersistentVolume that is mounted into the Pod:
 
 [source, bash]
 ----
@@ -27,14 +27,14 @@ Let's now create the PersistentVolume along with a PVC which can be mounted into
 
 [source, bash]
 ----
-kubectl create -f pv-and-pvc.yml
+kubectl apply -f https://k8spatterns.io/BatchJob/pv-and-pvc.yml
 ----
 
 The Job can be started with
 
 [source, bash]
 ----
-kubectl create -f job.yml
+kubectl apply -f https://k8spatterns.io/BatchJob/job.yml
 ----
 
 This Job will create multiple Pods to create the number.
@@ -65,7 +65,7 @@ To run this split Job, run:
 
 [source, bash]
 ----
-kubectl create -f indexed-job.yml
+kubectl apply -f https://k8spatterns.io/BatchJob/indexed-job.yml
 ----
 
 When the Job is finished, you will find files `logs/random-0.txt`, ..., `logs/random-4.txt` with the parts out of `logs/random.log`.

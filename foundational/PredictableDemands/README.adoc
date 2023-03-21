@@ -5,7 +5,7 @@ We recommend using a Minikube installation for this example. Please refer to the
 
 To play with memory limits, we assume you use the default 2GB memory for your Minikube VM. You can adjust this value with the `--memory` flag.
 endif::skipInstall[]
-
+;
 To access the PersistentVolume used in this demo, mount a local directory `logs/` into the Minikube VM with the following command:
 
 [source, bash]
