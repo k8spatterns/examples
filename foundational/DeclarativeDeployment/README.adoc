@@ -1,7 +1,7 @@
 == Declarative Deployment
 
-For this example you can use any Kubernetes installation you have access to.
-See the link:../../INSTALL.adoc[INSTALL] documentation for some options you have.
+ifndef::skipInstall[]
+We recommend using a Minikube installation for this example. Please refer to the link:../../INSTALL.adoc#minikube[installation instructions] for details.
 
 Let's now look, how we can get out https://github.com/k8spatterns/random-generator[random-generator] application from version 1 to version 2 with different update strategies.
 
@@ -14,16 +14,16 @@ kubectl create -f https://k8spatterns.io/DeclarativeDeployment/rolling-update.ym
 
 This will deploy 3 replicas of the `random-generator` and configures a `RollingUpdate` update strategy (which would be also the default).
 
-In order to be able to access our application, lets create a Service and Ingress object, too:
+In order to be able to access our application, lets create a Service that is exposed with Minikube's internal loadbalancer:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/DeclarativeDeployment/service-and-ingress.yml
+kubectl create -f https://k8spatterns.io/DeclarativeDeployment/service.yml
 ----
 
 The Service is of type `NodePort`, so even if you don't have an ingress controller installed you can access the random generator via the node port that you can find out via `kubectl get svc random-generator`
 
-Let's start now in a dedicated terminal window a loop which constantly accesses our Service. The following example assumes that you are using Minishift with ingress enabled.
+Let's start now in a dedicated terminal window a loop which constantly accesses our Service. The following example assumes that you are using Minikube with ingress enabled.
 
 [source, bash]
 ----

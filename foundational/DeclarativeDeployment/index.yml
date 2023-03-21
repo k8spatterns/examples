@@ -5,8 +5,8 @@ examples:
   path: recreate.yml
 - description: A rolling update Deployment
   path: rolling-update.yml
-- description: Service and Ingress objects for accessing the example Deployment
-  path: service-and-ingress.yml
+- description: Service object for accessing the example Deployment
+  path: service.yml
 links:
 - url: https://kubernetes.io/docs/tasks/run-application/rolling-update-replication-controller/
   title: Rolling Update

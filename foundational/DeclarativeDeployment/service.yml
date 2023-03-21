@@ -1,0 +1,15 @@
+# Service object for accessing the example Deployment via Minikube's LoadBalancer
+# Alternatively you could also use a "NodePort" service to access the service over a
+# random IP or use Minikube's Ingress extension to acess the application
+apiVersion: v1
+kind: Service
+metadata:
+  name: random-generator
+spec:
+  selector:
+    app: random-generator
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  type: LoadBalancer
