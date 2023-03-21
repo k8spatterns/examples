@@ -1,25 +1,25 @@
 == Daemon Service
 
-In this example we learn how to create a _Daemon Service_ for allowing to run infrastructure-focused Pods on specific nodes.
+In this example, we learn how to create a _Daemon Service_ for allowing to run infrastructure-focused Pods on specific nodes.
 
-This examples assumes a Kubernetes installation available.
-In this case its best played through with Minikube as we need some support for PVs.
-Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for how to install Minikube.
+This example assumes a Kubernetes installation is available.
+In this case, it's best played through with Minikube, as we need some support for PVs.
+Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for installing Minikube.
 
-This example used our `random-generator` application for seeding `/dev/random` periodically by writing 100000 random number every time to `/dev/random`.
+This example used our `random-generator` application for periodically seeding `/dev/random` by writing 100000 random numbers every time to `/dev/random`.
 
-To be honest, this a make up example which should never be used for any application as the generated random number are not really random.
+This daemon service is a makeup example that should never be used for any application, as the generated random number is not entirely random.
 
-NOTE: You could achieve a similar effect with a _Periodic Job_ and and appropriate `nodeSelector`. However, a _Daemon Service_ is still more safe for such kind of a task, as it also works without changes also for nodes that will be added later.
+NOTE: You could achieve a similar effect with a _Periodic Job_ and appropriate `nodeSelector`. However, a _Daemon Service_ is still safer for such a task, as it works without changes for nodes that will be added later.
 
 Nevertheless, let's create a DaemonSet with
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/DaemonService/daemonset.yml
+kubectl apply -f https://k8spatterns.io/DaemonService/daemonset.yml
 ----
 
-You can now check the generates pods with
+You can now check the generated pods with
 
 [source, bash]
 ----
@@ -27,11 +27,12 @@ kubectl get pods
 ----
 
 You see one Pod per node of your cluster.
-So for Minikube it should be a single pod and you can check the logs as ususal.
-
+For Minikube, it should be a single pod, and you can check the logs as usual.
 
 === More Information
 
-* https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/[DaemonSets]
-* https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/[Performing a Rolling Update on a DaemonSet]
-* https://blog.giantswarm.io/understanding-basic-kubernetes-concepts-v-daemon-sets-and-jobs/[DaemonSets and Jobs]
+* https://oreil.ly/_YRZc[Daemon Service Example]
+* https://oreil.ly/62c3q[DaemonSet]
+* https://oreil.ly/nTSbi[Perform a Rolling Update on a DaemonSet]
+* https://oreil.ly/CnHin[DaemonSets and Jobs]
+* https://oreil.ly/yYHft[Create Static Pods]
