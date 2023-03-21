@@ -1,34 +1,34 @@
 == Declarative Deployment
 
 ifndef::skipInstall[]
-We recommend using a Minikube installation for this example. Please refer to the link:../../INSTALL.adoc#minikube[installation instructions] for details.
+We recommend using a Minikube installation for this example. For details, please refer to the link:../../INSTALL.adoc#minikube[installation instructions].
 
-Let's now look, how we can get out https://github.com/k8spatterns/random-generator[random-generator] application from version 1 to version 2 with different update strategies.
+Let's look at how we can get our https://github.com/k8spatterns/random-generator[random-generator] application from version 1 to version 2 with different update strategies.
 
-First, install the application in version 1 by using the given deployment descriptor
+First, install the application in version 1 using the given deployment descriptor.
 
 [source, bash]
 ----
 kubectl apply -f https://k8spatterns.io/DeclarativeDeployment/rolling-update.yml
 ----
 
-This will deploy 3 replicas of the `random-generator` and configures a `RollingUpdate` update strategy (which would be also the default).
+This deployment will start three replicas of the `random-generator` and configures a `RollingUpdate` update strategy (which would also be the default).
 
-In order to be able to access our application, lets create a Service that is exposed with Minikube's internal loadbalancer:
+To be able to access our application, let's create a Service that is exposed with Minikube's internal load balancer:
 
 [source, bash]
 ----
 kubectl apply -f https://k8spatterns.io/DeclarativeDeployment/service.yml
 ----
 
-The Service is of type `LoadBalancer`, so in order to access this service, you need to tell minikube to expose this at a random port. For doing this run the following command in the background, storing the URL that is printed out in a temporary file:
+The service is of type `LoadBalancer`, so to access this service, you need to tell minikube to expose this at a random port. To do this, run the following command in the background, storing the URL that is printed out in a temporary file:
 
 [source, bash]
 ----
 minikube service random-generator --url > /tmp/random-url.txt &
 ----
 
-Let's start now in a dedicated terminal window a loop which constantly accesses our Service:
+Let's start now in a dedicated terminal window, a loop that constantly accesses our service:
 
 [source, bash]
 ----
@@ -41,7 +41,7 @@ done
 ----
 
 Now it's time to update to version 2.0.
-As mentioned in the book, you can it in several ways.
+As mentioned in the book, you can do it in several ways.
 Here we are using the easiest one and call `kubectl set image`:
 
 [source, bash]
@@ -49,17 +49,17 @@ Here we are using the easiest one and call `kubectl set image`:
 kubectl set image deployment random-generator random-generator=k8spatterns/random-generator:2.0
 ----
 
-After you started the deployment you can do several things to monitor the update:
+After you start the deployment, you can do several things to monitor the update:
 
-* Watch the terminal with the query loop we started. Do you see the change from version 1 to version 2 ? Are there any errors reported by curl ?
+* Watch the terminal with the query loop we started. Do you see the change from version 1 to version 2? Does curl report any errors?
 * Use `kubectl get pods -w` to watch how the Pods are coming down and up
-* Use `kubectl rollout status` to see the status of the rollout.
+* Use `kubectl rollout status` to see the rollout status.
 
 When the update has finished, let's have some fun:
 
 [source, bash]
 ----
-# Rollback the deployment
+# Rollback the Deployment
 kubectl rollout undo deploy/random-generator
 ----
 
@@ -69,7 +69,7 @@ kubectl rollout undo deploy/random-generator
 kubectl rollout history deploy/random-generator
 ----
 
-Finally let's switch the update strategy to `Recreate`:
+Finally, let's switch the update strategy to `Recreate`:
 
 [source, bash]
 ----
@@ -79,7 +79,7 @@ kubectl replace -f https://k8spatterns.io/DeclarativeDeployment/recreate.yml
 kubectl set image deployment random-generator random-generator=k8spatterns/random-generator:2.0
 ----
 
-Can you spot the difference when doing the update, also with respect to the downtime ?
+Can you spot the difference when doing the update, also concerning the downtime?
 
 === More Information
 
