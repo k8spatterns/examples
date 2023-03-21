@@ -64,6 +64,61 @@ Now you can just use the Docker CLI `docker` as usual.
 There are many more features to explore (like ssh-ing into the VM, exposing Services via NodePort, port-forwarding to Pods e.g. for remote debugging and more)
 Please consult the Minikube documentation for details.
 
+[[kind]]
+=== Kind
+
+An alternative to `minikube` is `kind`, which can also be used to simulate a multi-node cluster on your Desktop.
+
+`kind` (Kubernetes in Docker) is a tool for running local Kubernetes clusters using Docker container nodes. It's often used for development and testing purposes. You can easily create a multinode cluster with kind by defining a configuration file that specifies the desired number of control-plane and worker nodes.
+
+Here's a step-by-step guide to creating a multinode cluster with kind:
+
+. Install kind and Docker:
+
+First, make sure you have Docker installed. You can follow the installation instructions for your platform from the official Docker website: https://docs.docker.com/get-docker/
+
+Next, install kind. You can follow the installation instructions from the kind GitHub repository: https://github.com/kubernetes-sigs/kind#installation-and-usage
+
+. Create a configuration file:
+
+Create a new YAML file, for example, `kind-multinode.yaml`, and configure the desired number of control-plane and worker nodes. The following example creates a cluster with one control-plane node and two worker nodes:
+
+[source,yaml]
+----
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+----
+
+. Create the cluster:
+
+Use the `kind create cluster` command with the `--config` flag to create the cluster using your configuration file:
+
+[source,shell]
+----
+kind create cluster --name multinode-cluster --config kind-multinode.yaml
+----j
+
+. Check the cluster status:
+
+After the cluster is created, you can check its status using `kubectl`:
+
+[source,shell]
+----
+kubectl cluster-info --context kind-multinode-cluster
+----
+
+When you're done with the cluster, you can delete it using the `kind delete cluster` command:
+
+[source,shell]
+----
+kind delete cluster --name multinode-cluster
+----
+
+
 [[cloud]]
 === Kubernetes in the Cloud
 

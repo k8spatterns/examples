@@ -1,15 +1,29 @@
 == Singleton Service
 
 In this example we see see how a PodDisruptionBudget works.
-As the other examples we  assumes a Kubernetes installation available.
-Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for the installation how you can use an online Kubernetes playground.
-We can't use Minikube in this example because we need a 'real' cluster from where we can drain a node to see the effect of a PodDisruptionBudget.
+As the other examples we assumes a Kubernetes installation available.
+Check the link:../../INSTALL.adoc[INSTALL] documentation for the installation how you can use an online Kubernetes playground.
+We can't use Minikube in this example because we need a 'real' cluster from where we can drain a node to see the effect of a PodDisruptionBudget, but we can use `kind` for simulate a multinode cluster as described in link:../../INSTALL.adoc#kind[INSTALL].
 
-First, let's create a Deployment with six Pods:
+You can start a 3 node kind cluster with
+
+[source,shell]
+----
+kind create cluster --name multinode --config kind-multinode.yml
+----
+
+To verify that the cluster is running, check the node:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/SingletonService/deployment.yml
+kubectl get nodes
+----
+
+Now let's create a Deployment with six Pods:
+
+[source, bash]
+----
+kubectl apply -f https://k8spatterns.io/SingletonService/deployment.yml
 ----
 
 We can check on which nodes the Pods are running with
