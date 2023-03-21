@@ -17,7 +17,7 @@ Then create the PersistentVolume and PersistentVolumeClaim with
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/PeriodicJob/pv-and-pvc.yml
+kubectl apply -f https://k8spatterns.io/PeriodicJob/pv-and-pvc.yml
 ----
 
 but you don't have to do it, if you already have your Minikube still running from the _Batch Job_ example footnote:[If you reuse the Batch Job example, don't forget that the `random.log` is generated in the `logs/` directory over there.]
