@@ -80,7 +80,7 @@ Let's jump out of the debug container with the following command (or `CTRL-D`)
 exit
 ----
 
-=== service with type NodePort
+=== Service with type NodePort
 
 After you leave the Pod, let's switch to `NodePort` as the service type.
 
@@ -114,7 +114,7 @@ curl -s $(cat /tmp/random-url.txt) | jq .
 
 Stop the tunnel by bringing it back to the foreground with `fg` and then stop with `CTRL-C`.
 
-=== service with type LoadBalancer
+=== Service with type LoadBalancer
 
 [source, bash]
 ----
