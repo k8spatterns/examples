@@ -43,11 +43,11 @@ kubectl apply -f https://k8spatterns.io/ServiceDiscovery/service.yml
 This service is of type `ClusterIP` so only reachable from within the cluster.
 You can verify this by calling `kubectl get svc`.
 
-Let's verify that this service can reached from within the cluster:
+Let's verify that this service can reached from within the cluster.
+For this, let's create a debug sattelite Pod, wait until its ready and then jump into it.
 
 [source, bash]
 ----
-# Create a debug sattelite Pod, wait until its ready and then jump into it
 kubectl run dbg --image=k8spatterns/curl-jq --command -- sleep infinity && \
 kubectl wait --for=condition=Ready pod/dbg && \
 kubectl exec -it dbg -- ash
