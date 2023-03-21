@@ -25,7 +25,7 @@ The Service is of type `LoadBalancer`, so in order to access this service, you n
 
 [source, bash]
 ----
-minikube service random-app --url > /tmp/random-url.txt &
+minikube service random-generator --url > /tmp/random-url.txt &
 ----
 
 Let's start now in a dedicated terminal window a loop which constantly accesses our Service:
@@ -35,7 +35,7 @@ Let's start now in a dedicated terminal window a loop which constantly accesses 
 url=$(cat /tmp/random-url.txt)
 while true; do
   curl -s $url/info | jq '.version,.id'
-  echo ===========================
+  echo "==========================="
   sleep 1
 done
 ----
@@ -57,9 +57,17 @@ After you started the deployment you can do several things to monitor the update
 
 When the update has finished, let's have some fun:
 
-* Rollback the deployment with `kubectl rollout undo deploy/random-generator`
-* Check the update history `kubectl rollout history deploy/random-generator`
+[source, bash]
+----
+# Rollback the deployment
+kubectl rollout undo deploy/random-generator
+----
 
+[source, bash]
+----
+# Check the update history
+kubectl rollout history deploy/random-generator
+----
 
 Finally let's switch the update strategy to `Recreate`:
 
@@ -75,9 +83,12 @@ Can you spot the difference when doing the update, also with respect to the down
 
 === More Information
 
-* https://kubernetes.io/docs/tasks/run-application/rolling-update-replication-controller/[Rolling Update]
-* https://kubernetes.io/docs/concepts/workloads/controllers/deployment/[Deployments]
-* http://kubernetes.io/docs/user-guide/deploying-applications/[Deploying Applications]
-* http://martinfowler.com/bliki/BlueGreenDeployment.html[Blue-Green Deployment]
-* https://martinfowler.com/bliki/CanaryRelease.html[Canary Release]
-* https://www.openshift.com/promotions/devops-with-openshift.html[DevOps with OpenShift]
+* https://oreil.ly/xSsID[Declarative Deployment Example]
+* https://oreil.ly/paEA0[Performing a Rolling Update]
+* https://oreil.ly/NKEnH[Deployments]
+* https://oreil.ly/wb7D5[Run a Stateless Application Using a Deployment]
+* https://oreil.ly/sbN9T[Blue-Green Deployment]
+* https://oreil.ly/Z-vFT[Canary Release]
+* https://oreil.ly/JGL4C[Flagger: Deployment Strategies]
+* https://oreil.ly/0lzcD[Argo Rollouts]
+* https://oreil.ly/PAwMQ[Knative: Traffic Management]
