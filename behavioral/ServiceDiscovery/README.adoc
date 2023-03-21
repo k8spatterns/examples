@@ -38,7 +38,7 @@ Now lets just create a simple service which dispatches to these four pods dynami
 kubectl apply -f https://k8spatterns.io/ServiceDiscovery/service.yml
 ----
 
-This service is of type `ClusteIP` so only reachable from within the cluster.
+This service is of type `ClusterIP` so only reachable from within the cluster.
 You can verify this by calling `kubectl get svc`.
 
 Let's verify that this service can reached from within the cluster:
@@ -47,22 +47,34 @@ Let's verify that this service can reached from within the cluster:
 ----
 # Jump into one of the pods. Select first Pod as you get
 # from "kubectl get pods"
-pod=$(kubectl get pods -o name | grep random | head -1 | sed  's|.*/||')
-kubectl exec -it $pod bash
+pod=$(kubectl get pods -l app=random-generator -o name | head -1)
+kubectl exec -it $pod -- bash
+----
 
+Now do some checks:
+
+[source, bash]
+----
 # Check DNS entry of random-generator
-$ ping random-generator
-$ dig random-genertor.default.svc.cluster.local
+ping random-generator
+----
 
+[source, bash]
+----
+dig random-genertor.default.svc.cluster.local
+----
+
+[source, bash]
 # Curl to service `random-generator`
-$ curl -s http://random-generator:8080 | jq .
+curl -s http://random-generator:8080 | jq .
 ----
 
 You can also check whether, the service coordinates are exposed via environment variables within the pods:
 
 [source, bash]
 ----
-$ env | grep RANDOM
+# Check for exposed service variables in our test Pod
+env | grep RANDOM
 ----
 
 NOTE: If you have created the Service after the Deployment, you wont find any environment variables set for the service. This is obvious as environment variables for a container can't be updated when the container has been already started. You have to restart the containers again to see the environment variables. This is best done by scaling down the deployment to zero and up again (`kubectl scale deployment random-generator --replicas=0`) and then retry within one of the new Pods. This time you should find the coordinates of the random-generator Service within the shell environment. This dependency on the deployment order is also the reason why you shouldn't rely on the environment variables but always refer to a Service with its DNS name.
