@@ -1,10 +1,10 @@
 == Stateful Service
 
-In this example we will examine how a _Stateful Service_ can implemented with the help of a StatefulSet resource.
+In this example, we will examine how a _Stateful Service_ can be implemented with the help of a StatefulSet resource.
 
-This example assumes a Kubernetes installation available.
-For the moment we are using Minikube as we need some support for PersistentVolumes.
-Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for how to install Minikube.
+This example assumes a Kubernetes installation is available.
+Currently, we are using Minikube as we need some support for PersistentVolumes.
+Check the link:../../INSTALL.adoc#minikube[INSTALL] documentation for installing Minikube.
 
 To access the PersistentVolume used in this demo, let's mount a local directory into the Minikube VM that we later then use a PersistentVolume mounted into the Pod:
 
@@ -13,7 +13,7 @@ To access the PersistentVolume used in this demo, let's mount a local directory 
 minikube start --mount --mount-string="$(pwd)/logs:/example"
 ----
 
-This makes this directory available within the Minikube VM at the path `/example`.
+This startup command makes this directory available within the Minikube VM at the path `/example`.
 
 Let's create now two PersistentVolumes for the replicas of our StatefulSet later:
 
@@ -24,8 +24,8 @@ kubectl create -f https://k8spatterns.io/StatefulService/pvs.yml
 
 These persistent volumes are the local directories  `logs/1` and `logs/2`.
 
-As described for the _Stateful Service_ pattern we need a headless service for the StatefulSet.
-Let's create one with:
+As described for the _Stateful Service_ pattern, we need a headless service for the StatefulSet.
+Let's create one with the following:
 
 [source, bash]
 ----
@@ -39,18 +39,18 @@ Now its time to create the StatefulSet with
 kubectl create -f https://k8spatterns.io/StatefulService/statefulset.yml
 ----
 
-In order to access the service we are creating a regular Service exposed via `nodePort`:
+To access the service, we are creating a regular Service exposed via `nodePort`:
 
 [source, bash]
 ----
 kubectl create -f https://k8spatterns.io/StatefulService/service-nodeport.yml
 ----
 
-To access the service on Minikue we need to start a tunnel to the VM and store the URL to the service in a text file that we pick up later
+To access the service on Minikube, we need to start a tunnel to the VM and store the URL to the service in a text file that we pick up later.
 
 [source, bash]
 ----
-minikube service random-generator --url > /tmp/random-url.txt &
+minikube service random-generator-np --url > /tmp/random-url.txt &
 ----
 
 Now we can access our service with:
@@ -62,17 +62,17 @@ url=$(cat /tmp/random-url.txt)
 curl -s $url | jq .
 ----
 
-We can also look at the logs created
+We can also look at the logs created.
 
 [source, bash]
 ----
 curl -s $url/logs
 ----
 
-As you can see, the logs differ from call to call as it depends which endpoint you are hitting with this request.
+As you can see, the logs differ from call to call, depending on which endpoint you are hitting with this request.
 You can also check for those log files in the directory `./logs/1` and `.logs/2`
 
-Now that we set up we can play a bit with this StatefulSet:
+Now that we set up, we can play a bit with this StatefulSet:
 
 We can scale it down with
 
@@ -81,7 +81,7 @@ We can scale it down with
 kubectl scale statefulset --replicas 1 rg
 ----
 
-What happens to the PerstitenVolumeClaims created for the this StatefulSet (`kubectl get pvc`) ? Has it been deleted, too ? What happens when you query the service ?
+What happens to the PerstitenVolumeClaims created for this StatefulSet (`kubectl get pvc`)? Has it been deleted, too? What happens when you query the service?
 
 Now scale up to three replicas:
 
@@ -90,25 +90,25 @@ Now scale up to three replicas:
 kubectl scale statefulset --replicas 3 rg
 ----
 
-Check again the PVCs. It the Pod with index 1 attached back to its original PersistentVolume ? How is the new Pod nr. 3 attached to which PV ?
+Recheck the PVCs. Is it the Pod with index 1 attached back to its original PersistentVolume? How is the new Pod nr. 3 attached to which PV?
 
-Finally, let's check how the pods can be adressed within the internal network.
+Finally, let's check how the pods can be addressed within the internal network.
 
 For this, jump into one of the pods with
 
 [source, bash]
 ----
-kubectl exec -it rg-0 bash
+kubectl exec -it rg-0 -- bash
 ----
 
-and then, from within the Pod check the DNS entry for the headless Service:
+And then, from within the Pod, check the DNS entry for the headless Service:
 
 [source, bash]
 ----
 dig SRV random-generator.default.svc.cluster.local
 ----
 
-You will find all the internal IP adresses of the StatefulSet's Pod in the answer.
+You will find all the internal IP addresses of the StatefulSet's Pod in the answer.
 
 === More information
 
@@ -119,3 +119,4 @@ You will find all the internal IP adresses of the StatefulSet's Pod in the answe
 * https://oreil.ly/ES8Ve[Dapr: Distributed Lock Overview]
 * https://oreil.ly/K8zI1[Creating Clustered Singleton Services on Kubernetes]
 * https://oreil.ly/tho5T[Akka: Kubernetes Lease]
+
