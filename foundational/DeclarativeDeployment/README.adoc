@@ -26,7 +26,7 @@ The Service is of type `LoadBalancer`, so in order to access this service, you n
 [source, bash]
 ----
 minikube service random-app --url > /tmp/random-url.txt &
------
+----
 
 Let's start now in a dedicated terminal window a loop which constantly accesses our Service:
 
