@@ -34,10 +34,10 @@ The Job can be started with
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/BatchJob/job.yml
+kubectl create -f https://k8spatterns.io/BatchJob/job.yml
 ----
 
-This Job will create multiple Pods to create the number.
+This Job will create multiple Pods to create the numbers.
 Each Pod will run for creating 10000 entries into `logs/random.log`.
 The Job is configured to run the Pod 5 times, with three max running in parallel.
 That will take some minutes, but in the end, you should have 50000 entries in the log file.
@@ -47,6 +47,11 @@ You can check the Job's status with
 [source, bash]
 ----
 kubectl get jobs
+----
+
+which should give something like
+
+----
 NAME                     COMPLETIONS   DURATION   AGE
 random-generator-lnx4v   3/5           100s       100s
 ----
