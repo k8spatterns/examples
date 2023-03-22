@@ -93,8 +93,7 @@ Example for Kubernetes' RBAC access control subsystem for controlling the access
 link:advanced/Controller/README.adoc[Controller]::
 A simple, pure shell-based controller watches ConfigMap resources for changes and restarts Pods using a label selector provided as an annotation. An additional link:advanced/Controller/expose-controller/README.adoc[example controller] exposes an Ingress route when it detects an `exposeService` label attached to the service. **[*]**
 link:advanced/Operator/README.adoc[Operator]::
-Operator based on the ConfigMap watch. **[*]**
-link:advanced/Controller/README.adoc[controller] and introduces a CRD ConfigWatcher, which connects a ConfigMap with a set of Pods to restart in case of a config change. **[*]**
+Operator based on the ConfigMap watch link:advanced/Controller/README.adoc[controller] and introduces a CRD ConfigWatcher, which connects a ConfigMap with a set of Pods to restart in case of a config change. **[*]**
 link:advanced/ElasticScale/README.adoc[Elastic Scale]::
   Horizontal and vertical scaling examples with the random-generator service **[*]**
 link:advanced/ImageBuilder/README.adoc[Image Builder]::
