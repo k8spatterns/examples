@@ -3,32 +3,32 @@
 For this simple example, you need access to a Kubernetes installation.
 Anyone as described in link:../../INSTALL.adoc[INSTALL] is good enough.
 
-Our sample https://github.com/k8spatterns/random-generator[random-generator] application provides a `/shutdown` endpoint which we use to log its call during shutdown of a Pod.
+Our sample https://github.com/k8spatterns/random-generator[random-generator] application provides a `/shutdown` endpoint, which we use to log its call during the shutdown of a Pod.
 
-But lets create the Pod first:
+But let's create the Pod first:
 
 [source, bash]
 ----
 kubectl create -f https://k8spatterns.io/ManagedLifecycle/pod.yml
 ----
 
-and verify its status with
+And verify its status with
 
 [source, bash]
 ----
 kubectl get pods -w
 ----
 
-As you can see, the Pod only starts  only after 30s because we use a `sleep 30` as preStart hool (you can't even check the logs before).
+As you can see, the Pod only starts after 30s because we use a `sleep 30` as a preStart hook (you can't even check the logs before).
 
-In order to watch the logs during shutdown we start a `kubectl logs` in the background:
+To watch the logs during the shutdown, we start a `kubectl logs` in the background:
 
 [source, bash]
 ----
 kubectl logs -f random-generator &
 ----
 
-You can see the `postStart` message which has been picked up by random generator during startup and copied to the standard output of the application container.
+You can see the `postStart` message, which has been picked up by a random generator during startup and copied to the standard output of the application container.
 The environment variable `WAIT_FOR_POST_START` that we set for our main application container indicates the random generator application to wait until the `postStart` file has been created:
 
 ----
@@ -46,20 +46,13 @@ Now let's kill the Pod:
 kubectl delete pod random-generator
 ----
 
-You should see in the logs messages like the following which indicate that our `/shutdown` endpoint as been called indeed:
+You should see in the logs messages like the following which indicate that our `/shutdown` endpoint has been called indeed:
 
 ----
 ....
 i.k.examples.RandomGeneratorApplication  : SHUTDOWN NOW
 o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
 i.k.examples.RandomGeneratorApplication  : >>>> SHUTDOWN HOOK called. Possibly because of a SIGTERM from Kubernetes
-----
-
-If you have closed the log already you can still look at it with
-
-[source, bash]
-----
-kubectl logs random-generator --previous
 ----
 
 === More Information
