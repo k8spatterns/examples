@@ -21,7 +21,7 @@ random-generator-5856b5f774-54h6b   0/1     Running       0          5s
 random-generator-5856b5f774-54h6b   1/1     Running       0          38s
 ----
 
-=== Readiness and Liveness Probes
+=== Liveness Probes
 
 The example application exposes two endpoints with which you can switch the state of the readiness and liveness checks manually.
 For simplicity reasons, we haven't installed a Service or Ingress (but of course, you are free to do so!)
@@ -63,7 +63,9 @@ Watch the pods and wait a bit. What happens after 2-3 mins ?
 kubectl get pods -w
 ----
 
-Now switch readiness off:
+=== Readiness Probes
+
+Let's check now the readiness probes. For this first flip the readiness state to `false`:
 
 [source, bash]
 ----
