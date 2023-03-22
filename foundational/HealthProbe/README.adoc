@@ -22,14 +22,15 @@ random-generator-5856b5f774-54h6b   0/1     Running       0          5s
 random-generator-5856b5f774-54h6b   1/1     Running       0          38s
 ----
 
-The example apps expose to endpoints with which you can switch the state of the readiness and liveness checks.
+=== Readiness and Liveness Probes
+
+The example application exposes two endpoints with which you can switch the state of the readiness and liveness checks manually.
 For simplicity reasons, we haven't installed a Service or Ingress (but of course, you are free to do so!)
 
 Instead we are using a simple port-forwarding directly to the pod to trigger the toggles:
 
 [source, bash]
 ----
-# Port forward to Pod. "pod" is an alias to pick the full name of the pod (see INSTALL.adoc)
 kubectl port-forward deployment/random-generator 8080:8080 &
 ----
 
@@ -39,36 +40,59 @@ Now you can switch on/off the readiness/liveness checks and see how the cluster 
 ----
 # Check liveness probe by querying the actuator
 curl -s http://localhost:8080/actuator/health | jq .
+----
 
+[source, bash]
+----
 # Toggle liveness check to off
 curl -s http://localhost:8080/toggle-live
+----
 
+[source, bash]
+----
 # Check liveness probe again
 curl -s http://localhost:8080/actuator/health | jq .
+----
 
+[source, bash]
+----
 # Watch the pods and wait a bit. What happens after 2-3 mins ?
 kubectl get pods -w
+----
 
+[source, bash]
+----
 # Now switch readiness off
 curl -s http://localhost:8080/toggle-ready
+----
 
+[source, bash]
+----
 # Watch the pods for 1-2 mins
 kubectl get pods -w
+----
 
+[source, bash]
+----
 # Toggle readiness back on
 curl -s http://localhost:8080/toggle-ready
+----
 
+[source, bash]
+----
 # Watch the pods again ...
 kubectl get pods -w
 ----
 
 === More Information
 
-* https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/[Configuring Liveness and Readiness Probes]
-* http://kubernetes.io/docs/user-guide/production-pods/[Working with Containers in Production]
-* https://cloud.google.com/blog/products/gcp/kubernetes-best-practices-setting-up-health-checks-with-readiness-and-liveness-probes[Kubernetes best practices: Setting up health checks with readiness and liveness probes]
-* https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/resource-qos.md[Resource Quality of Service]
-* https://blog.risingstack.com/graceful-shutdown-node-js-kubernetes/[Graceful shutdown with Node.js and Kubernetes]
-* https://ahmet.im/blog/advanced-kubernetes-health-checks/[Advanced Health Check Patterns in Kubernetes]
-* https://mesosphere.github.io/marathon/docs/readiness-checks.html[Readiness Checks by Marathon]
-* https://mesosphere.github.io/marathon/docs/health-checks.html[Health Checks and Task Termination]
+* https://oreil.ly/moMx7[Health Probe Example]
+* https://oreil.ly/h862g[Configure Liveness, Readiness, and Startup Probes]
+* https://oreil.ly/q0wKy[Kubernetes Best Practices: Setting Up Health Checks with Readiness and Liveness Probes]
+* https://oreil.ly/kEik7[Graceful Shutdown with Node.js and Kubernetes]
+* https://oreil.ly/MHbup[Kubernetes Startup Probe—Practical Guide]
+* https://oreil.ly/h_W1G[Improving Application Availability with Pod Readiness Gates]
+* https://oreil.ly/O2sA2[Customizing the Termination Message]
+* https://oreil.ly/lhetJ[SmallRye Health]
+* https://oreil.ly/7kYX6[Spring Boot Actuator: Production-Ready Features]
+* https://oreil.ly/aKEGe[Advanced Health Check Patterns in Kubernetes]
