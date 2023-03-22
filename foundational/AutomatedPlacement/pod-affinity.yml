@@ -43,5 +43,5 @@ metadata:
     confidential: high
 spec:
   containers:
-  - image: gcr.io/google_containers/pause:2.0
-    name: pause
+  - image: nginx
+    name: nginx

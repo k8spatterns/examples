@@ -32,9 +32,9 @@ link:foundational/DeclarativeDeployment/README.adoc[Declarative Deployment]::
 link:foundational/HealthProbe/README.adoc[Health Probe]::
   Liveness, Readiness and Startup probes for the random generator and an example how to readiness gates.
 link:foundational/ManagedLifecycle/README.adoc[Managed Lifecycle]::
-  `postStart` and `preStop` hooks are demonstrated with the random generator application. **[*]**
+  `postStart` and `preStop` hooks are demonstrated with the random generator application.
 link:foundational/AutomatedPlacement/README.adoc[Automated Placement]::
-  These examples demonstrate a node selector, pod and node affinity, taint, and tolerations. **[*]**
+  These examples demonstrate a node selector, pod and node affinity, taint, and tolerations.
 
 === Behavioral Patterns
 

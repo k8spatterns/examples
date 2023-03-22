@@ -16,8 +16,8 @@ spec:
           - key: numberCores
             operator: Gt
             values: [ "3" ]
-      # Preferred rules which influence scheduling descission.
-      # Here we don't like to be scheduled on the Minikube master
+      # Preferred rules which influence scheduling decision.
+      # Here we don't like to be scheduled on the Minikube control-plane node
       # (but of course will be ignored if we are testing on Minikube with
       # only one node available)
       preferredDuringSchedulingIgnoredDuringExecution:
