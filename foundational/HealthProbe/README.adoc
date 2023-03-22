@@ -153,15 +153,10 @@ Then let's patch the Pod's status and add the readiness condition:
 
 [source, bash]
 ----
-kubectl patch $pod --type='json' \
-  -p='[{"op": "add", \
-        "path": "/status/conditions/-", \
-        "value": {"type": "k8spatterns.io/ready", \
-                  "status": "True", \
-                  "reason": "CustomReadinessCheck", \
-                  "message": "Custom readiness condition is satisfied", \
-                  "lastProbeTime": null, \
-                  "lastTransitionTime": null}}]'
+kubectl patch $pod --type='json' --subresource=status \
+  -p='[{"op": "add",
+        "path": "/status/conditions/-",
+        "value": {"type": "k8spatterns.io/RandomReady", "status": "True"}}]'
 ----
 
 Finally, let's check again if the Pod gets ready with the readiness gate fulfilled:
