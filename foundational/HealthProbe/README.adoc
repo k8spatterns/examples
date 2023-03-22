@@ -93,7 +93,7 @@ Watch the pods again:
 kubectl get pods -w
 ----
 
-==== Startup Probe
+==== Startup Probes
 
 In this example, we will introduce a startup probe to our application. Startup probes are useful when an application takes a significant amount of time to start and become ready. With a startup probe, you can give your application enough time to start and become ready without affecting the liveness and readiness probes.
 
@@ -112,7 +112,7 @@ Using
 [source, bash]
 ----
 kubectl get pods -w
------
+----
 
 you should see then an output that indicates that the Pod gets ready after roughly 60 seconds
 
