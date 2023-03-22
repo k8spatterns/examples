@@ -135,7 +135,9 @@ random-generator-7c569546cf-wh2tp   1/1     Running             0          71s
 
 === Readiness Gates
 
-Readiness gates provide an additional check that must be satisfied before a pod is considered ready. To demonstrate the usage of readiness gates, let's modify the existing deployment with a readiness gate includes:
+Readiness gates provide an additional check that must be satisfied before a pod is considered ready. Before running these example, please be sure that you have started minikube with the proper flag to enable readiness gates (see at the beginning of this document).
+
+To demonstrate the usage of readiness gates, let's modify the existing deployment with a readiness gate includes:
 
 [source, bash]
 ----
