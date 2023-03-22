@@ -5,6 +5,8 @@ metadata:
   name: random-generator
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: random-generator
@@ -14,7 +16,7 @@ spec:
         app: random-generator
     spec:
       containers:
-      - image: k8spatterns/random-generator:1.0
+      - image: k8spatterns/random-generator:2.0
         name: random-generator
         env:
         # Tell random-generator to wait 60 seconds when starting up so that the startup probe

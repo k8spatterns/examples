@@ -1,6 +1,16 @@
 == Health Probe
 
-For this example we need a Kubernetes installation as described in link:../../INSTALL.adoc[INSTALLATION.adoc].
+ifndef::skipInstall[]
+We are using a Minikube installation to run the examples. For details, please refer to the link:../../INSTALL.adoc#minikube[installation instructions].
+
+In order to enable readiness gates as used in our example below, we need to enable readiness gates by starting minikube with
+
+[source, bash]
+----
+minikube start --extra-config="kubelet.readiness-exception-headers-allowed=*"
+----
+
+endif::skipInstall[]
 
 Here we are reusing our https://github.com/k8spatterns/random-generator[random-generator] which also includes support for health checks.
 
@@ -8,7 +18,7 @@ To apply a Deployment with liveness and readiness check enabled, use
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/HealthProbe/deployment.yml
+kubectl apply -f https://k8spatterns.io/HealthProbe/deployment.yml
 ----
 
 This deployment introduces an artificial pause of 20 seconds before the application becomes ready.
@@ -114,12 +124,13 @@ Using
 kubectl get pods -w
 ----
 
-you should see then an output that indicates that the Pod gets ready after roughly 60 seconds
+you should see then an output that indicates that the Pod gets ready after roughly 60 seconds, after the old Pods from the original deployment have been terminated.
 
 ----
-NAME                                READY   STATUS        RESTARTS   AGE
-random-generator-5856b5f774-54h6b   0/1     Running       0          5s
-random-generator-5856b5f774-54h6b   1/1     Running       0          1m
+NAME                                READY   STATUS              RESTARTS   AGE
+random-generator-7c569546cf-wh2tp   0/1     ContainerCreating   0          1s
+random-generator-7c569546cf-wh2tp   0/1     Running             0          8s
+random-generator-7c569546cf-wh2tp   1/1     Running             0          71s
 ----
 
 === Readiness Gates
@@ -133,7 +144,7 @@ kubectl apply -f https://k8spatterns.io/HealthProbe/readiness-gate-deployment.ym
 
 The custom readiness gate example.com/CustomReadiness is added to the pod spec. This readiness gate must be satisfied in addition to the existing readiness probe for the pod to be considered ready.
 
-Checking with `kubectl get pods -w` shows, that the Pod doesn't get ready, since nobody add the condition `k8spatterns.io/read` with a value `True` to the Pod's status.
+Checking with `kubectl get pods -w` shows, that the Pod doesn't get ready, since nobody add the condition `k8spatterns.io/ready` with a value `True` to the Pod's status.
 
 Let's do this now. We are using `kubectl` here, but usually this would be done with a controller which monitors the Pod and its dependencies.
 
@@ -151,7 +162,7 @@ Then let's patch the Pod's status and add the readiness condition:
 kubectl patch $pod --type='json' \
   -p='[{"op": "add", \
         "path": "/status/conditions/-", \
-        "value": {"type": "example.com/CustomReadiness", \
+        "value": {"type": "k8spatterns.io/ready", \
                   "status": "True", \
                   "reason": "CustomReadinessCheck", \
                   "message": "Custom readiness condition is satisfied", \

@@ -5,6 +5,8 @@ metadata:
   name: random-generator
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: random-generator
@@ -23,6 +25,6 @@ spec:
           # We are checking for a file created by our app when its ready
           exec:
             command: [ "stat", "/opt/random-generator-ready" ]
-        readinessGates:
-        - conditionType: "k8spatterns.io/ready"
+      readinessGates:
+      - conditionType: "k8spatterns.io/ready"
        
