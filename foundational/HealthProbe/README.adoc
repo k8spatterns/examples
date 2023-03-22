@@ -127,7 +127,7 @@ random-generator-7c569546cf-wh2tp   1/1     Running             0          71s
 
 === Readiness Gates
 
-Readiness gates provide an additional check that must be satisfied before a pod is considered ready. Before running these examples, please ensure you have started minikube with the proper flag to enable readiness gates (see this document's beginning).
+Readiness gates provide an additional check that must be satisfied before a pod is considered ready.
 
 To demonstrate the usage of readiness gates, let's modify the existing deployment with a readiness gate that includes the following:
 
@@ -142,7 +142,14 @@ To check the status of the readiness gates use
 
 [source, bash]
 ----
-kubectl get -o wide
+kubectl get pod -o wide
+----
+
+which gives you an output like
+
+----
+NAME                               READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+random-generator-bf8cb84b4-n98l7   0/1     Running   0          9s    10.244.0.11   minikube   <none>           0/1
 ----
 
 You can see, that wile all containers ready, the overall Pod is not because of a failing readiness gate becaue nobody added the condition `k8spatterns.io/ready` with a value `True` to the Pod's status.
@@ -170,7 +177,7 @@ Finally, let's check again if the Pod gets ready with the readiness gate fulfill
 
 [source, bash]
 ----
-kubectl get pod -wide
+kubectl get pod -o wide
 ----
 
 That concludes our demo for the _Health Probe_ pattern.
