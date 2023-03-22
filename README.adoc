@@ -5,7 +5,7 @@ pass:[<a rel="license" href="https://k8spatterns.io"><img alt="Kubernetes Patter
 
 image:https://i.creativecommons.org/l/by/4.0/88x31.png[Creative Commons License, role="right", link="https://creativecommons.org/licenses/by/4.0/"]
 
-This GitHub project contains the examples from _Kubernetes Patterns - Reusable Elements for Designing Cloud-Native Applications_ http://hyperurl.co/kubernetes-patterns[book] by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß]
+This GitHub project contains the examples from _Kubernetes Patterns - Reusable Elements for Designing Cloud Native Applications_ http://hyperurl.co/kubernetes-patterns[book] by https://github.com/bibryam[Bilgin Ibryam] and https://github.com/rhuss[Roland Huß]
 
 Installation instructions for the example prerequisites are summarised in link:INSTALL.adoc[INSTALL].
 By default, you need access to a vanilla Kubernetes installation, like Minikube.
@@ -26,7 +26,7 @@ link:foundational/PredictableDemands/README.adoc[Predictable Demands]::
 link:foundational/DeclarativeDeployment/README.adoc[Declarative Deployment]::
   Rolling and fixed update of the random generator Deployment from version 1.0 to 2.0.
 link:foundational/HealthProbe/README.adoc[Health Probe]::
-  Liveness and Readiness probes for the random generator.
+  Liveness, Readiness and Startup probes for the random generator and an example how to readiness gates.
 link:foundational/ManagedLifecycle/README.adoc[Managed Lifecycle]::
   `postStart` and `preStop` hooks are demonstrated with the random generator application.
 link:foundational/AutomatedPlacement/README.adoc[Automated Placement]::
