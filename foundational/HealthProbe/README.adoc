@@ -136,9 +136,16 @@ To demonstrate the usage of readiness gates, let's modify the existing deploymen
 kubectl apply -f https://k8spatterns.io/HealthProbe/readiness-gate-deployment.yml
 ----
 
-The custom readiness gate example.com/CustomReadiness is added to the pod spec. This readiness gate must be satisfied in addition to the existing readiness probe for the Pod to be considered ready.
+The custom readiness gate `k8spatterns.io/RandomReady` is added to the pod spec. This readiness gate must be satisfied in addition to the existing readiness probe for the Pod to be considered ready.
 
-Checking with `kubectl get pods -w` shows that the Pod doesn't get ready since nobody adds the condition `k8spatterns.io/ready` with a value `True` to the Pod's status.
+To check the status of the readiness gates use
+
+[source, bash]
+----
+kubectl get -o wide
+----
+
+You can see, that wile all containers ready, the overall Pod is not because of a failing readiness gate becaue nobody added the condition `k8spatterns.io/ready` with a value `True` to the Pod's status.
 
 Let's do this now. We are using `kubectl` here, but this would usually be done with a controller that monitors the Pod and its dependencies.
 
@@ -163,7 +170,7 @@ Finally, let's check again if the Pod gets ready with the readiness gate fulfill
 
 [source, bash]
 ----
-kubectl get pods -w
+kubectl get pod -wide
 ----
 
 That concludes our demo for the _Health Probe_ pattern.
