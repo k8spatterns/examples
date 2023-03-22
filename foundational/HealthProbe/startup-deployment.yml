@@ -1,0 +1,47 @@
+# Deployment for starting up the random-generator with liveness, readiness, and startup probes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      - image: k8spatterns/random-generator:1.0
+        name: random-generator
+        env:
+        # Tell random-generator to wait 60 seconds when starting up so that the startup probe
+        # can kick in earlier after 20s
+        - name: DELAY_STARTUP
+          value: "60"
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          # Spring Boot's actuator comes in handy as a liveness probe check
+          # You can use the endpoint "/toggle-heath" to toggle the health state
+          httpGet:
+            path: /actuator/health
+            port: 8080
+        readinessProbe:
+          # We are checking for a file created by our app when its ready
+          exec:
+            command: [ "stat", "/opt/random-generator-ready" ]
+        startupProbe:
+          # Check the same endpoint as the liveness probe for the startup probe
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          # Configure the startup probe to have a longer initial delay to allow the application to start
+          initialDelaySeconds: 20
+          # Number of attempts to perform the probe before considering it a failure
+          failureThreshold: 30
+          # Interval between probe attempts
+          periodSeconds: 10

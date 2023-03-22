@@ -1,0 +1,28 @@
+# Deployment for starting up the random-generator with liveness, readiness, and startup probes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      - image: k8spatterns/random-generator:1.0
+        name: random-generator
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          # We are checking for a file created by our app when its ready
+          exec:
+            command: [ "stat", "/opt/random-generator-ready" ]
+        readinessGates:
+        - conditionType: "k8spatterns.io/ready"
+       

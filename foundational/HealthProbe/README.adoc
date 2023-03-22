@@ -93,9 +93,7 @@ Watch the pods again:
 kubectl get pods -w
 ----
 
-==== Startup Probes
-
-== Startup Probe
+==== Startup Probe
 
 In this example, we will introduce a startup probe to our application. Startup probes are useful when an application takes a significant amount of time to start and become ready. With a startup probe, you can give your application enough time to start and become ready without affecting the liveness and readiness probes.
 
@@ -122,6 +120,50 @@ you should see then an output that indicates that the Pod gets ready after rough
 NAME                                READY   STATUS        RESTARTS   AGE
 random-generator-5856b5f774-54h6b   0/1     Running       0          5s
 random-generator-5856b5f774-54h6b   1/1     Running       0          1m
+----
+
+=== Readiness Gates
+
+Readiness gates provide an additional check that must be satisfied before a pod is considered ready. To demonstrate the usage of readiness gates, let's modify the existing deployment with a readiness gate includes:
+
+[source, bash]
+----
+kubectl apply -f https://k8spatterns.io/HealthProbe/readiness-gate-deployment.yml
+----
+
+The custom readiness gate example.com/CustomReadiness is added to the pod spec. This readiness gate must be satisfied in addition to the existing readiness probe for the pod to be considered ready.
+
+Checking with `kubectl get pods -w` shows, that the Pod doesn't get ready, since nobody add the condition `k8spatterns.io/read` with a value `True` to the Pod's status.
+
+Let's do this now. We are using `kubectl` here, but usually this would be done with a controller which monitors the Pod and its dependencies.
+
+First, find out the Pod's name and store it in a variables:
+
+[source, bash]
+----
+pod=$(kubectl get pods -l app=random-generator -o name)
+----
+
+Then let's patch the Pod's status and add the readiness condition:
+
+[source, bash]
+----
+kubectl patch $pod --type='json' \
+  -p='[{"op": "add", \
+        "path": "/status/conditions/-", \
+        "value": {"type": "example.com/CustomReadiness", \
+                  "status": "True", \
+                  "reason": "CustomReadinessCheck", \
+                  "message": "Custom readiness condition is satisfied", \
+                  "lastProbeTime": null, \
+                  "lastTransitionTime": null}}]'
+----
+
+Finally, let's check again if the Pod gets ready with the readiness gate fullfilled:
+
+[source, bash]
+----
+kubect get pods -w
 ----
 
 That concludes our demo for the _Health Probe_ pattern.

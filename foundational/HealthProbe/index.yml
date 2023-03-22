@@ -4,3 +4,7 @@ base: foundational/HealthProbe
 examples:
 - description:
   path: deployment.yml
+- description: Deployment, now with startup probe
+  path: startup-deployment.yml
+- description: Deployment with a readiness gate
+  path: readiness-gate-deployment.yml
