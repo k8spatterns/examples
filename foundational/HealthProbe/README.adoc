@@ -12,7 +12,6 @@ kubectl create -f https://k8spatterns.io/HealthProbe/deployment.yml
 ----
 
 This deployment introduces an artificial pause of 20 seconds before the application becomes ready.
-To monitor the readiness and liveness states you best open an extra terminal with running
 
 [source, bash]
 ----
@@ -31,58 +30,61 @@ Instead we are using a simple port-forwarding directly to the pod to trigger the
 
 [source, bash]
 ----
-kubectl port-forward deployment/random-generator 8080:8080 &
+kubectl port-forward deployment/random-generator 8080:8080 2>&1 &
 ----
 
 Now you can switch on/off the readiness/liveness checks and see how the cluster manages your pods:
 
+* Check liveness probe by querying the actuator
 [source, bash]
 ----
-# Check liveness probe by querying the actuator
 curl -s http://localhost:8080/actuator/health | jq .
 ----
 
+* Toggle liveness check to off
 [source, bash]
 ----
-# Toggle liveness check to off
 curl -s http://localhost:8080/toggle-live
 ----
 
+* Check liveness probe again
 [source, bash]
 ----
-# Check liveness probe again
 curl -s http://localhost:8080/actuator/health | jq .
 ----
 
+* Watch the pods and wait a bit. What happens after 2-3 mins ?
 [source, bash]
 ----
-# Watch the pods and wait a bit. What happens after 2-3 mins ?
 kubectl get pods -w
 ----
 
+* Now switch readiness off
 [source, bash]
 ----
-# Now switch readiness off
 curl -s http://localhost:8080/toggle-ready
 ----
 
+* Watch the pods for 1-2 mins
 [source, bash]
 ----
-# Watch the pods for 1-2 mins
 kubectl get pods -w
 ----
 
+* Toggle readiness back on
 [source, bash]
-----
-# Toggle readiness back on
+---- 
 curl -s http://localhost:8080/toggle-ready
 ----
 
+* Watch the pods again
 [source, bash]
 ----
-# Watch the pods again ...
 kubectl get pods -w
 ----
+
+That concludes our demo for the _Health Probe_ pattern.
+Don't forget to stop the two background processes when done with this example (executing twice `fg` followed by a `CTRL-C`)
 
 === More Information
 
