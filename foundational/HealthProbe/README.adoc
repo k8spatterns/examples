@@ -2,17 +2,9 @@
 
 ifndef::skipInstall[]
 We are using a Minikube installation to run the examples. For details, please refer to the link:../../INSTALL.adoc#minikube[installation instructions].
-
-In order to enable readiness gates as used in our example below, we need to enable readiness gates by starting minikube with
-
-[source, bash]
-----
-minikube start --extra-config="kubelet.readiness-exception-headers-allowed=*"
-----
-
 endif::skipInstall[]
 
-Here we are reusing our https://github.com/k8spatterns/random-generator[random-generator] which also includes support for health checks.
+Here we are reusing our https://github.com/k8spatterns/random-generator[random-generator], which also includes support for health checks.
 
 To apply a Deployment with liveness and readiness check enabled, use
 
@@ -33,10 +25,10 @@ random-generator-5856b5f774-54h6b   1/1     Running       0          38s
 
 === Liveness Probes
 
-The example application exposes two endpoints with which you can switch the state of the readiness and liveness checks manually.
+The example application exposes two endpoints with which you can manually switch the state of the readiness and liveness checks.
 For simplicity reasons, we haven't installed a Service or Ingress (but of course, you are free to do so!)
 
-Instead we are using a simple port-forwarding directly to the pod to trigger the toggles:
+Instead, we are using a simple port-forwarding directly to the Pod to trigger the toggles:
 
 [source, bash]
 ----
@@ -45,7 +37,7 @@ kubectl port-forward deployment/random-generator 8080:8080 2>&1 &
 
 Now you can switch on/off the readiness/liveness checks and see how the cluster manages your pods:
 
-Check liveness probe by querying the actuator:
+Check the liveness probe by querying the actuator:
 
 [source, bash]
 ----
@@ -59,14 +51,14 @@ Toggle liveness check to off:
 curl -s http://localhost:8080/toggle-live
 ----
 
-Check liveness probe again:
+Recheck the liveness probe:
 
 [source, bash]
 ----
 curl -s http://localhost:8080/actuator/health | jq .
 ----
 
-Watch the pods and wait a bit. What happens after 2-3 mins ?
+Watch the pods and wait a bit. What happens after 2-3 mins?
 
 [source, bash]
 ----
@@ -75,7 +67,7 @@ kubectl get pods -w
 
 === Readiness Probes
 
-Let's check now the readiness probes. For this first flip the readiness state to `false`:
+Let's now check the readiness probes. For this first flip, the readiness state to `false`:
 
 [source, bash]
 ----
@@ -105,7 +97,7 @@ kubectl get pods -w
 
 ==== Startup Probes
 
-In this example, we will introduce a startup probe to our application. Startup probes are useful when an application takes a significant amount of time to start and become ready. With a startup probe, you can give your application enough time to start and become ready without affecting the liveness and readiness probes.
+In this example, we will introduce a startup probe to our application. Startup probes are helpful when an application takes significant time to start and become ready. With a startup probe, you can give your application enough time to create and become ready without affecting the liveness and readiness probes.
 
 To update the deployment with the startup probe enabled, use the following command:
 
@@ -115,7 +107,7 @@ kubectl apply -f https://k8spatterns.io/HealthProbe/startup-deployment.yml
 ----
 
 This deployment introduces an artificial startup delay of 60 seconds before the application becomes ready.
-It configures are startup probe the kicks in after 20 seconds after container has been created and then checks every 10 seconds.
+It configures a startup probe that kicks in after 20 seconds after the container has been created and then checks every 10 seconds.
 
 Using
 
@@ -124,7 +116,7 @@ Using
 kubectl get pods -w
 ----
 
-you should see then an output that indicates that the Pod gets ready after roughly 60 seconds, after the old Pods from the original deployment have been terminated.
+You should see an output that indicates that the Pod gets ready roughly 60 seconds after the old Pods from the original deployment have been terminated.
 
 ----
 NAME                                READY   STATUS              RESTARTS   AGE
@@ -135,22 +127,22 @@ random-generator-7c569546cf-wh2tp   1/1     Running             0          71s
 
 === Readiness Gates
 
-Readiness gates provide an additional check that must be satisfied before a pod is considered ready. Before running these example, please be sure that you have started minikube with the proper flag to enable readiness gates (see at the beginning of this document).
+Readiness gates provide an additional check that must be satisfied before a pod is considered ready. Before running these examples, please ensure you have started minikube with the proper flag to enable readiness gates (see this document's beginning).
 
-To demonstrate the usage of readiness gates, let's modify the existing deployment with a readiness gate includes:
+To demonstrate the usage of readiness gates, let's modify the existing deployment with a readiness gate that includes the following:
 
 [source, bash]
 ----
 kubectl apply -f https://k8spatterns.io/HealthProbe/readiness-gate-deployment.yml
 ----
 
-The custom readiness gate example.com/CustomReadiness is added to the pod spec. This readiness gate must be satisfied in addition to the existing readiness probe for the pod to be considered ready.
+The custom readiness gate example.com/CustomReadiness is added to the pod spec. This readiness gate must be satisfied in addition to the existing readiness probe for the Pod to be considered ready.
 
-Checking with `kubectl get pods -w` shows, that the Pod doesn't get ready, since nobody add the condition `k8spatterns.io/ready` with a value `True` to the Pod's status.
+Checking with `kubectl get pods -w` shows that the Pod doesn't get ready since nobody adds the condition `k8spatterns.io/ready` with a value `True` to the Pod's status.
 
-Let's do this now. We are using `kubectl` here, but usually this would be done with a controller which monitors the Pod and its dependencies.
+Let's do this now. We are using `kubectl` here, but this would usually be done with a controller that monitors the Pod and its dependencies.
 
-First, find out the Pod's name and store it in a variables:
+First, find out the Pod's name and store it in a variable:
 
 [source, bash]
 ----
@@ -172,15 +164,15 @@ kubectl patch $pod --type='json' \
                   "lastTransitionTime": null}}]'
 ----
 
-Finally, let's check again if the Pod gets ready with the readiness gate fullfilled:
+Finally, let's check again if the Pod gets ready with the readiness gate fulfilled:
 
 [source, bash]
 ----
-kubect get pods -w
+kubectl get pods -w
 ----
 
 That concludes our demo for the _Health Probe_ pattern.
-Don't forget to stop the two background processes when done with this example (executing twice `fg` followed by a `CTRL-C`)
+Don't forget to stop the two background processes when done with this example (executing `fg` followed by a `CTRL-C`)
 
 === More Information
 
