@@ -21,7 +21,7 @@ Also, we love contributions like spelling fixes, bug fixes, and improvements;...
 == Patterns
 
 All examples are categorised according to the Book's patterns category.
-Each example is contained in a different directory per pattern and is self-contained. footnote:[Examples marked with an "*" are functional but still lack the instructions for running the examples. If you feel adventurous, please try out the provided resource files yourself. Also happy to take PRs. Did we already mention that we love contributions? ;)]
+Each example is contained in a different directory per pattern and is self-contained. footnote:[Examples marked with an "*" are still in progress to be updated. We expect to be finished until the end of April 2023]
 
 === Foundational Patterns
 
