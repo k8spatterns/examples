@@ -35,49 +35,57 @@ kubectl port-forward deployment/random-generator 8080:8080 2>&1 &
 
 Now you can switch on/off the readiness/liveness checks and see how the cluster manages your pods:
 
-* Check liveness probe by querying the actuator
+Check liveness probe by querying the actuator:
+
 [source, bash]
 ----
 curl -s http://localhost:8080/actuator/health | jq .
 ----
 
-* Toggle liveness check to off
+Toggle liveness check to off:
+
 [source, bash]
 ----
 curl -s http://localhost:8080/toggle-live
 ----
 
-* Check liveness probe again
+Check liveness probe again:
+
 [source, bash]
 ----
 curl -s http://localhost:8080/actuator/health | jq .
 ----
 
-* Watch the pods and wait a bit. What happens after 2-3 mins ?
+Watch the pods and wait a bit. What happens after 2-3 mins ?
+
 [source, bash]
 ----
 kubectl get pods -w
 ----
 
-* Now switch readiness off
+Now switch readiness off:
+
 [source, bash]
 ----
 curl -s http://localhost:8080/toggle-ready
 ----
 
-* Watch the pods for 1-2 mins
+Watch the pods for 1-2 mins:
+
 [source, bash]
 ----
 kubectl get pods -w
 ----
 
-* Toggle readiness back on
+Toggle readiness back on:
+
 [source, bash]
 ---- 
 curl -s http://localhost:8080/toggle-ready
 ----
 
-* Watch the pods again
+Watch the pods again:
+
 [source, bash]
 ----
 kubectl get pods -w
