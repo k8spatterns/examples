@@ -154,7 +154,6 @@ Then let's patch the Pod's status and add the readiness condition:
 [source, bash]
 ----
 kubectl patch $pod --type='json' --subresource=status -p=\
-
   '[{"op": "add",
      "path": "/status/conditions/-",
       "value": {"type": "k8spatterns.io/RandomReady", "status": "True"}}]'
