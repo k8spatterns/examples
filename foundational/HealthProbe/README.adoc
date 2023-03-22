@@ -93,6 +93,37 @@ Watch the pods again:
 kubectl get pods -w
 ----
 
+==== Startup Probes
+
+== Startup Probe
+
+In this example, we will introduce a startup probe to our application. Startup probes are useful when an application takes a significant amount of time to start and become ready. With a startup probe, you can give your application enough time to start and become ready without affecting the liveness and readiness probes.
+
+To update the deployment with the startup probe enabled, use the following command:
+
+[source, bash]
+----
+kubectl apply -f https://k8spatterns.io/HealthProbe/startup-deployment.yml
+----
+
+This deployment introduces an artificial startup delay of 60 seconds before the application becomes ready.
+It configures are startup probe the kicks in after 20 seconds after container has been created and then checks every 10 seconds.
+
+Using
+
+[source, bash]
+----
+kubectl get pods -w
+-----
+
+you should see then an output that indicates that the Pod gets ready after roughly 60 seconds
+
+----
+NAME                                READY   STATUS        RESTARTS   AGE
+random-generator-5856b5f774-54h6b   0/1     Running       0          5s
+random-generator-5856b5f774-54h6b   1/1     Running       0          1m
+----
+
 That concludes our demo for the _Health Probe_ pattern.
 Don't forget to stop the two background processes when done with this example (executing twice `fg` followed by a `CTRL-C`)
 
