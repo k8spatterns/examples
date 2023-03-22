@@ -149,7 +149,7 @@ which gives you an output like
 
 ----
 NAME                               READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
-random-generator-bf8cb84b4-n98l7   0/1     Running   0          9s    10.244.0.11   minikube   <none>           0/1
+random-generator-bf8cb84b4-n98l7   1/1     Running   0          9s    10.244.0.11   minikube   <none>           0/1
 ----
 
 You can see, that wile all containers ready, the overall Pod is not because of a failing readiness gate becaue nobody added the condition `k8spatterns.io/ready` with a value `True` to the Pod's status.
