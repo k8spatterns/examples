@@ -10,10 +10,10 @@ To access the PersistentVolume used in this demo, mount a local directory `logs/
 
 [source, bash]
 ----
-minikube start --mount --mount-string="$(pwd)/logs:/example" --memory 2G
+minikube start --mount --mount-string="$(pwd)/logs:/tmp/example" --memory 2G
 ----
 
-The directory is now available within the Minikube VM at the path /example.
+The directory is now available within the Minikube VM at the path `/tmp/example`.
 
 For this example, we will use the https://github.com/k8spatterns/random-generator[random number service], a simple REST service that returns just a random number.  This service is contained in the image `k8spatterns/random-generator:1.0` from Docker Hub.
 
@@ -33,7 +33,8 @@ The Pod will not start immediately because the PersistentVolumeClaim (PVC) is mi
 [source, bash]
 ----
 kubectl get pods
-
+----
+----
 NAME               READY   STATUS    RESTARTS   AGE
 random-generator   0/1     Pending   0          3s
 ----
@@ -43,7 +44,8 @@ When you describe the pod, you can see that the PVC is missing:
 [source, bash]
 ----
 kubectl describe pod random-generator
-
+----
+----
 ...
 Events:
   Type     Reason            Age                From               Message
@@ -63,7 +65,8 @@ When we create the PV and PVC we are already one step further:
 [source, bash]
 ----
 kubectl describe pod random-generator
-
+----
+----
 ...
 Events:
   Type     Reason            Age                From               Message
@@ -89,19 +92,17 @@ and the pod will be finally up:
 [source, bash]
 ----
 kubectl get pods
+----
+----
 NAME               READY   STATUS    RESTARTS   AGE
 random-generator   1/1     Running   0          3s
 ----
 
 You can send an HTTP request to the service to check if everything is working correctly. As we haven't installed a Service, let's run `curl` within the cluster to check the output:
-
 [source, bash]
 ----
-# Set the IP address to check
 POD_IP=$(kubectl get pod -l app=random-generator -o jsonpath='{.items[0].status.podIP}')
-
-# Send a request to our app from an internal ad-hoc Pod
-kubectl run -itq --rm --image=k8spatterns/curl-jq --restart=Never curl -- http://${POD_IP}:8080 | jq .
+kubectl run -itq --rm --image=k8spatterns/curl-jq --restart=Never curl -- http://$POD_IP:8080 | jq .
 ----
 
 This will result in an output like this:

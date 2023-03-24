@@ -23,9 +23,9 @@ spec:
           key: pattern
       # Enabling logging into the mounted volume
     - name: LOG_FILE
-      value: /logs/random.log
+      value: /tmp/logs/random.log
     volumeMounts:
-      - mountPath: "/logs"
+      - mountPath: /tmp/logs
         name: log-volume
     # Put the pod in this priority class
     priorityClassName: high-priority
