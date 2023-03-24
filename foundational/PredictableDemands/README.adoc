@@ -102,6 +102,9 @@ You can send an HTTP request to the service to check if everything is working co
 [source, bash]
 ----
 POD_IP=$(kubectl get pod -l app=random-generator -o jsonpath='{.items[0].status.podIP}')
+----
+[source, bash]
+----
 kubectl run -itq --rm --image=k8spatterns/curl-jq --restart=Never curl -- http://$POD_IP:8080 | jq .
 ----
 
@@ -121,10 +124,12 @@ The log file that the application writes to the persistent volume should appear 
 
 [source, bash]
 ----
-# Check whether the log has been written locally
 cat ./logs/random.log
-
+----
+----
+...
 16:52:44.734,fe870020-fcab-42bf-b745-db65ec1cc51f,2137264413
+...
 ----
 
 Now that our hard requirements (ConfigMap, PVC) are fulfilled our the application runs smoothly.
@@ -132,10 +137,11 @@ Now that our hard requirements (ConfigMap, PVC) are fulfilled our the applicatio
 If you are done, it's a good idea to cleanup:
 [source, bash]
 ----
-# Delete the plain pod
 kubectl delete pod/random-generator
+----
 
-# Delete PV & PVC
+[source, bash]
+----
 kubectl delete -f https://k8spatterns.io/PredictableDemands/pv-and-pvc.yml
 ----
 
@@ -151,11 +157,11 @@ kubectl create -f https://k8spatterns.io/PredictableDemands/deployment.yml
 This will use 200M as upper limit for our application.
 Since we are using Java 11 as JVM for our Java application, the JVM respects this boundary
 and allocates only a fraction of this as heap.
-You can easily check this with
+You can easily check this with: (call `CTRL-C` when done)
 
 [source, bash]
 ----
-kubectl logs -l app=random-generator | grep "=== "
+kubectl logs -l app=random-generator -f | grep "=== "
 ----
 
 [source]
