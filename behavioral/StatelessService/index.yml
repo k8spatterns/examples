@@ -1,0 +1,11 @@
+pattern: Stateless Service
+base: behavioral/StatelessService
+examples:
+- description: A minimal ReplicaSet
+  path: replicaset.yml
+- description: A ReplicatSet the uses a PV
+  path: replicaset-with-pv.yml
+- description: Service object for accessing the example ReplicaSet
+  path: service.yml
+- description: PV and PVC for writing the log files
+  path: pv-and-pvc.yml

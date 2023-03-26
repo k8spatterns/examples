@@ -1,0 +1,23 @@
+# ReplicaSet as a stateless service
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: random-generator
+spec:
+  # Three stateless copies of the application
+  replicas: 3
+  strategy:
+  selector:
+    matchLabels:
+      app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      - image: k8spatterns/random-generator:1.0
+        name: random-generator
+        ports:
+        - containerPort: 8080
+          protocol: TCP

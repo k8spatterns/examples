@@ -1,0 +1,38 @@
+# ReplicaSet as a stateless service
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: random-generator
+spec:
+  # Three stateless copies of the application
+  replicas: 3
+  strategy:
+  selector:
+    matchLabels:
+      app: random-generator
+  template:
+    metadata:
+      labels:
+        app: random-generator
+    spec:
+      containers:
+      - image: k8spatterns/random-generator:1.0
+        name: random-generator
+        env:
+        # Get Pod ID from downward API
+        - name: POD_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        # Enabling logging into the mounted volume, using separate files per Pod
+        - name: LOG_FILE
+          value: /tmp/logs/random-$(POD_ID).log
+        volumeMounts:
+        - mountPath: /tmp/logs
+          name: log-volume
+      volumes:
+      - name: log-volume
+        # Second hard requirement is that the specified persitent volume claim
+        # exists and is bound.
+        persistentVolumeClaim:
+          claimName: random-generator-log
