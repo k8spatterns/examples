@@ -6,7 +6,6 @@ metadata:
 spec:
   # Three stateless copies of the application
   replicas: 3
-  strategy:
   selector:
     matchLabels:
       app: random-generator

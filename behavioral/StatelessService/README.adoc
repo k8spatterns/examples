@@ -34,13 +34,30 @@ Verify the ReplicaSet is working correctly:
 kubectl get rs
 ----
 
+----
+NAME               DESIRED   CURRENT   READY   AGE
+random-generator   3         3         3       17s
+----
+
 [source, shell]
-kubectl describe rs <replicaset-name>
+----
+kubectl describe rs random-generator
+----
+
+----
+Name:         random-generator
+Namespace:    default
+Selector:     app=random-generator
+Labels:       <none>
+Annotations:  <none>
+Replicas:     3 current / 3 desired
+Pods Status:  3 Running / 0 Waiting / 0 Succeeded / 0 Failed
+....
 ----
 
 You should see that all three Pods are coming up as expected.
 
-=== Healing the ReplicaSet
+=== Self-Healing
 
 Let's play with the ReplicaSet and check whether the self-healing works.
 For this, let's kill a random Pod:
@@ -52,10 +69,17 @@ kubectl delete $(kubectl get pods -l app=random-generator -o name | head -1)
 
 Check whether a new Pod is created so that the declared state of 3 replicas is fulfilled again)
 
+[source, shell]
 ----
-kubectl get pods -w
+kubectl get pods
 ----
 
+----
+NAME                     READY   STATUS    RESTARTS   AGE
+random-generator-8r727   1/1     Running   0          5s
+random-generator-qkv2c   1/1     Running   0          2m1s
+random-generator-smtsp   1/1     Running   0          2m1s
+----
 === Access via a Service
 
 To access the ReplicaSet from within the cluster, we create a Service of type `clusterIP`:
@@ -69,12 +93,8 @@ Let's test the service by calling the Pod from within the cluster:
 
 [source, bash]
 ----
-POD_IP=$(kubectl get pod -l app=random-generator -o jsonpath='{.items[0].status.podIP}')
-----
-
-[source, bash]
-----
-kubectl run -itq --rm --image=k8spatterns/curl-jq --restart=Never curl -- http://$POD_IP:8080 | jq .
+kubectl run -itq --rm --image=k8spatterns/curl-jq \
+    --restart=Never curl -- http://random-generator:8080
 ----
 
 Can you see how different Pods are hit when you repeat this command multiple times?
