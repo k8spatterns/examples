@@ -10,10 +10,10 @@ To access the PersistentVolume used in this demo, let's mount a local directory 
 
 [source, bash]
 ----
-minikube start --mount --mount-string="$(pwd)/logs:/example"
+minikube start --mount --mount-string="$(pwd)/logs:/tmp/example"
 ----
 
-This startup command makes this directory available within the Minikube VM at the path `/example`.
+This startup command makes this directory available within the Minikube VM at the path `/tmp/example`.
 
 Let's create now two PersistentVolumes for the replicas of our StatefulSet later:
 

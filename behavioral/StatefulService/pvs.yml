@@ -12,7 +12,7 @@ spec:
   storageClassName: standard
   hostPath:
     # Mount by Minikube from local directory during 'minikube start'
-    path: /example/1
+    path: /tmp/example/1
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -25,7 +25,7 @@ spec:
     storage: 10Mi
   storageClassName: standard
   hostPath:
-    path: /example/2
+    path: /tmp/example/2
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -38,4 +38,4 @@ spec:
     storage: 10Mi
   storageClassName: standard
   hostPath:
-    path: /example/3
+    path: /tmp/example/3

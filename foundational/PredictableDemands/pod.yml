@@ -16,7 +16,7 @@ spec:
         configMapKeyRef:
           name: random-generator-config
           key: pattern
-      # Enabling logging into the mounted volume
+    # Enabling logging into the mounted volume
     - name: LOG_FILE
       value: /tmp/logs/random.log
     volumeMounts:

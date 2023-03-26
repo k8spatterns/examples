@@ -1,1 +1,106 @@
-== Stateless Service
+
+== Stateless Service: Executable Guide
+
+ifndef::skipInstall[]
+We recommend using a Minikube installation for this example. For details, please refer to the link:../../INSTALL.adoc#minikube[installation instructions].
+
+We assume you use the default 2GB memory for your Minikube VM to play with memory limits. You can adjust this value with the `--memory` flag.
+endif::skipInstall[]
+;
+To access the PersistentVolume used in this demo, mount a local directory `logs/` into the Minikube VM with the following command:
+
+[source, bash]
+----
+minikube start --mount --mount-string="$(pwd)/logs:/tmp/example" --memory 2G
+----
+
+The directory is now available within the Minikube VM at the path `/tmp/example`.
+
+For this example, we will use the https://github.com/k8spatterns/random-generator[random number service], a simple REST service that returns just a random number. This service is in the image `k8spatterns/random-generator:1.0` from Docker Hub.
+
+=== Create a ReplicaSet
+
+First, create a ReplicaSet for your stateless service:
+
+[source,shell]
+----
+kubectl apply -f https://k8spatterns.io/StatelessService/replicaset.yml
+----
+
+Verify the ReplicaSet is working correctly:
+
+[source,shell]
+----
+kubectl get rs
+----
+
+[source, shell]
+kubectl describe rs <replicaset-name>
+----
+
+You should see that all three Pods are coming up as expected.
+
+=== Healing the ReplicaSet
+
+Let's play with the ReplicaSet and check whether the self-healing works.
+For this, let's kill a random Pod:
+
+[source,shell]
+----
+kubectl delete $(kubectl get pods -l app=random-generator -o name | head -1)
+----
+
+Check whether a new Pod is created so that the declared state of 3 replicas is fulfilled again)
+
+----
+kubectl get pods -w
+----
+
+=== Access via a Service
+
+To access the ReplicaSet from within the cluster, we create a Service of type `clusterIP`:
+
+[source,shell]
+----
+kubectl apply -f https://k8spatterns.io/StatelessService/service.yml
+----
+
+Let's test the service by calling the Pod from within the cluster:
+
+[source, bash]
+----
+POD_IP=$(kubectl get pod -l app=random-generator -o jsonpath='{.items[0].status.podIP}')
+----
+
+[source, bash]
+----
+kubectl run -itq --rm --image=k8spatterns/curl-jq --restart=Never curl -- http://$POD_IP:8080 | jq .
+----
+
+Can you see how different Pods are hit when you repeat this command multiple times?
+
+=== Using a Persistent Volume
+
+Create a PersistentVolume and a PersistentVolumeClaim:
+
+[source,shell]
+----
+kubectl apply -f https://k8spatterns.io/StatelessService/pv-and-pvc.yml
+----
+
+Update the ReplicaSet to use the PersistentVolumeClaim:
+
+[source,shell]
+----
+kubectl apply -f https://k8spatterns.io/StatelessService/replicaset-with-pv.yml
+----
+
+Now let's check your local directory `logs/` and see how it gets populated with log files from the three Pods.
+
+== More Information
+
+* https://oreil.ly/h0Ytj[Stateless Service Example]
+* https://oreil.ly/XugMo[ReplicaSet]
+* https://oreil.ly/HvApe[Persistent Volumes]
+* https://oreil.ly/qxFrz[Storage Classes]
+* https://oreil.ly/iovaa[Access Modes]

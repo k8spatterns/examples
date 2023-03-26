@@ -47,10 +47,10 @@ When we now jump into the Pod we can examine the generated metrics file
 [source, bash]
 ----
 kubectl exec -it random-generator -c main bash
-cat /logs/random.log
+cat /tmp/logs/random.log
 ----
 
-NOTE: You could also have entered the `adapter` container which mounts the same directory at `/logs/`, too
+NOTE: You could also have entered the `adapter` container which mounts the same directory at `/tmp/logs/`, too
 
 The metrics extracted from that data can now be accessed in a Prometheus conformant way:
 

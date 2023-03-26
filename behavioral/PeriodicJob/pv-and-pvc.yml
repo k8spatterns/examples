@@ -12,7 +12,7 @@ spec:
   storageClassName: standard
   hostPath:
     # Mount by Minikube from local directory during 'minikube start'
-    path: /example
+    path: /tmp/example
 ---
 # Persistent Volume Claim required by our random service
 kind: PersistentVolumeClaim

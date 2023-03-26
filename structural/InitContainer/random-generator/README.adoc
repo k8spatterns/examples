@@ -1,4 +1,4 @@
-== Init Container (random-genertor example)
+== Init Container (random-generator example)
 
 [source, bash]
 ----

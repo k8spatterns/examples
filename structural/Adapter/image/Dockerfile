@@ -5,7 +5,7 @@
 FROM perl
 
 # Default
-ENV LOG_FILE=/logs/random-generator.log
+ENV LOG_FILE=/tmp/logs/random-generator.log
 
 # Some handy Perl libraries
 RUN cpanm install Net::Server::HTTP Text::CSV

@@ -16,13 +16,13 @@ spec:
     env:
     # The log file that we want to export
     - name: LOG_FILE
-      value: /logs/random.log
+      value: /tmp/logs/random.log
     ports:
     # Application running on port 8080
     - containerPort: 8080
       protocol: TCP
     volumeMounts:
-    - mountPath: /logs
+    - mountPath: /tmp/logs
       name: log-volume
   # ------------------------------------------------
   # Prometheus adapter. You find the source to this image
@@ -30,16 +30,16 @@ spec:
   - image: k8spatterns/random-generator-exporter
     name: adapter
     env:
-    # Logfile  to pick up by exporter script
+    # Logfile to pick up by exporter script
     - name: LOG_FILE
-      value: /logs/random.log
+      value: /tmp/logs/random.log
     ports:
     # Expose prometheus metrics via that port
     - containerPort: 9889
       protocol: TCP
     # Mount shared volume for accessing the logs
     volumeMounts:
-    - mountPath: /logs
+    - mountPath: /tmp/logs
       name: log-volume
   volumes:
   # New empty directory volume for sharing the log file between container

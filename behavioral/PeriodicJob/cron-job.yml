@@ -19,12 +19,12 @@ spec:
             # Class running batch job
             - RandomRunner
             # 1. Arg: File to store data (on a PV)
-            - /logs/random.log
+            - /tmp/logs/random.log
             # 2. How many iterations
             - "10000"
             # Mount directory to where to write the results
             volumeMounts:
-            - mountPath: /logs
+            - mountPath: /tmp/logs
               name: log-volume
           restartPolicy: OnFailure
           volumes:

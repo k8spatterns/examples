@@ -33,9 +33,9 @@ spec:
           start=$(expr $JOB_COMPLETION_INDEX \* 10000)
           end=$(expr $JOB_COMPLETION_INDEX \* 10000 + 10000)
           awk "NR>=$start && NR<$end" /logs/random.log \
-              > /logs/random-$JOB_COMPLETION_INDEX.txt
+              > /tmp/logs/random-$JOB_COMPLETION_INDEX.txt
         volumeMounts:
-        - mountPath: /logs
+        - mountPath: /tmp/logs
           name: log-volume
       # Retry again if failed (this field is mandatory)
       restartPolicy: Never

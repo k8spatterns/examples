@@ -27,6 +27,8 @@ To start Minikube you just call
 minikube start
 ----
 
+NOTE: When running on Mac with an M1 or M2 chip, for the best experience it is recommended to use Docker as the underlying virtualization platform instead of the default of `qemu2`. It allows for better networking and tunneling for the examples that involved networking. You can chose the Docker driver with the option `--driver docker` or set it permanently with `minikube config set driver docker`. Of course, for this to work, you need to have Docker Desktop installed locally.
+
 If you do this for the first time Minikube will download all required files and starts a VM whose default runtime depends on your operating system and installation options.
 
 Some of the examples use an `Ingress` object to export a service to the outside.
@@ -107,7 +109,6 @@ When you're done with the cluster, you can delete it using the `kind delete clus
 ----
 kind delete cluster
 ----
-
 
 [[cloud]]
 === Kubernetes in the Cloud

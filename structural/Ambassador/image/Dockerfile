@@ -8,5 +8,5 @@ FROM node
 EXPOSE 9009
 
 # Run a mini-http server just logging out POST requests
-COPY log_ambassador.js /
-CMD node /log_ambassador.js
+COPY log_ambassador.js /opt
+CMD node /opt/log_ambassador.js
