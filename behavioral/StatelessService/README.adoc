@@ -115,7 +115,22 @@ Update the ReplicaSet to use the PersistentVolumeClaim:
 kubectl apply -f https://k8spatterns.io/StatelessService/replicaset-with-pv.yml
 ----
 
-Now let's check your local directory `logs/` and see how it gets populated with log files from the three Pods.
+Delete all Pods so that they are recreated with the new configuration:
+
+[source,shell]
+----
+kubectl delete pod -l app=random-generator
+----
+
+Call several times again our service with
+
+[source, shell]
+----
+kubectl run -itq --rm --image=k8spatterns/curl-jq \
+    --restart=Never curl -- http://random-generator:8080
+----
+
+Now let's check your local directory `logs/` and see how it gets populated with log files from the three Pods
 
 == More Information
 
