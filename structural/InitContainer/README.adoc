@@ -1,22 +1,22 @@
 == Init Container
 
-In this example we will see a simple _Init Container_ in action.
-As in the other examples we assume that you have a running Kubernetes cluster to your avail.
+In this example, we will see a simple _Init Container_ in action.
+As in the other examples, we assume that you have a running Kubernetes cluster to your avail.
 Checkout link:../../INSTALL.adoc[INSTALL] documentation for some options to access a Kubernetes cluster.
 
-In this example we are creating a Pod with an init container and a main container:
+In this example, we are creating a Pod with an init container and a main container:
 
-* The _Init Container_ will start first and checks out a https://github.com/mdn/beginner-html-site-scripted[GitHub repository] containing a static example web site.
+* The _Init Container_ will start first and check out a https://github.com/mdn/beginner-html-site-scripted[GitHub repository] containing a static example website.
 * The application container started after the _Init Container_ has finished will then serve these pages over port 80
 
-Let's create this bare Pod into the current namespace with:
+Let's create this bare Pod into the current namespace with the following:
 
 [source, bash]
 ----
 kubectl create -f https://k8spatterns.io/InitContainer/pod.yml
 ----
 
-Check the startup of the pod by watching the pod by executing the following command right after the creation of your Pod:
+Check the startup of the Pod by watching the Pod by executing the following command right after the creation of your Pod:
 
 [source, bash]
 ----
@@ -32,34 +32,41 @@ www    0/1     PodInitializing   0          10s
 www    1/1     Running           0          12s
 ----
 
-Finally, let's check how we can access the data that had been retrieved by the _Init Container_.
-For this we create a `nodePort` Service with
+Finally, let's check how we can access the data from the _Init Container_retrieved.
+For this, we create a `nodePort` Service with
 
 [source, bash]
 ----
 kubectl create -f https://k8spatterns.io/InitContainer/service.yml
 ----
 
-This will open the a port on every node of which we can access the static HTTP server.
+This service will open a port on every node so that we can access the static HTTP server from there.
 
-With a little Json path foo we can extract that dynamically assigned port and curl the web page or open it in a web browser:
+If you are using `minikube`, you can quickly fire up your browser to point to the exposed port with
 
 [source, bash]
 ----
-port=$(kubectl get svc www -o jsonpath={.spec.ports[0].nodePort})
-# If using Minishift:
-ip=$(minikube ip)
-# or set ip to your real cluster's address (e.g. obtained from `kubectl cluster-info`)
-curl -s http://$ip:$port
+minikube service www
 ----
 
-If this access doesn't work it could be that your cluster doesn't allow access to your node's ports directly.
-In this case either use e.g. Minikube which allows that or use a different service access as described in the pattern "Service Discovery".
+For any other cluster, you can find out the service port.
+
+[source, bash]
+----
+port=$(kubectl get svc www -o jsonpath='{.spec.ports[0].nodePort}')
+----
+
+And then access it from every node of your cluster. You would need to find out the address of such a node first, like with `kubectl get node -o wide`
+For more ways to expose that service, see the "Service Discovery" pattern.
 
 === More Information
 
-* https://github.com/k8spatterns/examples/tree/master/structural/InitContainer[Init Container example]
-* https://kubernetes.io/docs/concepts/workloads/pods/init-containers/[Init Containers]
-* https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-initialization/#creating-a-pod-that-has-an-init-container[Configuring Pod Initialization]
-* http://blog.javascriptroom.com/2013/01/21/the-initializer-pattern/[The Initializer Pattern in JavaScript]
-* https://developer.apple.com/library/content/documentation/General/Conceptual/CocoaEncyclopedia/Initialization/Initialization.html[Object Initialization in Swift]
+* https://oreil.ly/dtC_W[Init Container Example]
+* https://oreil.ly/AcBVc[Init Containers]
+* https://oreil.ly/XJV9K[Configuring Pod Initialization]
+* https://oreil.ly/H1-va[Admission Controllers Reference]
+* https://oreil.ly/uOzBD[Dynamic Admission Control]
+* https://oreil.ly/f-P_d[Metacontroller]
+* https://oreil.ly/VnbkZ[Kyverno]
+* https://oreil.ly/a3kmy[Demystifying Istio's Sidecar Injection Model]
+* https://oreil.ly/Wy-ca[Object Initialization in Swift]
