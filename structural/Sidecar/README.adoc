@@ -26,7 +26,7 @@ Apply the resource descriptor with the Pod and Service definition:
 
 [source, bash]
 ----
-kubectl -f web-app.yml
+kubectl apply -f web-app.yml
 ----
 
 * When all images are pulled, and the pods are running, open your browser with the web pages

@@ -12,28 +12,32 @@ spec:
   - name: app
     image: centos/httpd
     ports:
-      - containerPort: 80
+    - containerPort: 80
     volumeMounts:
     - mountPath: /var/www/html
-      name: git
-  # Sidecar poll every 10 minutes a given repository with git
+      name: source
+  # Sidecar poll every minute a given repository with git
   - name: poll
     image: bitnami/git
+    env:
+    - name: SOURCE_REPO
+      value: https://github.com/mdn/beginner-html-site-scripted
+    command: [ "sh", "-c" ]
+    args:
+    - |
+      git clone $(SOURCE_REPO) .
+      while true; do
+        sleep 60
+        git pull
+      done
+    workingDir: /var/lib/data
     volumeMounts:
     - mountPath: /var/lib/data
-      name: git
-    env:
-      - name: GIT_REPO
-        value: https://github.com/mdn/beginner-html-site-scripted
-    command:
-    - "sh"
-    - "-c"
-    - "git clone $(GIT_REPO) . && watch -n 60 git pull"
-    workingDir: /var/lib/data
+      name: source
   volumes:
   # The shared directory for holding the files
   - emptyDir: {}
-    name: git
+    name: source
 ---
 # A service which opens a NodePort is added for your convenience 
 # but is not necessarily required for this example:
