@@ -1,40 +1,53 @@
 == Sidecar
+This example demonstrates a simple Sidecar defined in link:web-app.yml[web-app.yml]:
 
-This examples shows a useful example for a Sidecar in link:web-app.yml[web-app.yml]:
-
-* The main container is a _httpd_ daemon who serves HTML file from within its directory `/var/www/html`. This directory is mounted from a volume named `git`.
+* The main container is an _httpd_ daemon that serves HTML files from within its directory `/var/www/html`. This directory is mounted from a volume named `git`.
 * The sidecar container is a stock image containing a `git` CLI tool. It also mounts the volume `git` in a directory and executes a command to pull a git repository periodically into this directory.
 
-The effect is, that as soon as something changes in the Git repository, the HTML files that the HTTP daemon serves get updated.
+The effect is that as soon as something changes in the Git repository, the HTML files that the HTTP daemon serves get updated.
 
-You can choose the Git repository by setting then environment variable `GIT_REPO` accordingly.
+You can choose the Git repository by setting the environment variable `GIT_REPO` accordingly.
 
-Also not the trick with `watch` to perform a periodic polling loop without requiring a shell script (as it would be needed for a `for` loop):
+Also note the trick with `watch` to perform a periodic polling loop without requiring a shell script (as it would be needed for a `for` loop):
 
 [source, bash]
 ----
 sh -c "git clone $(GIT_REPO) . && watch -n 600 git pull"
 ----
 
-For you convenience a `nodePort` service is exposed so that you can access the HTML pages from the outside
+For your convenience, a `nodePort` service is exposed so that you can access the HTML pages from the outside.
 
-=== Installation
+This example uses the sample repository `https://github.com/mdn/beginner-html-site-scripted`, but for experimenting with it, you should either fork this repository or use any other repo you have to write and push access to.
+To point to this directory, update the `GIT_REPO` variable in `web-app.yml`.
 
-* Start minikube
-* Apply the resource descriptor
+You can run this example on any Kubernetes installation; however, for exposing the Service, we assume for now that you are using `minikube`. Checkout link:../../INSTALL.adoc[INSTALL] for more installation options.
+
+Apply the resource descriptor with the Pod and Service definition:
 
 [source, bash]
 ----
 kubectl -f web-app.yml
 ----
 
-* When all images are pulled and the pods are running, open your browser with the web pages
+* When all images are pulled, and the pods are running, open your browser with the web pages
 
 [source, bash]
 ----
 minikube service web-app
 ----
 
-If you want to test whether the pages are really updated, change `GIT_REPO` in `web-app.yml` to a git repo which is under your control and then change files after the pods has been started. 
+If you want to test whether the pages are updated, clone the repository configured in `GIT_REPO` in a local directory, make some changes, `git commit` and `git push` (assuming that you have changed the `GIT_REPO` URL to a repo that you can write to). You should see the changes automatically propagating to your web application.
 
-You can also tune the update interval in the sidecar command definition, which is currently set to 10 minutes.
+You can also tune the update interval in the sidecar command definition, currently set to one minute.
+
+=== More Information
+
+* https://oreil.ly/bMAvz[Sidecar Example]
+* https://oreil.ly/7cII-[Pods]
+* https://oreil.ly/1XqCg[Design Patterns for Container-Based Distributed Systems]
+* https://oreil.ly/1KMw1[Prana: A Sidecar for Your Netflix PaaS-Based Applications and Services]
+* https://oreil.ly/8Cq95[Tin-Can Phone: Patterns to Add Authorization and Encryption to Legacy [.keep-together]#Applications#]
+* https://oreil.ly/0FF-r[Envoy]
+* https://dapr.io[Dapr]
+* https://oreil.ly/kkhYD[The Almighty Pause Container]
+* https://oreil.ly/KYe39[Sidecar Pattern]

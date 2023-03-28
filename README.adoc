@@ -60,7 +60,7 @@ link:behavioral/SelfAwareness/README.adoc[Self Awareness]::
 link:structural/InitContainer/README.adoc[Init Container]::
   Initialize an HTTP server's HTML source from a remote git repository.
 link:structural/Sidecar/README.adoc[Sidecar]::
-  Git polling example for a sidecar. **[*]**
+  Git polling example for a sidecar.
 link:structural/Adapter/README.adoc[Adapter]::
   Adapter for exporting timing information from the sample random-generator application in a Prometheus format. **[*]**
 link:structural/Ambassador/README.adoc[Ambassador]::
