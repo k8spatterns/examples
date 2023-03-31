@@ -13,8 +13,8 @@ We are using a bare Pod for simplicities sake (in real-world scenarios, this wou
 
 Please have a look at the `pod.yml` descriptor which
 
-* Create two containers: Our `random-generator` and the _Adapter_, `k8spatterns/random-generator-exporter`. This exporter is a simple Perl script that does the transformation. The Dockerfile and script for this image are in the link:./image/[image] directory.
-* Create a shared volume between the main application container and the adapter. The main container writes the metrics file into this shared directory, and the Prometheus _Adapter_ picks it up when queried over HTTP
+* Create two containers: Our `random-generator` and the adapter, `k8spatterns/random-generator-exporter`. This exporter is a simple Perl script that does the transformation. The Dockerfile and script for this image are in the link:./image/[image] directory.
+* Create a shared volume between the main application container and the adapter. The main container writes the metrics file into this shared directory, and the Prometheus adapter picks it up when queried over HTTP
 
 The Pod can be created with
 
@@ -55,7 +55,7 @@ After this first request, let's jump into the main container of the Pod and veri
 
 [source, bash]
 ----
-kubectl exec -it random-generator -c main bash
+kubectl exec -it random-generator -c main -- bash
 ----
 
 [source, bash]
