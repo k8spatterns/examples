@@ -48,7 +48,7 @@ We store those two lines in a text file so that we can access the service with t
 [source, bash]
 ----
 curl $(head -1 /tmp/random-url.txt)
------
+----
 
 The first line in the file depicts the accessible web service.
 After this first request, let's jump into the main container of the Pod and verify that a metrics file has been written:
