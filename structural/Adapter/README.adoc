@@ -1,19 +1,20 @@
 == Adapter
 
-In this example we will see how we can expose a the metrics created by the random generator REST service in a Prometheus conformant format.
+In this example, we will see how to expose metrics created by the random generator REST service in a Prometheus conformant format.
 
-By intention the metrics created by the the random-generator service is written is an own format which can't be used by Prometheus directly.
-Also the metrics are not exposed via a network port but is written into the filesystem.
-We are using an _Adapter_ sidecar container to convert and expose data written in that custom proprietary format over HTTP so that it can be scraped by Prometheus.
+By intention, the metrics created by the random-generator service are written in a format that can't be used by Prometheus directly.
+Also, the metrics are not exposed via a network port but are written into the filesystem.
+We use an adapter 
+sidecar container to convert and expose data written in that custom proprietary format over HTTP so that Prometheus can scrape it.
 
 Let's see how this works.
 
-We are using a bare Pod for simplicities sake (in real world scenarios this would be of course e.g. a Deployment).
+We are using a bare Pod for simplicities sake (in real-world scenarios, this would be, of course, e.g., a Deployment).
 
-Please have a look into the `pod.yml` descriptor which
+Please have a look at the `pod.yml` descriptor which
 
-* Create two containers: One is our `random-generator` the other is the _Adapter_, `k8spatterns/random-generator-exporter`. This is a simple Perl script (yeah, Perl ;) which does the transformation. You find the Dockerfile and script for this image in the link::image/[image] directory.
-* Create a volume which is shared between the main application container and the adapter. The main container writes the metrics file into this shared directory, and the Prometheus _Adapter_ picks it up when queried over HTTP
+* Create two containers: Our `random-generator` and the _Adapter_, `k8spatterns/random-generator-exporter`. This exporter is a simple Perl script that does the transformation. The Dockerfile and script for this image are in the link:./image/[image] directory.
+* Create a shared volume between the main application container and the adapter. The main container writes the metrics file into this shared directory, and the Prometheus _Adapter_ picks it up when queried over HTTP
 
 The Pod can be created with
 
@@ -22,44 +23,59 @@ The Pod can be created with
 kubectl create -f https://k8spatterns.io/Adapter/pod.yml
 ----
 
-For easy access of random generator, let's create a Service:
+For easy access to the random generator, let's create a Service:
 
 [source, bash]
 ----
 kubectl create -f https://k8spatterns.io/Adapter/service.yml
 ----
 
-This Service uses a `nodePort` to expose it on every node of the cluster.
-For Minikube this works nicely.
-However, if your cluster nodes are not exposed, you might either use our `kubectl port-forward` hack used in other examples or use a full ingress or loadbalancer exposed route as described in the _Service Discovery_ pattern.
+This service uses `nodePort` to expose two ports on every cluster node.
+For simple testing, this works nicely.
+You can also use a full ingress or load-balancer exposed route as described in the _service Discovery_ pattern.
 
-Let's assume that you are using Minikube for now, so that we can access the
-Then let's access our Service with
+Let's assume that you are using Minikube for now so that we can access the
+Then let's access and expose the service with
 
 [source, bash]
 ----
-port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
-curl http://$(minikube ip):$port
+minikube service random-generator --url > /tmp/random-url.txt &
 ----
 
-When we now jump into the Pod we can examine the generated metrics file
+This command starts a tunnel in the background and writes down the access URL to the two exposed ports.
+We store those two lines in a text file so that we can access the service with the following:
+
+[source, bash]
+----
+curl $(head -1 /tmp/random-url.txt)
+-----
+
+The first line in the file depicts the accessible web service.
+After this first request, let's jump into the main container of the Pod and verify that a metrics file has been written:
 
 [source, bash]
 ----
 kubectl exec -it random-generator -c main bash
-cat /tmp/logs/random.log
 ----
-
-NOTE: You could also have entered the `adapter` container which mounts the same directory at `/tmp/logs/`, too
-
-The metrics extracted from that data can now be accessed in a Prometheus conformant way:
 
 [source, bash]
 ----
-prom_port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[1].nodePort})
-curl http://$(minikube ip):$prom_port
+cat /tmp/logs/random.log
 ----
+
+NOTE: You could also have entered the `adapter` container, which mounts the same directory at `/tmp/logs/`, too
+
+Let's exit the container again with `exit` (or by pressing `CTRL-D`)
+
+The following command will now query our adapter service that transforms this proprietary format into a Prometheus conformant format:
+
+[source, bash]
+----
+curl $(tail -1 /tmp/random-url.txt)
+----
+
+(The second line in `/tmp/random-url.txt` is the URL of our adapter service)
 
 === More Information
 
-* https://www.youtube.com/watch?v=Ph3t8jIt894[Container patterns for modular distributed system design]
+* https://oreil.ly/ABSfi[Adapter Example]
