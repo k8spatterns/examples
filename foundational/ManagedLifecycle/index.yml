@@ -6,16 +6,16 @@ examples:
   path: pod.yml
 links:
 - url: https://oreil.ly/2T2jc
-  title: Managed Lifecycle Example
+  title: 'Managed Lifecycle Example'
 - url: https://oreil.ly/xzeMi
-  title: Container Lifecycle Hooks
+  title: 'Container Lifecycle Hooks'
 - url: https://oreil.ly/NTi1h
-  title: Attach Handlers to Container Lifecycle Events
+  title: 'Attach Handlers to Container Lifecycle Events'
 - url: https://oreil.ly/j-5yl
-  title: Kubernetes Best Practices: Terminating with Grace
+  title: 'Kubernetes Best Practices: Terminating with Grace'
 - url: https://oreil.ly/TgjCp
-  title: Graceful Shutdown of Pods with Kubernetes
+  title: 'Graceful Shutdown of Pods with Kubernetes'
 - url: https://oreil.ly/CVZX6
-  title: Argo and Tekton: Pushing the Boundaries of the Possible on Kubernetes
+  title: 'Argo and Tekton: Pushing the Boundaries of the Possible on Kubernetes'
 - url: https://oreil.ly/iBhoQ
-  title: Russian Doll: Extending Containers with Nested Processes
+  title: 'Russian Doll: Extending Containers with Nested Processes'

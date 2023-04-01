@@ -12,22 +12,22 @@ examples:
   path: tolerations.yml
 links:
 - url: https://oreil.ly/N-iAz
-  title: Automated Placement Example
+  title: 'Automated Placement Example'
 - url: https://oreil.ly/QlbMB
-  title: Assigning Pods to Nodes
+  title: 'Assigning Pods to Nodes'
 - url: https://oreil.ly/iPbBT
-  title: Scheduler Configuration
+  title: 'Scheduler Configuration'
 - url: https://oreil.ly/qkp60
-  title: Pod Topology Spread Constraints
+  title: 'Pod Topology Spread Constraints'
 - url: https://oreil.ly/appyT
-  title: Configure Multiple Schedulers
+  title: 'Configure Multiple Schedulers'
 - url: https://oreil.ly/4lPFX
-  title: Descheduler for Kubernetes
+  title: 'Descheduler for Kubernetes'
 - url: https://oreil.ly/oNGSR
-  title: Disruptions
+  title: 'Disruptions'
 - url: https://oreil.ly/w9tKY
-  title: Guaranteed Scheduling for Critical Add-On Pods
+  title: 'Guaranteed Scheduling for Critical Add-On Pods'
 - url: https://oreil.ly/_MODM
-  title: Keep Your Kubernetes Cluster Balanced: The Secret to High Availability
+  title: 'Keep Your Kubernetes Cluster Balanced: The Secret to High Availability'
 - url: https://oreil.ly/6Tog3
-  title: Advanced Kubernetes Pod to Node Scheduling
+  title: 'Advanced Kubernetes Pod to Node Scheduling'

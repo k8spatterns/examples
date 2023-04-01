@@ -12,22 +12,22 @@ examples:
   path: config-watcher-operator.yml
 links:
 - url: https://oreil.ly/iN2B4
-  title: Operator Example
+  title: 'Operator Example'
 - url: https://oreil.ly/aIGNA
-  title: OpenAPI V3
+  title: 'OpenAPI V3'
 - url: https://oreil.ly/GeHKy
-  title: Kubebuilder
+  title: 'Kubebuilder'
 - url: https://oreil.ly/5JWcN
-  title: Operator Framework
+  title: 'Operator Framework'
 - url: https://oreil.ly/etanj
-  title: Metacontroller
+  title: 'Metacontroller'
 - url: https://oreil.ly/1iiab
-  title: Client Libraries
+  title: 'Client Libraries'
 - url: https://oreil.ly/8ungP
-  title: Extend the Kubernetes API with CustomResourceDefinitions
+  title: 'Extend the Kubernetes API with CustomResourceDefinitions'
 - url: https://oreil.ly/0xhlw
-  title: Custom Resources
+  title: 'Custom Resources'
 - url: https://oreil.ly/kyIsL
-  title: Sample-Controller
+  title: 'Sample-Controller'
 - url: https://oreil.ly/voY92
-  title: What Are Red Hat OpenShift Operators?
+  title: 'What Are Red Hat OpenShift Operators?'

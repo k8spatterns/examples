@@ -9,20 +9,20 @@ examples:
   path: service.yml
 links:
 - url: https://oreil.ly/xSsID
-  title: Declarative Deployment Example
+  title: 'Declarative Deployment Example'
 - url: https://oreil.ly/paEA0
-  title: Performing a Rolling Update
+  title: 'Performing a Rolling Update'
 - url: https://oreil.ly/NKEnH
-  title: Deployments
+  title: 'Deployments'
 - url: https://oreil.ly/wb7D5
-  title: Run a Stateless Application Using a Deployment
+  title: 'Run a Stateless Application Using a Deployment'
 - url: https://oreil.ly/sbN9T
-  title: Blue-Green Deployment
+  title: 'Blue-Green Deployment'
 - url: https://oreil.ly/Z-vFT
-  title: Canary Release
+  title: 'Canary Release'
 - url: https://oreil.ly/JGL4C
-  title: Flagger: Deployment Strategies
+  title: 'Flagger: Deployment Strategies'
 - url: https://oreil.ly/0lzcD
-  title: Argo Rollouts
+  title: 'Argo Rollouts'
 - url: https://oreil.ly/PAwMQ
-  title: Knative: Traffic Management
+  title: 'Knative: Traffic Management'

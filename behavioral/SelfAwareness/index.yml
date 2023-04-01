@@ -6,12 +6,12 @@ examples:
   path: pod.yml
 links:
 - url: https://oreil.ly/fHu1O
-  title: Self Awareness Example
+  title: 'Self Awareness Example'
 - url: https://oreil.ly/iCwPr
-  title: AWS EC2: Instance Metadata and User Data
+  title: 'AWS EC2: Instance Metadata and User Data'
 - url: https://oreil.ly/qe2Gc
-  title: Expose Pod Information to Containers Through Files
+  title: 'Expose Pod Information to Containers Through Files'
 - url: https://oreil.ly/bZrtR
-  title: Expose Pod Information to Containers Through Environment Variables
+  title: 'Expose Pod Information to Containers Through Environment Variables'
 - url: https://oreil.ly/Jh4zf
-  title: Downward API: Available Fields
+  title: 'Downward API: Available Fields'

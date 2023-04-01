@@ -8,4 +8,4 @@ examples:
   path: service.yml
 links:
 - url: https://oreil.ly/ABSfi
-  title: Adapter Example
+  title: 'Adapter Example'

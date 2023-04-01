@@ -9,13 +9,19 @@ examples:
 - description:
   path: service.yml
 links:
-- url: https://github.com/k8spatterns/examples/tree/master/configuration/ConfigurationResource
-  title: Configuration Resource example
-- url: https://kubernetes.io/docs/tasks/configure-pod-container/configmap/
-  title: ConfigMap Documentation
-- url: https://kubernetes.io/docs/concepts/configuration/secret/
-  title: Secrets Documentation
-- url: https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo
-  title: gitRepo Volumes
-- url: https://github.com/kubernetes/kubernetes/issues/19781
-  title: Size restriction of a ConfigMap
+- url: https://oreil.ly/-_jDa
+  title: 'Configuration Resource Example'
+- url: https://oreil.ly/oRN9a
+  title: 'Configure a Pod to Use a ConfigMap'
+- url: https://oreil.ly/mvoXO
+  title: 'Secrets'
+- url: https://oreil.ly/GrL0_
+  title: 'Encrypting Secret Data at Rest'
+- url: https://oreil.ly/Im-R9
+  title: 'Distribute Credentials Securely Using Secrets'
+- url: https://oreil.ly/9PvQ5
+  title: 'Immutable Secrets'
+- url: https://oreil.ly/ndYd0
+  title: 'How to Create Immutable ConfigMaps and Secrets'
+- url: https://oreil.ly/JUDZU
+  title: 'Size Limit for a ConfigMap'

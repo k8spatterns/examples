@@ -18,30 +18,30 @@ examples:
   path: authorization-policy-allow-metrics.yml
 links:
 - url: https://oreil.ly/gwU-y
-  title: Network Segmentation Example
+  title: 'Network Segmentation Example'
 - url: https://oreil.ly/P5r0X
-  title: Network Policies
+  title: 'Network Policies'
 - url: https://oreil.ly/qR0O9
-  title: The Kubernetes Network Model
+  title: 'The Kubernetes Network Model'
 - url: https://oreil.ly/NhrWK
-  title: Kubernetes Network Policy Recipes
+  title: 'Kubernetes Network Policy Recipes'
 - url: https://oreil.ly/BzlSd
-  title: Using Network Policies
+  title: 'Using Network Policies'
 - url: https://oreil.ly/r-dn7
-  title: Why You Should Test Your Kubernetes Network Policies
+  title: 'Why You Should Test Your Kubernetes Network Policies'
 - url: https://oreil.ly/_5cWc
-  title: Using the eBPF Superpowers to Generate Kubernetes Security Policies
+  title: 'Using the eBPF Superpowers to Generate Kubernetes Security Policies'
 - url: https://oreil.ly/5VbP4
-  title: Using Advise Network-Policy
+  title: 'Using Advise Network-Policy'
 - url: https://oreil.ly/-jKvO
-  title: You and Your Security Profiles; Generating Security Policies with the Help of eBPF
+  title: 'You and Your Security Profiles; Generating Security Policies with the Help of eBPF'
 - url: https://oreil.ly/r-4pI
-  title: kube-iptables-tailer
+  title: 'kube-iptables-tailer'
 - url: https://oreil.ly/9lqlu
-  title: Creating Policies from Verdicts
+  title: 'Creating Policies from Verdicts'
 - url: https://oreil.ly/69M7s
-  title: Istio: Authorization Policy
+  title: 'Istio: Authorization Policy'
 - url: https://oreil.ly/bLq35
-  title: Istio: Authentication Policies
+  title: 'Istio: Authentication Policies'
 - url: https://oreil.ly/X00FG
-  title: SIG Multitenancy Working Group
+  title: 'SIG Multitenancy Working Group'

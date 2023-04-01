@@ -10,22 +10,22 @@ examples:
   path: readiness-gate-deployment.yml
 links:
 - url: https://oreil.ly/moMx7
-  title: Health Probe Example
+  title: 'Health Probe Example'
 - url: https://oreil.ly/h862g
-  title: Configure Liveness, Readiness, and Startup Probes
+  title: 'Configure Liveness, Readiness, and Startup Probes'
 - url: https://oreil.ly/q0wKy
-  title: Kubernetes Best Practices: Setting Up Health Checks with Readiness and Liveness Probes
+  title: 'Kubernetes Best Practices: Setting Up Health Checks with Readiness and Liveness Probes'
 - url: https://oreil.ly/kEik7
-  title: Graceful Shutdown with Node.js and Kubernetes
+  title: 'Graceful Shutdown with Node.js and Kubernetes'
 - url: https://oreil.ly/MHbup
-  title: Kubernetes Startup Probe—Practical Guide
+  title: 'Kubernetes Startup Probe—Practical Guide'
 - url: https://oreil.ly/h_W1G
-  title: Improving Application Availability with Pod Readiness Gates
+  title: 'Improving Application Availability with Pod Readiness Gates'
 - url: https://oreil.ly/O2sA2
-  title: Customizing the Termination Message
+  title: 'Customizing the Termination Message'
 - url: https://oreil.ly/lhetJ
-  title: SmallRye Health
+  title: 'SmallRye Health'
 - url: https://oreil.ly/7kYX6
-  title: Spring Boot Actuator: Production-Ready Features
+  title: 'Spring Boot Actuator: Production-Ready Features'
 - url: https://oreil.ly/aKEGe
-  title: Advanced Health Check Patterns in Kubernetes
+  title: 'Advanced Health Check Patterns in Kubernetes'

@@ -11,12 +11,12 @@ examples:
   path: pv-and-pvc.yml
 links:
 - url: https://oreil.ly/h0Ytj
-  title: Stateless Service Example
+  title: 'Stateless Service Example'
 - url: https://oreil.ly/XugMo
-  title: ReplicaSet
+  title: 'ReplicaSet'
 - url: https://oreil.ly/HvApe
-  title: Persistent Volumes
+  title: 'Persistent Volumes'
 - url: https://oreil.ly/qxFrz
-  title: Storage Classes
+  title: 'Storage Classes'
 - url: https://oreil.ly/iovaa
-  title: Access Modes
+  title: 'Access Modes'

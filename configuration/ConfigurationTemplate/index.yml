@@ -6,10 +6,10 @@ examples:
   path: wildfly.yml
 links:
 - url: https://oreil.ly/gzSdc
-  title: Configuration Template Example
+  title: 'Configuration Template Example'
 - url: https://oreil.ly/0gPNC
-  title: Tiller Template Engine
+  title: 'Tiller Template Engine'
 - url: https://oreil.ly/e-5mR
-  title: Gomplate
+  title: 'Gomplate'
 - url: https://oreil.ly/fHi0o
-  title: Go Template Syntax
+  title: 'Go Template Syntax'

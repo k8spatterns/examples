@@ -53,8 +53,11 @@ curl -s http://$ip:$port/info | \
 
 === More Information
 
-* https://github.com/k8spatterns/examples/tree/master/configuration/ConfigurationResource[Configuration Resource example]
-* https://kubernetes.io/docs/tasks/configure-pod-container/configmap/[ConfigMap Documentation]
-* https://kubernetes.io/docs/concepts/configuration/secret/[Secrets Documentation]
-* https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo[gitRepo Volumes]
-* https://github.com/kubernetes/kubernetes/issues/19781[Size restriction of a ConfigMap]
+* https://oreil.ly/-_jDa[Configuration Resource Example]
+* https://oreil.ly/oRN9a[Configure a Pod to Use a ConfigMap]
+* https://oreil.ly/mvoXO[Secrets]
+* https://oreil.ly/GrL0_[Encrypting Secret Data at Rest]
+* https://oreil.ly/Im-R9[Distribute Credentials Securely Using Secrets]
+* https://oreil.ly/9PvQ5[Immutable Secrets]
+* https://oreil.ly/ndYd0[How to Create Immutable ConfigMaps and Secrets]
+* https://oreil.ly/JUDZU[Size Limit for a ConfigMap]
