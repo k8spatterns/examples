@@ -1,14 +1,14 @@
 == Ambassador
 
-For trying out this example you need to have access to a Kubernetes cluster, e.g. by choosing one of the options from link:../../INSTALL.adoc#minikube[INSTALL].
+To try out this example, you need access to a Kubernetes cluster, e.g., by choosing one of the options from the link:../../INSTALL.adoc#minikube[INSTALL].
 
-In this example we are creating a simple ambassador, which abstracts away a logging backend.
-The main `random-generator` service will log each incoming request by sending the generated data to an URL which is specified via the environment variable `LOG_URL`.
-Here we use this `LOG_URL` to call out to an _Ambassador_ listening on localhost at port 9009.
-The _Ambassador_ is free to forward the log data to an arbitrary log service.
+In this example, we are creating a simple ambassador, which abstracts away a logging backend.
+The leading `random-generator` service will log each incoming request by sending the generated data to a URL specified via the environment variable `LOG_URL`.
+Here we use this `LOG_URL` to call out to an ambassador listening on localhost at port 9009.
+The ambassador cannot forward the log data to an arbitrary log service.
 
-For sake of simplicity we are just using as simple _Ambassador_ which just logs the data to standard output.
-This ambassador uses a sime Node.js HTTP server and used from within the container image `k8spatterns/random-generator-log-ambassador`.
+For simplicity, we just use simple ambassador, which logs the data to standard output.
+This ambassador uses a simple Node.js HTTP server from within the container image `k8spatterns/random-generator-log-ambassador`.
 This image can be found in the link:image[image] directory (Dockerfile and Node.js code).
 It's also directly available from Docker Hub.
 
@@ -19,37 +19,47 @@ Let's create a bare Pod with `k8spatterns/random-generator` as the main containe
 kubectl create -f https://k8spatterns.io/Ambassador/pod.yml
 ----
 
-A nodePort service helps for external access to the random generator:
+A `nodePort` service helps for external access to the random generator:
 
 [source, bash]
 ----
 kubectl create -f https://k8spatterns.io/Ambassador/service.yml
 ----
 
-Now let's access the service where we again assume that your cluster node's have an external IP address which can be directly contacted from your desktop
+This service uses `nodePort` to expose two ports on every cluster node.
+For simple testing, this works nicely.
+You can also use a full ingress or load-balancer exposed route as described in the _service Discovery_ pattern.
+
+Let's assume that you are using Minikube for now so that we can access the
+Then let's access and expose the service with
 
 [source, bash]
 ----
-port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
-# Use Minikube's IP or any external accessible node IP from your cluster
-ip=$(minikube ip)
-curl -s http://$ip:$port
+minikube service random-generator --url > /tmp/random-url.txt &
 ----
 
-We can now verify whether our _Ambassador_ has been contacted with the appropriate data.
+This command starts a tunnel in the background and writes down the access URL to the two exposed ports.
+We store those two lines in a text file so that we can access the service with the following:
+
+[source, bash]
+----
+curl $(cat /tmp/random-url.txt)
+----
+
+We can now verify whether our ambassador has been contacted with the appropriate data.
 
 [source, bash]
 ----
 kubectl logs -f random-generator -c ambassador
 ----
 
-You can also run this command in the background and re-run the `curl` program to see how the sidecar container is called in turn for each request.
+You can also run this command in the background and re-run the `curl` program to see how the sidecar container is called for each request.
 
-This will result in an output like:
+Showing the logs will result in an output like this:
 
 ----
 ==========================================
-Starting up random-generator Ambassador
+Starting up random-generator ambassador
 Listening at http://localhost:9009
 ==========================================
 Message received for processing:
@@ -65,4 +75,5 @@ Message received for processing:
 * https://oreil.ly/m0KTi[Ambassador Example]
 * https://oreil.ly/TPQX5[How to Use the Ambassador Pattern to Dynamically Configure Services on CoreOS]
 * https://oreil.ly/6bszq[Modifications to the CoreOS Ambassador Pattern]
+
 
