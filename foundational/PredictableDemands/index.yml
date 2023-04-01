@@ -12,3 +12,34 @@ examples:
   path: pod.yml
 - description:
   path: pod-with-priority-class.yml
+links:
+- url: https://oreil.ly/HYIqJ
+  title: Predictable Demands Example
+- url: https://oreil.ly/tib-D
+  title: Configure a Pod to Use a ConfigMap
+- url: https://oreil.ly/8bKD5
+  title: Kubernetes Best Practices: Resource Requests and Limits
+- url: https://oreil.ly/a37eO
+  title: Resource Management for Pods and Containers
+- url: https://oreil.ly/RXQD1
+  title: Manage HugePages
+- url: https://oreil.ly/ozlU1
+  title: Configure Default Memory Requests and Limits for a Namespace
+- url: https://oreil.ly/fxRvs
+  title: Node-Pressure Eviction
+- url: https://oreil.ly/FpUoH
+  title: Pod Priority and Preemption
+- url: https://oreil.ly/x07OT
+  title: Configure Quality of Service for Pods
+- url: https://oreil.ly/yORlL
+  title: Resource Quality of Service in Kubernetes
+- url: https://oreil.ly/j_a8a
+  title: Resource Quotas
+- url: https://oreil.ly/1bXfO
+  title: Limit Ranges
+- url: https://oreil.ly/lkmMK
+  title: Process ID Limits and Reservations
+- url: https://oreil.ly/Yk-Ag
+  title: Stop Using CPU Limits on Kubernetes
+- url: https://oreil.ly/cdJkP
+  title: What Everyone Should Know About Kubernetes Memory Limits

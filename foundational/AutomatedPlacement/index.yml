@@ -11,27 +11,23 @@ examples:
 - description: Tolerations for tolerating tainted nodes
   path: tolerations.yml
 links:
-- url: https://kubernetes.io/docs/user-guide/node-selection
+- url: https://oreil.ly/N-iAz
+  title: Automated Placement Example
+- url: https://oreil.ly/QlbMB
   title: Assigning Pods to Nodes
-- url: http://kubernetes.io/docs/admin/multiple-zones
-  title: Running in Multiple Zones
-- url: https://blog.openshift.com/node-placement-scheduling-explained
-  title: Node Placement and Scheduling Explained
-- url: https://kubernetes.io/docs/concepts/configuration/assign-pod-node
-  title: Assigning Pods to Nodes
-- url: https://kubernetes.io/docs/admin/disruptions
-  title: Pod Disruption Budget by Kubernetes
-- url: https://kubernetes.io/docs/admin/rescheduler
-  title: Guaranteed Scheduling For Critical Add-On Pods
-- url: https://docs.okd.io/latest/admin_guide/scheduling/scheduler.html
-  title: The Kubernetes Scheduler
-- url: https://github.com/kubernetes/community/blob/master/contributors/devel/scheduler_algorithm.md
-  title: Scheduler Algorithm
-- url: https://kubernetes.io/docs/admin/multiple-schedulers
-  title: Configuring Multiple Schedulers
-- url: https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node-allocatable.md
-  title: Node Allocatable Resources
-- url: https://github.com/kubernetes-incubator/descheduler
+- url: https://oreil.ly/iPbBT
+  title: Scheduler Configuration
+- url: https://oreil.ly/qkp60
+  title: Pod Topology Spread Constraints
+- url: https://oreil.ly/appyT
+  title: Configure Multiple Schedulers
+- url: https://oreil.ly/4lPFX
   title: Descheduler for Kubernetes
-- url: https://www.youtube.com/watch?v=nWGkvrIPqJ4
-  title: Everything You Ever Wanted to Know About Resource Scheduling, But Were Afraid to Ask
+- url: https://oreil.ly/oNGSR
+  title: Disruptions
+- url: https://oreil.ly/w9tKY
+  title: Guaranteed Scheduling for Critical Add-On Pods
+- url: https://oreil.ly/_MODM
+  title: Keep Your Kubernetes Cluster Balanced: The Secret to High Availability
+- url: https://oreil.ly/6Tog3
+  title: Advanced Kubernetes Pod to Node Scheduling

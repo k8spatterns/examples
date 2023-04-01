@@ -111,3 +111,11 @@ PRODUCTION: 07:19:20,446 INFO  [org.wildfly.extension.io] (ServerService Thread 
 ----
 
 Please also have a look to the comments within link:wildfly.yml[wildfly.yml] which explain this examples in even more details.
+
+
+=== More Information
+
+* https://oreil.ly/gzSdc[Configuration Template Example]
+* https://oreil.ly/0gPNC[Tiller Template Engine]
+* https://oreil.ly/e-5mR[Gomplate]
+* https://oreil.ly/fHi0o[Go Template Syntax]

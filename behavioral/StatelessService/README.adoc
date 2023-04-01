@@ -132,7 +132,7 @@ kubectl run -itq --rm --image=k8spatterns/curl-jq \
 
 Now let's check your local directory `logs/` and see how it gets populated with log files from the three Pods
 
-== More Information
+=== More Information
 
 * https://oreil.ly/h0Ytj[Stateless Service Example]
 * https://oreil.ly/XugMo[ReplicaSet]

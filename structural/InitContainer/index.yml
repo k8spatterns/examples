@@ -6,3 +6,22 @@ examples:
   path: pod.yml
 - description:
   path: service.yml
+links:
+- url: https://oreil.ly/dtC_W
+  title: Init Container Example
+- url: https://oreil.ly/AcBVc
+  title: Init Containers
+- url: https://oreil.ly/XJV9K
+  title: Configuring Pod Initialization
+- url: https://oreil.ly/H1-va
+  title: Admission Controllers Reference
+- url: https://oreil.ly/uOzBD
+  title: Dynamic Admission Control
+- url: https://oreil.ly/f-P_d
+  title: Metacontroller
+- url: https://oreil.ly/VnbkZ
+  title: Kyverno
+- url: https://oreil.ly/a3kmy
+  title: Demystifying Istio's Sidecar Injection Model
+- url: https://oreil.ly/Wy-ca
+  title: Object Initialization in Swift

@@ -6,3 +6,12 @@ examples:
   path: pod.yml
 - description:
   path: service.yml
+links:
+- url: https://github.com/k8spatterns/examples/tree/master/configuration/EnvVarConfiguration
+  title: Envvar Configuration example
+- url: https://12factor.net/config
+  title: The Twelve-Factor App Manifesto
+- url: https://martinfowler.com/bliki/ImmutableServer.html
+  title: Immutable Server Pattern
+- url: http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/boot-features-profiles.html
+  title: Spring Boot profiles for using sets of configuration values

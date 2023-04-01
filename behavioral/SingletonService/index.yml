@@ -8,3 +8,18 @@ examples:
   path: pdb.yml
 - description: Kind configuration for a multinode cluster
   path: kind-multinode.yml
+links:
+- url: https://oreil.ly/aGoPv
+  title: Singleton Service Example
+- url: https://oreil.ly/tb9aX
+  title: Leases
+- url: https://oreil.ly/W1ABD
+  title: Specifying a Disruption Budget for Your Application
+- url: https://oreil.ly/NU1aN
+  title: Leader Election in Go Client
+- url: https://oreil.ly/ES8Ve
+  title: Dapr: Distributed Lock Overview
+- url: https://oreil.ly/K8zI1
+  title: Creating Clustered Singleton Services on Kubernetes
+- url: https://oreil.ly/tho5T
+  title: Akka: Kubernetes Lease

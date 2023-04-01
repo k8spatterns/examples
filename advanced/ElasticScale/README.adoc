@@ -48,21 +48,34 @@ kubectl create -f vpa.yml
 
 # Check VPA recommendations
 kubectl describe vpa random-generator
-
-
 ----
-=== More information
 
-* https://github.com/k8spatterns/examples/tree/master/advanced/ElasticScale[ElasticScale example]
-* https://www.youtube.com/watch?v=Y4vnYaqhS74[Rightsize Your Pods with Vertical Pod Autoscaling]
-* https://medium.com/magalix/kubernetes-autoscaling-101-cluster-autoscaler-horizontal-pod-autoscaler-and-vertical-pod-2a441d9ad231[Kubernetes Autoscaling 101]
-* https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/[Horizontal Pod Autoscaler]
-* https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/[Horizontal Pod Autoscaler Walkthrough]
-* https://github.com/kubernetes/metrics/[Kubernetes Metrics API and Clients]
-* https://cloud.google.com/kubernetes-engine/docs/concepts/verticalpodautoscaler[Vertical Pod Autoscaling]
-* https://cloud.google.com/kubernetes-engine/docs/how-to/vertical-pod-autoscaling[Configuring Vertical Pod Autoscaling]
-* https://github.com/kubernetes/community/blob/master/contributors/design-proposals/autoscaling/vertical-pod-autoscaler.md[Vertical Pod Autoscaler Proposal]
-* https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler[Vertical Pod Autoscaler GitHub Repo]
-* https://kubernetes.io/blog/2016/07/autoscaling-in-kubernetes/[Cluster Autoscaling in Kubernetes]
-* https://medium.com/@NetflixTechBlog/performance-under-load-3e6fa9a60581[Adaptive Concurrency Limits]
-* https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md[Cluster Autoscaler FAQ]
+=== More Information
+
+* https://oreil.ly/PTUws[Elastic Scale Example]
+* https://oreil.ly/x2DJI[Rightsize Your Pods with Vertical Pod Autoscaling]
+* https://oreil.ly/_nRvf[Kubernetes Autoscaling 101]
+* https://oreil.ly/_hg2J[Horizontal Pod Autoscaling]
+* https://oreil.ly/n1C4o[HPA Algorithm Details]
+* https://oreil.ly/4BN1z[Horizontal Pod Autoscaler Walk-Through]
+* https://oreil.ly/8W7WM[Knative]
+* https://oreil.ly/dt15f[Knative Autoscaling]
+* https://oreil.ly/-f2di[Knative: Serving Your Serverless Services]
+* https://keda.sh[KEDA]
+* https://oreil.ly/0Q4g4[Application Autoscaling Made Easy with Kubernetes Event-Driven Autoscaling (KEDA)]
+* https://oreil.ly/lIDRK[Kubernetes Metrics API and Clients]
+* https://oreil.ly/GowW1[Vertical Pod Autoscaling]
+* https://oreil.ly/bhuVj[Configuring Vertical Pod Autoscaling]
+* https://oreil.ly/8LUZT[Vertical Pod Autoscaler Proposal]
+* https://oreil.ly/Hk5Xc[Vertical Pod Autoscaler GitHub Repo]
+* https://oreil.ly/eKb8G[Kubernetes VPA: Guide to Kubernetes Autoscaling]
+* https://oreil.ly/inobt[Cluster Autoscaler]
+* https://oreil.ly/oq_FS[Performance Under Load: Adaptive Concurrency Limits at Netflix]
+* https://oreil.ly/YmgkB[Cluster Autoscaler FAQ]
+* https://oreil.ly/pw4aC[Cluster API]
+* https://oreil.ly/OvJrT[Kubermatic Machine-Controller]
+* https://oreil.ly/W2o6v[OpenShift Machine API Operator]
+* https://oreil.ly/RH7fI[Adaptive Concurrency Limits Library (Java)]
+* https://oreil.ly/f0TyP[Knative Tutorial]
+
+

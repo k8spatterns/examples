@@ -82,7 +82,7 @@ To remove the kind cluster call
 kind delete cluster
 ----
 
-== More Information
+=== More Information
 
 * https://oreil.ly/aGoPv[Singleton Service Example]
 * https://oreil.ly/tb9aX[Leases]

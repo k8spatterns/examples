@@ -110,7 +110,7 @@ dig SRV random-generator.default.svc.cluster.local
 
 You will find all the internal IP addresses of the StatefulSet's Pod in the answer.
 
-=== More information
+=== More Information
 
 * https://oreil.ly/aGoPv[Singleton Service Example]
 * https://oreil.ly/tb9aX[Leases]

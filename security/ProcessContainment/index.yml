@@ -20,3 +20,24 @@ examples:
   path: restricted-pod.yml
 - description: Pod running in privileged mode
   path: privileged-pod.yml 
+links:
+- url: https://oreil.ly/Seeg_
+  title: Process Containment Example
+- url: https://oreil.ly/e7lKN
+  title: Configure a Security Context for a Pod or Container
+- url: https://oreil.ly/S8ac9
+  title: Pod Security Admission
+- url: https://oreil.ly/2xzlg
+  title: Pod Security Standards
+- url: https://oreil.ly/FnVMh
+  title: Enforce Pod Security Standards with Namespace Labels
+- url: https://oreil.ly/QnhLj
+  title: Admission Controllers Reference: PodSecurity
+- url: https://oreil.ly/GkHt7
+  title: Linux Capabilities
+- url: https://oreil.ly/IkMnH
+  title: Introduction to Security Contexts and SCCs
+- url: https://oreil.ly/f04Xj
+  title: 10 Kubernetes Security Context Settings You Should Understand
+- url: https://oreil.ly/pbAqs
+  title: Security Risk Analysis Tool for Kubernetes Resources

@@ -14,3 +14,22 @@ examples:
   path: ingress.yml
 - description:
   path: service.yml
+links:
+- url: https://oreil.ly/nagmD
+  title: Service Discovery Example
+- url: https://oreil.ly/AEDi5
+  title: Kubernetes Service
+- url: https://oreil.ly/WRT5H
+  title: DNS for Services and Pods
+- url: https://oreil.ly/voVbw
+  title: Debug Services
+- url: https://oreil.ly/mGjzg
+  title: Using Source IP
+- url: https://oreil.ly/pzOiM
+  title: Create an External Load Balancer
+- url: https://oreil.ly/Idv2c
+  title: Ingress
+- url: https://oreil.ly/W4i8U
+  title: Kubernetes NodePort Versus LoadBalancer Versus Ingress? When Should I Use What?
+- url: https://oreil.ly/fXicP
+  title: Kubernetes Ingress Versus OpenShift Route

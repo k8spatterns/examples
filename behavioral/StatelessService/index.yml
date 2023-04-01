@@ -9,3 +9,14 @@ examples:
   path: service.yml
 - description: PV and PVC for writing the log files
   path: pv-and-pvc.yml
+links:
+- url: https://oreil.ly/h0Ytj
+  title: Stateless Service Example
+- url: https://oreil.ly/XugMo
+  title: ReplicaSet
+- url: https://oreil.ly/HvApe
+  title: Persistent Volumes
+- url: https://oreil.ly/qxFrz
+  title: Storage Classes
+- url: https://oreil.ly/iovaa
+  title: Access Modes

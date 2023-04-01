@@ -6,3 +6,14 @@ examples:
   path: pv-and-pvc.yml
 - description: The cron job itself
   path: cron-job.yml
+links:
+- url: https://oreil.ly/yINcj
+  title: Periodic Job Example
+- url: https://oreil.ly/9096p
+  title: CronJob
+- url: https://oreil.ly/ZPavq
+  title: Cron
+- url: https://oreil.ly/Oi3b5
+  title: Crontab Specification
+- url: https://oreil.ly/xYymj
+  title: Cron Expression Generator

@@ -4,3 +4,22 @@ base: structural/Sidecar
 examples:
 - description:
   path: web-app.yml
+links:
+- url: https://oreil.ly/bMAvz
+  title: Sidecar Example
+- url: https://oreil.ly/7cII-
+  title: Pods
+- url: https://oreil.ly/1XqCg
+  title: Design Patterns for Container-Based Distributed Systems
+- url: https://oreil.ly/1KMw1
+  title: Prana: A Sidecar for Your Netflix PaaS-Based Applications and Services
+- url: https://oreil.ly/8Cq95
+  title: Tin-Can Phone: Patterns to Add Authorization and Encryption to Legacy [.keep-together]#Applications#
+- url: https://oreil.ly/0FF-r
+  title: Envoy
+- url: https://dapr.io
+  title: Dapr
+- url: https://oreil.ly/kkhYD
+  title: The Almighty Pause Container
+- url: https://oreil.ly/KYe39
+  title: Sidecar Pattern

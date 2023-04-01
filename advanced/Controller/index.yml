@@ -6,3 +6,26 @@ examples:
   path: config-watcher-controller.yml
 - description:
   path: web-app.yml
+links:
+- url: https://oreil.ly/qQcZM
+  title: Controller Example
+- url: https://oreil.ly/3yuBU
+  title: Writing Controllers
+- url: https://oreil.ly/mY5Dc
+  title: Writing a Kubernetes Controller
+- url: https://oreil.ly/Qa2X4
+  title: A Deep Dive into Kubernetes Controllers
+- url: https://oreil.ly/Mq3GN
+  title: Expose Controller
+- url: https://oreil.ly/bcTYK
+  title: Reloader: ConfigMap Controller
+- url: https://oreil.ly/yZdL3
+  title: Writing a Custom Controller: Extending the Functionality of Your Cluster
+- url: https://oreil.ly/0zM5X
+  title: Writing Kubernetes Custom Controllers
+- url: https://oreil.ly/19xfy
+  title: Contour Ingress Controller
+- url: https://oreil.ly/FTxze
+  title: Syntax and Character Set
+- url: https://oreil.ly/_g75A
+  title: Kubectl-Proxy

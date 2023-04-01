@@ -112,3 +112,16 @@ and then finally call the URL again to check that the content has been updated
 # Access webapp via the included Ingress object
 curl -sk https://webapp.$(minikube ip).nip.io
 ----
+
+=== More Information
+
+* https://oreil.ly/iN2B4[Operator Example]
+* https://oreil.ly/aIGNA[OpenAPI V3]
+* https://oreil.ly/GeHKy[Kubebuilder]
+* https://oreil.ly/5JWcN[Operator Framework]
+* https://oreil.ly/etanj[Metacontroller]
+* https://oreil.ly/1iiab[Client Libraries]
+* https://oreil.ly/8ungP[Extend the Kubernetes API with CustomResourceDefinitions]
+* https://oreil.ly/0xhlw[Custom Resources]
+* https://oreil.ly/kyIsL[Sample-Controller]
+* https://oreil.ly/voY92[What Are Red Hat OpenShift Operators?]

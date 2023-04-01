@@ -6,3 +6,10 @@ examples:
   path: pod.yml
 - description:
   path: service.yml
+links:
+- url: https://oreil.ly/m0KTi
+  title: Ambassador Example
+- url: https://oreil.ly/TPQX5
+  title: How to Use the Ambassador Pattern to Dynamically Configure Services on CoreOS
+- url: https://oreil.ly/6bszq
+  title: Modifications to the CoreOS Ambassador Pattern

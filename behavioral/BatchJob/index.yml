@@ -8,3 +8,20 @@ examples:
   path: job.yml
 - description: Sample Job that uses an index
   path: indexed-job.yml
+links:
+- url: https://oreil.ly/PkVF0
+  title: Batch Job Example
+- url: https://oreil.ly/I2Xum
+  title: Jobs
+- url: https://oreil.ly/mNmhN
+  title: Parallel Processing Using Expansions
+- url: https://oreil.ly/W5aqH
+  title: Coarse Parallel Processing Using a Work Queue
+- url: https://oreil.ly/-8FBt
+  title: Fine Parallel Processing Using a Work Queue
+- url: https://oreil.ly/2B2Nn
+  title: Indexed Job for Parallel Processing with Static Work Assignment
+- url: https://oreil.ly/8dLDo
+  title: Spring Batch on Kubernetes: Efficient Batch Processing at Scale
+- url: https://oreil.ly/YyYxy
+  title: JBeret Introduction

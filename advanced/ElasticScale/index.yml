@@ -8,3 +8,54 @@ examples:
   path: vpa.yml
 - description:
   path: hpa.yml
+links:
+- url: https://oreil.ly/PTUws
+  title: Elastic Scale Example
+- url: https://oreil.ly/x2DJI
+  title: Rightsize Your Pods with Vertical Pod Autoscaling
+- url: https://oreil.ly/_nRvf
+  title: Kubernetes Autoscaling 101
+- url: https://oreil.ly/_hg2J
+  title: Horizontal Pod Autoscaling
+- url: https://oreil.ly/n1C4o
+  title: HPA Algorithm Details
+- url: https://oreil.ly/4BN1z
+  title: Horizontal Pod Autoscaler Walk-Through
+- url: https://oreil.ly/8W7WM
+  title: Knative
+- url: https://oreil.ly/dt15f
+  title: Knative Autoscaling
+- url: https://oreil.ly/-f2di
+  title: Knative: Serving Your Serverless Services
+- url: https://keda.sh
+  title: KEDA
+- url: https://oreil.ly/0Q4g4
+  title: Application Autoscaling Made Easy with Kubernetes Event-Driven Autoscaling (KEDA)
+- url: https://oreil.ly/lIDRK
+  title: Kubernetes Metrics API and Clients
+- url: https://oreil.ly/GowW1
+  title: Vertical Pod Autoscaling
+- url: https://oreil.ly/bhuVj
+  title: Configuring Vertical Pod Autoscaling
+- url: https://oreil.ly/8LUZT
+  title: Vertical Pod Autoscaler Proposal
+- url: https://oreil.ly/Hk5Xc
+  title: Vertical Pod Autoscaler GitHub Repo
+- url: https://oreil.ly/eKb8G
+  title: Kubernetes VPA: Guide to Kubernetes Autoscaling
+- url: https://oreil.ly/inobt
+  title: Cluster Autoscaler
+- url: https://oreil.ly/oq_FS
+  title: Performance Under Load: Adaptive Concurrency Limits at Netflix
+- url: https://oreil.ly/YmgkB
+  title: Cluster Autoscaler FAQ
+- url: https://oreil.ly/pw4aC
+  title: Cluster API
+- url: https://oreil.ly/OvJrT
+  title: Kubermatic Machine-Controller
+- url: https://oreil.ly/W2o6v
+  title: OpenShift Machine API Operator
+- url: https://oreil.ly/RH7fI
+  title: Adaptive Concurrency Limits Library (Java)
+- url: https://oreil.ly/f0TyP
+  title: Knative Tutorial

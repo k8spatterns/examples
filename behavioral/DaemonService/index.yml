@@ -4,3 +4,14 @@ base: behavioral/DaemonService
 examples:
 - description:
   path: daemonset.yml
+links:
+- url: https://oreil.ly/_YRZc
+  title: Daemon Service Example
+- url: https://oreil.ly/62c3q
+  title: DaemonSet
+- url: https://oreil.ly/nTSbi
+  title: Perform a Rolling Update on a DaemonSet
+- url: https://oreil.ly/CnHin
+  title: DaemonSets and Jobs
+- url: https://oreil.ly/yYHft
+  title: Create Static Pods

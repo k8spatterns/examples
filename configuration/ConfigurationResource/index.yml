@@ -8,3 +8,14 @@ examples:
   path: pod.yml
 - description:
   path: service.yml
+links:
+- url: https://github.com/k8spatterns/examples/tree/master/configuration/ConfigurationResource
+  title: Configuration Resource example
+- url: https://kubernetes.io/docs/tasks/configure-pod-container/configmap/
+  title: ConfigMap Documentation
+- url: https://kubernetes.io/docs/concepts/configuration/secret/
+  title: Secrets Documentation
+- url: https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo
+  title: gitRepo Volumes
+- url: https://github.com/kubernetes/kubernetes/issues/19781
+  title: Size restriction of a ConfigMap

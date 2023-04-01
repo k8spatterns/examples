@@ -6,3 +6,6 @@ examples:
   path: pod.yml
 - description:
   path: service.yml
+links:
+- url: https://oreil.ly/ABSfi
+  title: Adapter Example
