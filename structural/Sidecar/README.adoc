@@ -6,13 +6,17 @@ This example demonstrates a simple Sidecar defined in link:web-app.yml[web-app.y
 
 The effect is that as soon as something changes in the Git repository, the HTML files that the HTTP daemon serves get updated.
 
-You can choose the Git repository by setting the environment variable `GIT_REPO` accordingly.
+You can choose the Git repository by setting the environment variable `SOURCE_REPO` accordingly.
 
-Also note the trick with `watch` to perform a periodic polling loop without requiring a shell script (as it would be needed for a `for` loop):
+The sidecar actually does nothing else then do a `git pull` every 60 seconds in the cloned Git repository:
 
 [source, bash]
 ----
-sh -c "git clone $(GIT_REPO) . && watch -n 600 git pull"
+git clone $(SOURCE_REPO) .
+while true; do
+  sleep 60
+  git pull
+done
 ----
 
 For your convenience, a `nodePort` service is exposed so that you can access the HTML pages from the outside.
