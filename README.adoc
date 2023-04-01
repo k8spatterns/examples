@@ -4,7 +4,7 @@ pass:[<a rel="license" href="https://k8spatterns.io"><img alt="Kubernetes Patter
 = Kubernetes Patterns - Examples
 
 image:https://i.creativecommons.org/l/by/4.0/88x31.png[Creative Commons License, role="right", link="https://creativecommons.org/licenses/by/4.0/"]
-
+image:https://github.com/k8spatterns/examples/actions/workflows/check_links.yml/badge.svg["Link Check", role="right", link="https://github.com/k8spatterns/examples/actions/workflows/check_links.yml"]
 This GitHub project contains the examples from _Kubernetes Patterns - Reusable Elements for Designing Cloud Native Applications, Second Edition_ https://www.amazon.com/_/dp/1098131681?tag=oreilly20-20[book] by https://github.com/bibryam[Bilgin Ibryam] and https://hachyderm.io/@ro14nd[Roland Huß]
 
 IMPORTANT: Most of the examples have been updated for this second edition of the book and examples have been added for the new chapters. However, we are not fully finished yet with updating everything. You can follow the status on the https://github.com/orgs/k8spatterns/projects/2[example roadmap]. We expect to be finished at the end of April 2023. Every pattern that has not yet been updated is listed below with an **[*]**. Thanks for your patience, and we hope you enjoy the book!
