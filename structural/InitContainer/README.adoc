@@ -32,7 +32,7 @@ www    0/1     PodInitializing   0          10s
 www    1/1     Running           0          12s
 ----
 
-Finally, let's check how we can access the data from the _Init Container_retrieved.
+Finally, let's check how we can access the data from the _Init Container_ retrieved.
 For this, we create a `nodePort` Service with
 
 [source, bash]
