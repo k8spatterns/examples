@@ -137,3 +137,7 @@ On Minikube you then access the service with
 ----
 curl -sL http://random-service.$(minikube ip).nip.io | jq .
 ----
+
+=== More Information
+
+

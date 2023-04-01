@@ -107,3 +107,7 @@ oc create -f random-generator-multi-stage-docker.yml
 
 You can monitor the build as described above for the chained build.
 Also, as this build pushes to the same imagestream you can reuse the deployment above to check this image.
+
+=== More Information
+
+

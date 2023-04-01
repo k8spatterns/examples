@@ -200,7 +200,7 @@ Also don't forget to check the logs, too !
 === More Information
 
 * https://oreil.ly/HYIqJ[Predictable Demands Example]
-* https://oreil.ly/tib-D[Configure a Pod to Use a ConfigMap]
+* https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/[Configure a Pod to Use a ConfigMap]
 * https://oreil.ly/8bKD5[Kubernetes Best Practices: Resource Requests and Limits]
 * https://oreil.ly/a37eO[Resource Management for Pods and Containers]
 * https://oreil.ly/RXQD1[Manage HugePages]
@@ -209,7 +209,7 @@ Also don't forget to check the logs, too !
 * https://oreil.ly/FpUoH[Pod Priority and Preemption]
 * https://oreil.ly/x07OT[Configure Quality of Service for Pods]
 * https://oreil.ly/yORlL[Resource Quality of Service in Kubernetes]
-* https://oreil.ly/j_a8a[Resource Quotas]
+* https://kubernetes.io/docs/concepts/policy/resource-quotas/[Resource Quotas]
 * https://oreil.ly/1bXfO[Limit Ranges]
 * https://oreil.ly/lkmMK[Process ID Limits and Reservations]
 * https://oreil.ly/Yk-Ag[Stop Using CPU Limits on Kubernetes]
