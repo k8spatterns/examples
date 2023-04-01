@@ -17,7 +17,7 @@ links:
   title: 'Predictable Demands Example'
 - url: https://oreil.ly/tib-D
   title: 'Configure a Pod to Use a ConfigMap'
-- url: https://oreil.ly/8bKD5
+- url: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
   title: 'Kubernetes Best Practices: Resource Requests and Limits'
 - url: https://oreil.ly/a37eO
   title: 'Resource Management for Pods and Containers'
@@ -33,7 +33,7 @@ links:
   title: 'Configure Quality of Service for Pods'
 - url: https://oreil.ly/yORlL
   title: 'Resource Quality of Service in Kubernetes'
-- url: https://oreil.ly/j_a8a
+- url: https://kubernetes.io/docs/concepts/policy/resource-quotas/
   title: 'Resource Quotas'
 - url: https://oreil.ly/1bXfO
   title: 'Limit Ranges'
