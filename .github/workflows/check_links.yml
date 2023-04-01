@@ -23,4 +23,4 @@ jobs:
         pip install requests pyyaml
 
     - name: Check links
-      run: python .github/link_check.py
+      run: python .github/check_links.py
