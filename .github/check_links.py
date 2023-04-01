@@ -15,7 +15,7 @@ def check_links(links, index_yml_path):
             response = requests.get(url, allow_redirects=True, timeout=10)
             print(f"{directory}: Checking {url} ... {response.status_code}")
             if response.status_code != 200:
-                errors.append((index_yml_path, url, response.status_code))
+                errors.append((index_yml_path, url, link['title'], response.status_code))
                 error_occurred = True
         except requests.exceptions.RequestException as e:
             print(f"{directory}: Checking {url} ... ERROR")
@@ -39,6 +39,6 @@ for root, _, filenames in os.walk("."):
 if error_occurred:
     print("\nErrors:")
     for error in errors:
-        index_yml_path, url, error_message = error
-        print(f"{index_yml_path}: {url} - {error_message}")
+        index_yml_path, url, title, error_message = error
+        print(f"{index_yml_path}: {url} - {title} - {error_message}")
     sys.exit(1)
