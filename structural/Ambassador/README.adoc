@@ -20,7 +20,7 @@ To enable external access to the random generator, we use a `nodePort` service:
 kubectl create -f https://k8spatterns.io/Ambassador/service.yml
 ----
 
-This service leverages `nodePort` to expose two ports on every cluster node. For simple testing, this approach works well. Alternatively, you can use a full ingress or load-balancer exposed route as described in the _Service Discovery_ pattern.
+This service leverages `nodePort` to expose its port on every cluster node. For simple testing, this approach works well. Alternatively, you can use a full ingress or load-balancer exposed route as described in the _Service Discovery_ pattern.
 
 Assuming you are using Minikube, we can access and expose the service using the following command:
 
