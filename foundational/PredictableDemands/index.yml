@@ -15,9 +15,9 @@ examples:
 links:
 - url: https://oreil.ly/HYIqJ
   title: 'Predictable Demands Example'
-- url: https://oreil.ly/tib-D
-  title: 'Configure a Pod to Use a ConfigMap'
 - url: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
+  title: 'Configure a Pod to Use a ConfigMap'
+- url: https://oreil.ly/8bKD5
   title: 'Kubernetes Best Practices: Resource Requests and Limits'
 - url: https://oreil.ly/a37eO
   title: 'Resource Management for Pods and Containers'
