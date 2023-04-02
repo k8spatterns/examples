@@ -8,6 +8,7 @@ items:
   kind: Deployment
   metadata:
     labels:
+      app: wildfly
       project: k8spatterns
       pattern: ConfigurationTemplate
     name: wildfly
@@ -20,6 +21,7 @@ items:
       metadata:
         labels:
           project: k8spatterns
+          app: wildfly
           pattern: ConfigurationTemplate
       spec:
         initContainers:
@@ -35,13 +37,19 @@ items:
         # to a emptyDir shared pod volume.        
         - image: k8spatterns/example-configuration-template-init
           name: init
+          args:
+          # Directory where the processed configurations files should be put in
+          - "--output-dir=/out"
+          # The replacement parameters are picked up from a file that is defined
+          # in the mounted config map
+          - "--datasource=config=/params/config.yml"
           volumeMounts:
           - mountPath: "/params"
             name: wildfly-parameters
           - mountPath: "/out"
             name: wildfly-config
         containers:
-        - image: jboss/wildfly:10.1.0.Final
+        - image: quay.io/wildfly/wildfly:27.0.0.Final-jdk17
           name: server
           command:
           # Use a special configuration directory holding our processed

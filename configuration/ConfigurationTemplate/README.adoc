@@ -18,7 +18,7 @@ The only datum we are want to adapt in this simple example is the log format. Th
 As a template processor https://github.com/hairyhenderson/gomplate[gomplate] is used which has the notion of "datasources". The template syntax please refer to https://gohugo.io/templates/go-templates/[Go Templates].
 Actually its an slightly adapted gomplate so that it fits our use case better. You found the changed version in the https://github.com/rhuss/gomplate[rhuss/gomplate] repo.
 
-As described in the pattern's description an Kubernertes _init-container_ is used for processing the templates. The docker build files for this container are in link:init-container[init-container].
+As described in the pattern's description an Kubernetes init container that contains the templates is also used for processing the templates. The docker build files for this container are in link:init-container[init-container].
 
 Please check its link:init-container/README.md[README] how to re-create the image, but we already pushed it to Docker hub for your convenience.
 
@@ -26,49 +26,40 @@ Please check its link:init-container/README.md[README] how to re-create the imag
 
 The value to fill into the template come from config map which needs to be created first.
 
-The config map nused in the example has the name `wildfly-parameters` and contains a key `config.yml`. The directories link:dev[dev] and link:prod[prod] contains both sample configurations as it can be used in the link:init-container/in/standalone.xml#L122[standalone.xml] template. You would create a different config-map with the name `wildfly-parameters` for each environment.
+The config map used in the example has the name `wildfly-parameters` and contains a key `config.yml`. The directories link:dev[dev] and link:prod[prod] contains both sample configurations as it can be used in the link:init-container/in/standalone.xml#L122[standalone.xml] template. You would create a different config-map with the name `wildfly-parameters` for each environment.
 
-To create the configuration map use (assuming the current working directory is the directory of this README):
+To create the config maps that we use (assuming the current working directory is the directory of this README), for both, a development and a production environment:
 
 [source, bash]
 ----
-kubectl create configmap wildfly-parameters --from-file=dev
+kubectl create configmap dev-params --from-file=dev
 ----
+
+[source, bash]
+----
+kubectl create configmap prod-params --from-file=prod
+----
+
 
 Then start the service and deployment as specified in link:wildfly.yml[wildfly.yml]:
 
 [source, bash]
 ----
-kubectl create -f wildfly.yml
+kubectl create -f https://k8spatterns.io/ConfigurationTemplates/wildfly.yml
 ----
 
 In order to check that the configuration was processed properly check now the logs:
 
 [source, bash]
 ----
-kubectl logs -f $(kubectl get pod -o name | grep wildfly) server
+kubectl logs -f $(kubectl get pod -l app=wildfly -o name) server
+----
 
-=========================================================================
-
-  JBoss Bootstrap Environment
-
-  JBOSS_HOME: /opt/jboss/wildfly
-
-  JAVA: /usr/lib/jvm/java/bin/java
-
-  JAVA_OPTS:  -server -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true
-
-=========================================================================
-
-05:48:31,124 INFO  [org.jboss.modules] (main) JBoss Modules version 1.5.2.Final
-05:48:31,294 INFO  [org.jboss.msc] (main) JBoss MSC version 1.2.6.Final
-05:48:31,408 INFO  [org.jboss.as] (MSC service thread 1-1) WFLYSRV0049: WildFly Full 10.1.0.Final (WildFly Core 2.2.0.Final) starting
-05:48:32,546 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0039: Creating http management service using socket-binding (management-http)
-05:48:32,566 INFO  [org.xnio] (MSC service thread 1-3) XNIO version 3.4.0.Final
-05:48:32,580 INFO  [org.xnio.nio] (MSC service thread 1-3) XNIO NIO Implementation Version 3.4.0.Final
+----
+....
 DEVELOPMENT: 05:48:32,627 INFO  [org.jboss.remoting] (MSC service thread 1-3) JBoss Remoting version 4.0.21.Final
 DEVELOPMENT: 05:48:32,713 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 38) WFLYCLINF0001: Activating Infinispan subsystem.
-.....
+.... 
 ----
 
 Note the added prefix `DEVELOPMENT` which comes from the config map.
@@ -78,11 +69,25 @@ If you want to change the configuration, replace the config-map and restart the 
 [source, bash]
 ----
 kubectl delete cm wildfly-parameters
-kubectl create configmap wildfly-parameters --from-file=prod
-kubectl delete $(kubectl get pod -o name | grep wildfly)
-sleep 15
-kubectl logs -f $(kubectl get pod -o name | grep wildfly) server
+----
 
+[source, bash]
+----
+kubectl create configmap wildfly-parameters --from-file=prod
+----
+
+[source, bash]
+----
+kubectl delete --force $(kubectl get pod -l app=wildfly -o name)
+----
+
+[source, bash]
+----
+kubectl logs -f $(kubectl get pod -l app=wildfly -o name) server
+----
+
+[source, bash]
+----
 configmap "wildfly-parameters" deleted
 configmap "wildfly-parameters" created
 pod "wildfly-cm-template-3436327307-j7db6" deleted
@@ -109,6 +114,8 @@ PRODUCTION: 07:19:20,431 INFO  [org.jboss.as.clustering.infinispan] (ServerServi
 PRODUCTION: 07:19:20,446 INFO  [org.wildfly.extension.io] (ServerService Thread Pool -- 37) WFLYIO001: Worker 'default' has auto-configured to 4 core threads with 32 task threads based on your 2 available processors
 .....
 ----
+
+That concludes our demo and how you can easily parameterise big configuration files with values that you store in a configmap.
 
 Please also have a look to the comments within link:wildfly.yml[wildfly.yml] which explain this examples in even more details.
 

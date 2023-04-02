@@ -2,7 +2,7 @@ pattern: Configuration Template
 category: configuration
 base: configuration/ConfigurationTemplate
 examples:
-- description:
+- description: Deployment descriptor for a wildfly service
   path: wildfly.yml
 links:
 - url: https://oreil.ly/gzSdc
