@@ -64,8 +64,7 @@ Finally, to demonstrate that the ConfigMap is indeed immutable, attempt to patch
 
 [source, bash]
 ----
-kubectl patch configmap random-generator-config \
-    --type merge -p '{"data":{"newKey":"newValue"}}'
+kubectl patch configmap random-generator-config --type merge -p '{"data":{"newKey":"newValue"}}'
 ----
 
 You should receive an error indicating that the ConfigMap cannot be updated since it is marked as immutable.
