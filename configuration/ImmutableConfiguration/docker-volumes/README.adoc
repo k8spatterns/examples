@@ -1,15 +1,15 @@
 == Docker Volumes to link configuration containers
 
-This example demonstrates how to use an immutable configuration container with plain Docker means. It uses Docker volumes under the hood to link together the configuration container with the application container.
+This example demonstrates using an immutable configuration container with plain Docker means. It uses Docker volumes under the hood to link the configuration container with the application container.
 
-* Create the application Docker Image first which uses link:../demo[demo.war] :
+* Create the application Docker Image first, which uses link:../demo[demo.war] :
 
 [source,bash]
 ----
 docker build -t k8spatterns/demo:1 -f Dockerfile-demo .
 ----
      
-* Now create _config-dev_ container which holds the configuration for the developer environment. The first step here is to create an image (with version number) and then a container from it
+* Now create _config-dev_ container, which holds the configuration for the developer environment. The first step here is to create an image (with version number) and then a container from it
 
 [source,bash]
 ----
@@ -28,10 +28,10 @@ docker create --name config-dev k8spatterns/config-dev:1 .
 docker run --volumes-from=config-dev -p 8080:8080 k8spatterns/demo:1
 ----
   
-* The application is now reachable as http://localhost:8080/demo[]. Use the address for your Docker daemon here (which in most of the cases is "localhost").
+* The application is now reachable as http://localhost:8080/demo[]. Use the address for your Docker daemon here (in most cases, it is "localhost").
      
 
-The same process can be done now for the production environment, but using now `prod.properties` to create a configuration container for the production environment:
+The exact process can be done now for the production environment, but using now `prod.properties` to create a configuration container for the production environment:
 
 [source,bash]
 ----
