@@ -9,10 +9,10 @@ For this, let's create the ConfigMap with:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/ConfigurationResource/configmap.yml
+kubectl apply -f https://k8spatterns.io/ConfigurationResource/configmap.yml
 ----
 
-The following Pod declaration will now put up this ConfigMap for being used as environment variables and mounted as files in a directory `/config`.
+The following Pod declaration will now put up this ConfigMap for being used as environment variables and mounted the entry `application.properties` with a name `random-generator.properties` in a directory `/config/app`.
 
 Please check out the comments in https://k8spatterns.io/ConfigurationResource/pod.yml[pod.yml] which provide some more explanations.
 
@@ -27,7 +27,7 @@ Like in the other examples we expose a nodePort service for accessing our servic
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/ConfigurationResource/service.yml
+kubectl apply -f https://k8spatterns.io/ConfigurationResource/service.yml
 ----
 
 Now let's access the service where we again assume that your cluster node's have an external IP address which can be directly contacted from your desktop.
@@ -36,18 +36,21 @@ The `/info` endpoint will return the configuration data that has been picked up 
 
 [source, bash]
 ----
-port=$(kubectl get svc random-generator -o jsonpath={.spec.ports[0].nodePort})
-# Use Minikube's IP or any external accessible node IP from your cluster
-ip=$(minikube ip)
-curl -s http://$ip:$port/info | jq .
+minikube service random-generator --url > /tmp/random-url.txt &
+----
+
+This command starts a tunnel in the background and writes down the access URL for the two exposed ports. We store these URLs in a text file to access the service with the following command:
+
+[source, bash]
+----
+curl -s $(cat /tmp/random-url.txt)/info | jq .
 ----
 
 In order to filter on the environment variables which have been bulk-exposed with a `CONFIG_` prefix in an `envFrom` section, use:
 
 [source, bash]
 ----
-# Check also for env variables which has been set via envFrom
-curl -s http://$ip:$port/info | \
+curl -s $(cat /tmp/random-url.txt)/info \
    jq '.env | with_entries(select(.key | startswith("CONFIG_")))'
 ----
 
