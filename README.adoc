@@ -12,11 +12,11 @@ IMPORTANT: Most of the examples have been updated for this second edition of the
 
 NOTE: All the examples that we have updated have been checked on minikube or kind with Kubernetes 1.26. If you run in any issues, please open a https://github.com/k8spatterns/examples/issues[issue] on this repository, we will take as soon as possible.
 
-All of these examples have been tested on Minikube on a macOS with ARM architecture (M1), but they should work on any Kubernetes installation. Be sure to explore the provided example resources, as they contain a wealth of comments and clarifications about the concepts explained in each pattern.
-
 Installation instructions for the example prerequisites are summarized in link:INSTALL.adoc[INSTALL].
 By default, you need access to a vanilla Kubernetes installation, like Minikube.
 However, if add-ons are required, the example description explains this additional requirement.
+
+All of these examples have been tested on Minikube on a macOS with ARM architecture (M1), but they should work on any Kubernetes installation. Be sure to explore the provided example resources, as they contain a wealth of comments and clarifications about the concepts explained in each pattern.
 
 For feedback, issues, or questions in general, please use the https://github.com/bibryam/k8spatterns/issues[issue tracker] to open cases.
 Also, we love contributions like spelling fixes, bug fixes, and improvements;... Please open pull requests; we are happy to review them!

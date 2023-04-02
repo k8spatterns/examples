@@ -32,7 +32,7 @@ kubectl create -f https://k8spatterns.io/Adapter/service.yml
 
 This service uses `nodePort` to expose two ports on every cluster node.
 For simple testing, this works nicely.
-You can also use a full ingress or load-balancer exposed route as described in the _service Discovery_ pattern.
+You can also use a full ingress or load-balancer exposed route as described in the _Service Discovery_ pattern.
 
 Let's assume that you are using Minikube for now so that we can access the
 Then let's access and expose the service with
