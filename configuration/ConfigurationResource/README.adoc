@@ -50,7 +50,7 @@ In order to filter on the environment variables which have been bulk-exposed wit
 
 [source, bash]
 ----
-curl -s $(cat /tmp/random-url.txt)/info \
+curl -s $(cat /tmp/random-url.txt)/info | \
    jq '.env | with_entries(select(.key | startswith("CONFIG_")))'
 ----
 

@@ -14,7 +14,7 @@ spec:
     # Configure Spring boot to pick up that configuration coming from
     # a ConfigMap
     - name: SPRING_CONFIG_LOCATION
-      value: /config/application.properties
+      value: /config/app/random-generator.properties
     # Pattern environment variable is picked up from a config map
     - name: PATTERN
       valueFrom:
