@@ -31,7 +31,14 @@ spec:
     - name: config-volume
       mountPath: /config
   volumes:
+  # Volume is mounted directly from a config map
   - name: config-volume
     configMap:
       name: random-generator-config
-  # Volume is mounted directly from a config map
+      items:
+      # Mount only application properties under the provided path
+      # and with the given permission
+      - key: application.properties
+        path: app/random-generator.properties
+        mode: 0400
+

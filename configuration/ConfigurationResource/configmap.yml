@@ -13,3 +13,5 @@ data:
   # by a Pod's 'envFrom' declaration:
   EXTRA_OPTIONS: "high-secure,native"
   SEED: "432576345"
+# Make this config map immutable
+immutable: true
