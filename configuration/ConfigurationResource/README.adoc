@@ -1,58 +1,74 @@
 == Configuration Resource
 
-For trying out this example you need to have access to a Kubernetes cluster, e.g. by choosing one of the options from link:../../INSTALL.adoc#minikube[INSTALL].
+To try out this example, ensure you have access to a Kubernetes cluster by choosing one of the options from link:../../INSTALL.adoc#minikube[INSTALL].
 
-Our sample [random-generator] REST service can be configured with environment variables and an `application.properties` configuration file.
-We will now provide this configuration via a ConfigMap.
+The sample [random-generator] REST service can be configured using environment variables and an `application.properties` configuration file. In this example, we'll provide this configuration via a ConfigMap.
 
-For this, let's create the ConfigMap with:
+First, create the ConfigMap with the following command:
 
 [source, bash]
 ----
 kubectl apply -f https://k8spatterns.io/ConfigurationResource/configmap.yml
 ----
 
-The following Pod declaration will now put up this ConfigMap for being used as environment variables and mounted the entry `application.properties` with a name `random-generator.properties` in a directory `/config/app`.
+Next, the following Pod declaration will use this ConfigMap as environment variables and mount the `application.properties` entry as `random-generator.properties` in the `/config/app` directory.
 
-Please check out the comments in https://k8spatterns.io/ConfigurationResource/pod.yml[pod.yml] which provide some more explanations.
+For additional explanations, please review the comments at https://k8spatterns.io/ConfigurationResource/pod.yml[pod.yml].
 
-Let's create that Pod with:
+Create the Pod with this command:
 
 [source, bash]
 ----
 kubectl create -f https://k8spatterns.io/ConfigurationResource/pod.yml
 ----
 
-Like in the other examples we expose a nodePort service for accessing our service:
+As in previous examples, we'll expose a nodePort service for accessing our service:
 
 [source, bash]
 ----
 kubectl apply -f https://k8spatterns.io/ConfigurationResource/service.yml
 ----
 
-Now let's access the service where we again assume that your cluster node's have an external IP address which can be directly contacted from your desktop.
+Now, access the service, assuming your cluster node has an external IP address that can be directly contacted from your desktop.
 
-The `/info` endpoint will return the configuration data that has been picked up by the random-generator Pod:
+The `/info` endpoint returns the configuration data picked up by the random-generator Pod:
 
 [source, bash]
 ----
 minikube service random-generator --url > /tmp/random-url.txt &
 ----
 
-This command starts a tunnel in the background and writes down the access URL for the two exposed ports. We store these URLs in a text file to access the service with the following command:
+This command starts a tunnel in the background and writes down the access URLs for the exposed ports. Store these URLs in a text file and use the following command to access the service:
 
 [source, bash]
 ----
 curl -s $(cat /tmp/random-url.txt)/info | jq .
 ----
 
-In order to filter on the environment variables which have been bulk-exposed with a `CONFIG_` prefix in an `envFrom` section, use:
+To filter the environment variables that have been bulk-exposed with a `CONFIG_` prefix in an `envFrom` section, use:
 
 [source, bash]
 ----
 curl -s $(cat /tmp/random-url.txt)/info | \
    jq '.env | with_entries(select(.key | startswith("CONFIG_")))'
 ----
+
+Now let's check whether the permissions of the mounted `random-generator.properties` file has been set properly to `0400`; use the following command:
+
+[source, bash]
+----
+kubectl exec random-generator -- ls -l /config/app/random-generator.properties
+----
+
+Finally, to demonstrate that the ConfigMap is indeed immutable, attempt to patch it with the following command:
+
+[source, bash]
+----
+kubectl patch configmap random-generator-config \
+    --type merge -p '{"data":{"newKey":"newValue"}}'
+----
+
+You should receive an error indicating that the ConfigMap cannot be updated since it is marked as immutable.
 
 === More Information
 

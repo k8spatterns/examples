@@ -72,11 +72,11 @@ link:structural/Ambassador/README.adoc[Ambassador]::
 === Configuration Patterns
 
 link:configuration/EnvVarConfiguration/README.adoc[EnvVar Configuration]::
-  Learn how to use environment variables, both literal and sourced from ConfigMaps and Secrets, for our random-generator service. **[*]**
+  Learn how to use environment variables, both literal and sourced from ConfigMaps and Secrets, for our random-generator service.
 link:configuration/ConfigurationResource/README.adoc[Configuration Resource]::
-  Discover how to configure the random-generator Spring Boot application using a ConfigMap. **[*]**
-link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]:: **[*]**
-  Review examples that demonstrate using immutable configuration containers for application configuration in Docker and Kubernetes.
+  Discover how to configure the random-generator Spring Boot application using a ConfigMap.
+link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]:: 
+  Review examples that demonstrate using immutable configuration containers for application configuration in Docker and Kubernetes. **[*]**
 link:configuration/ConfigurationTemplate/README.adoc[Configuration Template]::
   See how a template configuration `standalone.xml` is processed using a template processor and filled with data from ConfigMap before starting a Wildfly server. **[*]**
 
