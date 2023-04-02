@@ -13,12 +13,12 @@ docker build -t k8spatterns/demo:1 -f Dockerfile-demo .
 
 [source,bash]
 ----
-docker build --build-arg config=dev.properties -f Dockerfile-config -t k8spatterns/config-dev:1.0.0 .
+docker build --build-arg config=dev.properties -f Dockerfile-config -t k8spatterns/config-dev:1 .
 ----
 
 [source, bash]
 ----
-docker create --name config-dev k8spatterns/config-dev:1.0.0 .
+docker create --name config-dev k8spatterns/config-dev:1 .
 ----
          
 * Start demo image with _config-dev_
@@ -35,12 +35,12 @@ The same process can be done now for the production environment, but using now `
 
 [source,bash]
 ----
-docker build --build-arg config=prod.properties -f Dockerfile-config -t k8spatterns/config-prod:1.0.0 .
+docker build --build-arg config=prod.properties -f Dockerfile-config -t k8spatterns/config-prod:1 .
 ----
 
 [source, bash]
 ----
-docker create --name config-prod k8spatterns/config-prod:1.0.0 .
+docker create --name config-prod k8spatterns/config-prod:1 .
 ----
 
 [source, bash]

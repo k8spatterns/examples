@@ -40,3 +40,13 @@ The following examples demonstrate how to apply the "Immutable Configuration" pa
 
 * link:docker-volumes/README.adoc[Docker Volumes] demonstrates how to use plain Docker volumes to link together the configuration and application container.
 * link:init-container/README.adoc[Init Container] uses an https://kubernetes.io/docs/concepts/workloads/pods/init-containers/[init container] initialize a pod's volume with the configuration from a configuration container in a Kubernetes context.
+
+=== More Information
+
+* https://oreil.ly/1bPZ2[Immutable Configuration Example]
+* https://oreil.ly/bTtty[How to Mimic +--volumes-from+ in Kubernetes]
+* https://oreil.ly/RfrwN[Immutable ConfigMaps]
+* https://oreil.ly/XQ54e[Feature Request: Image Volumes and Container Volumes]
+* https://oreil.ly/vhCdH[docker-flexvol: A Kubernetes Driver That Supports Docker Volumes]
+* https://oreil.ly/QyX2y[Red Hat OpenShift: Using Templates]
+* https://oreil.ly/OMqRo[Kubernetes CSI Driver for Mounting Images]

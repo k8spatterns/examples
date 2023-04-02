@@ -17,31 +17,31 @@ The images are created similar as in the link:../docker-volumes[plain Docker cas
 Like in the other examples we are using minikube as platform and the included Docker daemon for building the image.
 The following instructions assume that you already have a minikube running.
 
-* Set the Docker environment variables to point to the minikube Docker daemon
+Set the Docker environment variables to point to the minikube Docker daemon
 
 [source,bash]
 ----
 eval $(minikube docker-env)
 ----
 
-* Create the application Docker Image first which uses link:../demo[demo.war] :
+Create the application Docker Image first which uses link:../demo[demo.war] :
 
 [source,bash]
 ----
 docker build -t k8spatterns/demo:1 -f Dockerfile-demo .
 ----
      
-* Now create the image _config-dev-image_ which holds the configuration for the developer environment:
+Now create the image _config-dev-image_ which holds the configuration for the developer environment:
 
 [source,bash]
 ----
 docker build --build-arg config=dev.properties -f Dockerfile-config -t k8spatterns/config-dev:1 .
 ----
          
-   Have a look into `Dockerfile-config`, it's a bit different then for usage with the Docker volume. It uses `busybox` as base images and contains an `ENTRYPOINT` for allowing to copy the configuration data. Also we don't need a container here, the image is sufficient.
+Have a look into `Dockerfile-config`, it's a bit different then for usage with the Docker volume. It uses `busybox` as base images and contains an `ENTRYPOINT` for allowing to copy the configuration data. Also we don't need a container here, the image is sufficient.
    
 
-* Next lets create the configuration for the production environment from `prod.properties`. We create a production configuration similar to the development configuration:
+Next lets create the configuration for the production environment from `prod.properties`. We create a production configuration similar to the development configuration:
 
 [source, bash]
 ----
@@ -50,18 +50,18 @@ docker build --build-arg config=prod.properties -f Dockerfile-config -t k8spatte
 
 === Apply Kubernetes resources
 
-It's time now to apply the Kubernetes resource descriptor:
+It's time now to apply the Kubernetes resource descriptor to deploy the image as a Deployment and add a Service for accessing the service
 
 [source, bash]
 -----
-kubectl create -f demo.yml
+kubectl apply -f https://k8spatterns.io/ImmutableConfiguration/demo.yml
 -----
 
-* Open application
+Open application in the web browser with
 
 [source, bash]
 ----
-open $(minikube service --url demo)/demo
+minikube service demo
 ----
 
 The only thing we have finally to do is to exchange the configuration image within the pod declaration of our deployment:
@@ -72,17 +72,15 @@ kubectl patch deployment demo --type json -p \
   '[ {"op" : "replace", "path": "/spec/template/spec/initContainers/0/image", "value": "k8spatterns/config-prod:1"}]'
 ----
 
-WARNING: There is currently an issue with Kubernetes not updating initContainers with `kubectl patch` or `kubectl apply`. Please https://github.com/kubernetes/kubectl/issues/27[track] https://github.com/kubernetes/kubernetes/issues/47264[these issues] for updates.
-
 === OpenShift Template
 
-If you are on OpenShift, e.g. by running minishift, you can benefit from the template mechanism provided by OpenShift.
+If you are on OpenShift you can benefit from the template mechanism provided by OpenShift.
 
 Our example can be deployed with the template defined in `demo-openshift-template.yml`:
 
 [source, bash]
 ----
-oc create -f demo-openshift-template.yml
+oc create -f https://k8spatterns.io/ImmutableConfiguration/demo-openshift-template.yml
 ----
 
 The template contains the same elements as in `demo.yml` but is parameterised on the init containers' image. The template variable used here is `CONFIG_IMAGE` and defaults to `k8spatterns/config-dev:1`.
