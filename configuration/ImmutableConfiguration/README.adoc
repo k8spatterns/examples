@@ -29,7 +29,7 @@ In order to test the application just call
 
 [source, bash]
 ----
-mvn clean install tomcat7:run
+mvn clean install jetty:run
 ----
 
 and the direct your browser to `http://localhost:8080/demo`. You will get an error message that the configuration file can't be found.

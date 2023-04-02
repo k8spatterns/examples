@@ -1,6 +1,10 @@
 import java.io.*;
 import java.util.*;
-import javax.servlet.http.*;
+
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 
 public class ConfigContainerDemo extends HttpServlet {
 
