@@ -45,7 +45,7 @@ items:
           - "--datasource=config=/params/config.yml"
           volumeMounts:
           - mountPath: "/params"
-            name: wildfly-parameters
+            name: wildfly-params
           - mountPath: "/out"
             name: wildfly-config
         containers:
@@ -70,9 +70,11 @@ items:
         # is supposed to hold a file 'config.yml' with is a yaml document
         # with the following keys:
         # - logFormat : Log line to use for Wildfly logoutput
-        - name: wildfly-parameters
+        - name: wildfly-params
           configMap:
-            name: wildfly-parameters
+            # Use developer parameters by default, will be patched later
+            # to switch to prod-params
+            name: dev-params
         # Node and Pod specific directory used to share the processed temlates
         # between the init container who created it and the the 
         # server who picks it up during startup
