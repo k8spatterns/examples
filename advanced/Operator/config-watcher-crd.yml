@@ -30,12 +30,30 @@ spec:
         properties:
           configMap:
             type: string
-            description: Name of the ConfigMap to monitor for changes
+            
           podSelector:
             type: object
-            description: Label selector used for selecting Pods
+            
             additionalProperties:
               type: string
+      openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required:
+                - configMap
+                - podSelector
+              properties:
+                configMap:
+                  type: string
+                  description: Name of the ConfigMap to monitor for changes
+                  minLength: 1
+                podSelector:
+                  type: object
+                  description: Label selector used for selecting Pods
+                  additionalProperties:
+                    type: string
     # Additional columns to print when in kubectl get
     additionalPrinterColumns:
     - name: configmap

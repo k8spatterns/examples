@@ -64,7 +64,7 @@ Then create the web application itself:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/Operator/web-app.yml
+kubectl apply -f https://k8spatterns.io/Operator/web-app.yml
 ----
 
 If you look into this descriptor file, you will find the same `Deployment` using our dumb HTTP server which references the content environment variable via a `ConfigMap`.
@@ -77,6 +77,8 @@ With minikube, access the application in your browser:
 minikube service webapp
 ----
 
+(use option `-n namespace` if you have deployed this example in a different namespace than `default).
+
 Stop the tunnel created by `minikube service` (with `CTRL-C`), update the content of `ConfigMap`, and watch the controller's log:
 
 If you change the config map now, it doesn't change anything.
@@ -85,7 +87,7 @@ We have to first install a concreate custom resource of kind `ConfigWatcher` to 
 [source,bash]
 ----
 kubectl apply -f https://k8spatterns.io/Operator/config-watcher-sample.yml
------
+----
 
 Check that the resource has been created
 
