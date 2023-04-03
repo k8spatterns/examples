@@ -52,28 +52,6 @@ spec:
     port: 8080
     protocol: TCP
     targetPort: 8080
+  type: NodePort
   selector:
     app: webapp
----
-# Ingress object for external access to the webserver.
-# If running on minikube, # Replace the IP address with the output of `minikube ip` either directly
-# in this file or later with a `kubectl patch`.
-# Then open "https://webapp.$(minikube ip).nip.io"
-# in the browser and don't forget to enable ingress on minikube via
-# "minikube addons enable ingress"
-apiVersion: extensions/v1
-kind: Ingress
-metadata:
-  name: webapp
-spec:
-  rules:
-  - host: webapp.127.0.0.1.nip.io
-    http:
-      paths:
-      - path: "/"
-        pathType: Prefix
-        backend:
-          service:
-            name: webapp
-            port:
-              number: 8080

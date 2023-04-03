@@ -12,15 +12,7 @@ For a full explanation of how this controller works, please refer to the "Contro
 
 WARNING: Note, that this is example is meant for educational purposes only and is not suitable for general purpose usage.
 
-The easiest way to try this example is by using https://github.com/kubernetes/minikube[minikube] with an ingress controller enabled:
-
-[source,bash]
-----
-# Start minikube and enable the ingress addon
-minikube start
-minikube addons enable ingress
-----
-
+For the following, we asumme that you are using `minikube`.
 More options for running the example are described in link:../../INSTALL.adoc#minikube[installation instructions].
 
 The controller script itself is stored in a `ConfigMap` and can be easily edited later on:
@@ -44,10 +36,10 @@ To create this deployment in the current namespace, call:
 kubectl apply -f https://k8spatterns.io/Controller/config-watcher-controller.yml
 ----
 
-You might want to have a look at the descriptor file; it contains some useful comments along the way and also the security setup to allow the controller to watch resources and to restart `Pods`.
+You might want to have a look at the descriptor file; it contains some useful comments along the way and also the security setup to allow the controller to watch resources and to restart Pods.
 
 That's all.
-Now you have a nice little Controller which watches on `ConfigMap` and restart `Pods` in case of updates.
+Now you have a nice little controller which watches on ConfigMap and restart Pods in case of updates.
 
 To try it out, we are reusing the super simple web application which just exposes an environment variable as content.
 This link:../images/mini-http-server.dockerfile[image] uses `nc` to deliver the content and can be found on Docker Hub as https://cloud.docker.com/u/k8spatterns/repository/docker/k8spatterns/mini-http-server[k8spatterns/mini-http-server].
@@ -59,6 +51,8 @@ Before we deploy this app, we should tail on the log of our controller (e.g. `ku
 kubectl logs -f $(kubectl get pods -l role=controller -o name) config-watcher
 ----
 
+You can also put this command into the background to follow any future events that arrive.
+
 Then create the web application itself:
 
 [source,bash]
@@ -69,40 +63,27 @@ kubectl apply -f https://k8spatterns.io/Controller/web-app.yml
 If you look into this descriptor, you will find a `Deployment` using our dumb HTTP server which references the content environment variable via a `ConfigMap`.
 The `ConfigMap` itself is annotated with a pod selector `k8spatterns.io/podDeleteSelector: "app=webapp"` which directly select the webapp `Pod`.
 
-This resource file also includes the definition of a Service and an Ingress object so that we can access the server from the outside.
+This resource file also includes the definition of a Service that exposes the Pod via a `nodePort`.
 
-Before accessing the web-app we need to path the Ingress object to point to our minikube installation:
+If you are running minikube (as recommended for this example), you can now access your application with your browser with
 
 [source, bash]
 ----
-kubectl patch ingress webapp --type=json \
-   -p "[{op: replace, \
-         path: /spec/rules/0/host, \
-         value: webapp.$(minikube ip).nip.io}]"
+minikube service webapp
 ----
 
-NOTE: `nip.io` is a nice DNS reflector service, that as result of a DNS lookup just returns the IP address that is added before as subdomain just before the `.nip.io` part.
-
-You can access our web app directly
+Stop the tunnel created by `minikube service` (with `CTRL-C`), change the content of `ConfigMap` and watch the log of your controller:
 
 [source,bash]
 ----
-curl -sk https://webapp.$(minikube ip).nip.io
+kubectl patch configmap webapp-config -p '{"data":{"message":"Take this update!"}}'
 ----
 
-Now change the content of `ConfigMap` and watch the log of your controller:
-
-[source,bash]
-----
-kubectl patch configmap webapp-config \
-    -p '{"data":{"message":"Take this update!"}}'
-----
-
-and then finally call the URL again to check that the content has been updated to
+Finally call the URL again to check that the content has been updated:
 
 [source,bash]
 ----
-curl -sk https://webapp.$(minikube ip).nip.io
+minkube service webapp
 ----
 
 === More Information
