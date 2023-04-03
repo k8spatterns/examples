@@ -61,6 +61,7 @@ DEVELOPMENT: 14:52:14,096 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0
 DEVELOPMENT: 14:52:14,097 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:9990/management
 DEVELOPMENT: 14:52:14,098 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://127.0.0.1:9990
 ....
+----
 
 Note the added prefix `DEVELOPMENT`, which comes from the ConfigMap.
 
@@ -88,6 +89,7 @@ PRODUCTION: 14:49:04,786 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV00
 PRODUCTION: 14:49:04,787 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:9990/management
 PRODUCTION: 14:49:04,788 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://127.0.0.1:9990
 ....
+----
 
 That concludes our demo on how to easily parameterize large configuration files with values you store in a ConfigMap.
 
