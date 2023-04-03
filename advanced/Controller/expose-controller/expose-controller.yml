@@ -44,6 +44,13 @@ spec:
         image: k8spatterns/kubeapi-proxy
       - name: expose-controller
         image: k8spatterns/curl-jq
+        env:
+        # The operator watches the namespace in which the controller
+        # itself is installed (by using the Downward API)
+        - name: WATCH_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
         command:
         - "sh"
         - "/expose-script/expose-controller.sh"
