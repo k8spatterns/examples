@@ -76,9 +76,9 @@ link:configuration/EnvVarConfiguration/README.adoc[EnvVar Configuration]::
 link:configuration/ConfigurationResource/README.adoc[Configuration Resource]::
   Discover how to configure the random-generator Spring Boot application using a ConfigMap.
 link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]:: 
-  Review examples that demonstrate using immutable configuration containers for application configuration in Docker and Kubernetes. **[*]**
+  Review examples that demonstrate using immutable configuration containers for application configuration in Docker and Kubernetes.
 link:configuration/ConfigurationTemplate/README.adoc[Configuration Template]::
-  See how a template configuration `standalone.xml` is processed using a template processor and filled with data from ConfigMap before starting a Wildfly server. **[*]**
+  See how a template configuration `standalone.xml` is processed using a template processor and filled with data from ConfigMap before starting a Wildfly server.
 
 === Security Patterns
 
