@@ -7,11 +7,13 @@ examples:
 - description:
   path: service.yml
 links:
-- url: https://github.com/k8spatterns/examples/tree/master/configuration/EnvVarConfiguration
-  title: 'Envvar Configuration example'
-- url: https://12factor.net/config
-  title: 'The Twelve-Factor App Manifesto'
-- url: https://martinfowler.com/bliki/ImmutableServer.html
-  title: 'Immutable Server Pattern'
-- url: http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/boot-features-profiles.html
-  title: 'Spring Boot profiles for using sets of configuration values'
+- url: https://oreil.ly/W25g0
+  title: 'EnvVar Configuration Example'
+- url: https://oreil.ly/DzBTm
+  title: 'The Twelve-Factor App'
+- url: https://oreil.ly/KxFtr
+  title: 'Expose Pod Information to Containers Through Environment Variables'
+- url: https://oreil.ly/YoUVj
+  title: 'Define Dependent Environment Variables'
+- url: https://oreil.ly/3XVe9
+  title: 'Spring Boot Profiles for Using Sets of Configuration Values'

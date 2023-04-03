@@ -10,36 +10,27 @@ NOTE: Before we start, please ensure that you have stopped the link:../Controlle
 
 WARNING: Again the warning, that this is example is meant for educational purposes only and is not suitable for general purpose usage.
 
-The easiest way to try this example is by using https://github.com/kubernetes/minikube[minikube] with an ingress controller enabled:
 
-[source, bash]
-----
-# Start minikube and enable the ingress addon
-minikube start
-minikube addons enable ingress
-----
+The following steps assume you are using `minikube`. More options for running the example are described in the link:../../INSTALL.adoc#minikube[installation instructions].
 
 As a first step, we have to install the CRD along with a role to allow to modify custom resource created for this CRD:
 
 [source, bash]
 ----
-# Register ConfigWatcher CRD (Kubernetes >= 1.16)
-kubectl create -f config-watcher-crd.yml
+kubectl apply -f https://k8spatterns.io/Operator/config-watcher-crd.yml
+----
 
-# For Kubernetes < 1.16 use
-# kubectl create -f config-watcher-crd-v1beta1.yml
+Verify that the CRD is registered:
 
-# Verify that the CRD is registered
-$ kubectl get crd
-NAME                            CREATED AT
-configwatchers.k8spatterns.io   2018-12-28T17:19:28Z
+[source, bash]
+----
+kubectl get crd
 ----
 
 The operator script itself is stored in a `ConfigMap`:
 
 [source, bash]
 ----
-# Create a configmap holding the controller shell script:
 kubectl create configmap config-watcher-operator --from-file=./config-watcher-operator.sh
 ----
 
@@ -54,63 +45,68 @@ To create this deployment in the current namespace, call:
 
 [source, bash]
 ----
-# Create the controller Deployment
-kubectl create -f config-watcher-operator.yml
+kubectl apply -f https://k8spatterns.io/Operator/config-watcher-operator.yml
 ----
 
 To see our operator in action, we are reusing the same super simple web application as for the `Controller` example.
 This image just exposes an environment variable as HTTP content on any request.
 This link:../images/mini-http-server.dockerfile[image] uses `nc` to deliver the content and can be found on Docker Hub as https://cloud.docker.com/u/k8spatterns/repository/docker/k8spatterns/mini-http-server[k8spatterns/mini-http-server].
 
-Before we deploy this app, we should tail on the log of our operator in another terminal (e.g. `kubectl logs -f config-watcher-operator-....`) to see the events received by the operator as they come in.
+Before we deploy this app, we should tail on the log of our operator in another terminal to see the events received by the operator as they come in:
+
+[source,bash]
+----
+kubectl logs -f $(kubectl get pods -l role=operator -o name) config-watcher
+----
+
 
 Then create the web application itself:
 
 [source, bash]
 ----
-# Create a sample web application with an 'expose' annotation:
-kubectl create -f web-app.yml
+kubectl create -f https://k8spatterns.io/Operator/web-app.yml
 ----
 
 If you look into this descriptor file, you will find the same `Deployment` using our dumb HTTP server which references the content environment variable via a `ConfigMap`.
 In contrast to the other controller example the `ConfigMap` does *not* contain a reference to the pods to restart.
 
-You can access our web app directly
+With minikube, access the application in your browser:
 
 [source, bash]
 ----
-# Access webapp via the included Ingress obect
-curl -sk https://webapp.$(minikube ip).nip.io
+minikube service webapp
 ----
+
+Stop the tunnel created by `minikube service` (with `CTRL-C`), update the content of `ConfigMap`, and watch the controller's log:
 
 If you change the config map now, it doesn't change anything.
 We have to first install a concreate custom resource of kind `ConfigWatcher` to trigger the operator on a config change:
 
 [source,bash]
 ----
-# Install a ConfigWatcher custom resource
-kubectl create -f config-watcher-sample.yml
+kubectl apply -f https://k8spatterns.io/Operator/config-watcher-sample.yml
+-----
 
-# Check that the resource has been created
+Check that the resource has been created
+
+[source, bash]
+----
 kubectl get configwatchers
-NAME                      AGE
-webapp-config-watcher     1m
 ----
 
 After this connection between `ConfigMap` and `Pods` has been configured, change the content of `ConfigMap` and watch the operator log:
 
 [source, bash]
 ----
-# Patch config-map to update the web content
-kubectl patch configmap webapp-config -p '{"data":{"message":"Greets from your smooth operator!"}}'
+kubectl patch configmap webapp-config \
+   -p '{"data":{"message":"Greets from your smooth operator!"}}'
 ----
 
 and then finally call the URL again to check that the content has been updated
 
-[source, bash]
+[source,bash]
 ----
-# Access webapp via the included Ingress object
-curl -sk https://webapp.$(minikube ip).nip.io
+minikube service webapp
 ----
 
 === More Information

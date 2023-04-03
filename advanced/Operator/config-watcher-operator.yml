@@ -47,7 +47,8 @@ spec:
     metadata:
       labels:
         project: k8spatterns
-        pattern: Controller
+        pattern: Operator
+        role: operator
         app: config-watcher-operator
     spec:
       serviceAccountName: config-watcher-operator

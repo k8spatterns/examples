@@ -60,7 +60,7 @@ Message received for processing:
 >>> ID: d822e648-0f41-4c4f-ae3a-1ced14d2b4a2 -- Duration: 21987 -- Random: 1345536975
 ----
 
-=== Additional Resources
+=== More Information
 
 * https://oreil.ly/m0KTi[Ambassador Example]
 * https://oreil.ly/TPQX5[How to Use the Ambassador Pattern to Dynamically Configure Services on CoreOS]
