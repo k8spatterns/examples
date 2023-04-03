@@ -12,18 +12,19 @@ Note, that this is example is meant for educational purposes only and is not sui
 
 The easiest way to try this example is by using https://github.com/kubernetes/minikube[minikube] with an ingress controller enabled:
 
-```
-# Start minikube and enable the ingress addon
+[source, bash]
+----
 minikube start
 minikube addons enable ingress
-```
+----
+
 
 The controller script itself is stored in a `ConfigMap` and can be easily edited later on:
 
-```
-# Create a configmap holding the controller shell script:
+[source, bash]
+----
 kubectl create configmap expose-controller-script --from-file=./expose-controller.sh
-```
+----
 
 In order to deploy the controlller a `Deployment` creates a pod with two containers:
 
@@ -32,10 +33,10 @@ In order to deploy the controlller a `Deployment` creates a pod with two contain
 
 To create this deployment just call:
 
-```
-# Create the controller object:
+[source, bash]
+----
 kubectl create -f expose-controller.yml
-```
+----
 
 You might want to have a look at the descriptor file; it contains some useful comments along the way.
 
@@ -49,25 +50,25 @@ This command will show the events received by the controller as they come in.
 
 The create the web application itself:
 
-```
-# Create a sample web application with an 'expose' annotation:
+[source, bash]
+----
 kubectl create -f web-app.yml
-```
+----
 
 To verify that indeed an ingress object is created, try:
 
-```
-# Check that an ingress has been created
+[source, bash]
+----
 kubectl get ingress web-app -o yaml
-```
+----
 
 Finally, let's point our browser to the exposed ingress by
 
 
-```
-# Open Ingress route
+[source, bash]
+----
 open https://$(minikube ip)/mdn
-```
+----
 
 (`open` works nicely on macOS, for other operating systems, just open manually the URL `https://$(minikube ip)/mdn`)
 

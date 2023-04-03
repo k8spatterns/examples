@@ -36,7 +36,7 @@ do
       echo "::: Creating Ingress backend for service '$service'"
       cat - << EOT | curl -s -H "Content-Type: application/json" -X "POST" -d @- $k8s_ingress_url
 {
-    "apiVersion": "extensions/v1beta1",
+    "apiVersion": "networking.k8s.io/v1",
     "kind": "Ingress",
     "metadata": {
         "name": "$service",
@@ -46,11 +46,16 @@ do
         "rules": [{
             "http": {
                 "paths": [{
+                    "path": "$expose",
+                    "pathType": "Prefix",
                     "backend": {
-                        "serviceName": "$service",
-                        "servicePort": $port
-                    },
-                    "path": "$expose"
+                        "service": {
+                            "name": "$service",
+                            "port": {
+                                "number": $port
+                            }
+                        }
+                    }
                 }]
             }
         }]
