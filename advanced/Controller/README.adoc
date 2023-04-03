@@ -1,6 +1,6 @@
 == Controller
 
-This example demonstrates a simple *Controller* which evaluates `ConfigMaps` and restart associated pods if such a `ConfigMap` changes.
+This example demonstrates a simple controller which evaluates `ConfigMaps` and restart associated pods if such a `ConfigMap` changes.
 
 This controller is been inspired from https://github.com/fabric8io/configmapcontroller[configmap-controller] but for more limited.
 
@@ -21,11 +21,12 @@ minikube start
 minikube addons enable ingress
 ----
 
+More options for running the example are described in link:../../INSTALL.adoc#minikube[installation instructions].
+
 The controller script itself is stored in a `ConfigMap` and can be easily edited later on:
 
 [source,bash]
 ----
-# Create a configmap holding the controller shell script:
 kubectl create configmap config-watcher-controller --from-file=./config-watcher-controller.sh
 ----
 

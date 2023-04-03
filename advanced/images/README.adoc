@@ -7,3 +7,26 @@ They are also available directly via Docker Hub.
 * link:kubeapi-proxy.dockerfile[k8spatterns/kubeapi-proxy] is an alpine Linux with a local `kubectl` installed and `kubectl proxy` started with the proper CA and token mounted. The original version https://github.com/luksa/kubernetes-in-action/tree/master/Chapter08/kubectl-proxy[kubectl-proxy] is from https://github.com/luksa[Marko Lukša] who introduced this proxy in his fine book https://www.manning.com/books/kubernetes-in-action[Kubernetes in Action].
 * link:curl-jq.dockerfile[k8spatterns/curl-jq] which is an https://hub.docker.com/_/alpine/[alpine] Image with https://curl.haxx.se/[curl] and https://stedolan.github.io/jq/[jq] added.
 * link:mini-http-server.dockerfile[k8spatterns/mini-http-server] is a super simple HTTP server based on `nc` which just answers each HTTP request with the same message provided by an environment variable `MESSAGE`. This is for demo purposes only, of course.
+
+
+The best way to build these image is with `docker buildx` so that you can crossbuild it for multiple platforms:
+
+[source, bash]
+----
+docker buildx create --use
+----
+
+[source, bash]
+----
+docker buildx build --platform linux/arm64/v8,linux/amd64 -f kubeapi-proxy.dockerfile --push -t k8spatterns/kubeapi-proxy .
+----
+
+[source, bash]
+----
+docker buildx build --platform linux/arm64/v8,linux/amd64 -f curl-jq.dockerfile --push -t k8spatterns/curl-jq .
+----
+
+[source, bash]
+----
+docker buildx build --platform linux/arm64/v8,linux/amd64 -f mini-http-server.dockerfile --push -t k8spatterns/mini-http-server .
+----
