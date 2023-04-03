@@ -75,7 +75,7 @@ link:configuration/EnvVarConfiguration/README.adoc[EnvVar Configuration]::
   Learn how to use environment variables, both literal and sourced from ConfigMaps and Secrets, for our random-generator service.
 link:configuration/ConfigurationResource/README.adoc[Configuration Resource]::
   Discover how to configure the random-generator Spring Boot application using a ConfigMap.
-link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]:: 
+link:configuration/ImmutableConfiguration/README.adoc[Immutable Configuration]::
   Review examples that demonstrate using immutable configuration containers for application configuration in Docker and Kubernetes.
 link:configuration/ConfigurationTemplate/README.adoc[Configuration Template]::
   See how a template configuration `standalone.xml` is processed using a template processor and filled with data from ConfigMap before starting a Wildfly server.
@@ -87,20 +87,20 @@ link:security/ProcessContainment/README.adoc[Process Containment]::
 link:security/NetworkSegmentation/README.adoc[Network Segmentation]::
   Learn how to limit network access to Pods using Network Policies and control HTTP traffic with Istio's Authentication Policies.
 link:security/SecureConfiguration/README.adoc[Secure Configuration] **[*]**::
-  Examine various techniques for securely storing configuration data in a Kubernetes Cluster. 
+  Examine various techniques for securely storing configuration data in a Kubernetes Cluster.
 link:security/AccessControl/README.adoc[Access Control] **[*]**::
-  Discover Kubernetes' RBAC access control subsystem for managing access to the Kubernetes API server. 
+  Discover Kubernetes' RBAC access control subsystem for managing access to the Kubernetes API server.
 
 === Advanced Patterns
 
 link:advanced/Controller/README.adoc[Controller] **[*]**::
   A simple shell-based controller watches ConfigMap resources for changes and restarts Pods using a label selector provided as an annotation. An additional link:advanced/Controller/expose-controller/README.adoc[example controller] exposes an Ingress route when it detects an `exposeService` label attached to the service.
-link:advanced/Operator/README.adoc[Operator]::
-  Explore an operator based on the ConfigMap watch link:advanced/Controller/README.adoc[controller], introducing a CRD ConfigWatcher that connects a ConfigMap with a set of Pods to restart in case of a config change. **[*]**
-link:advanced/ElasticScale/README.adoc[Elastic Scale]::
-  Investigate horizontal and vertical scaling examples with the random-generator service. **[*]**
-link:advanced/ImageBuilder/README.adoc[Image Builder]::
-  Examine examples demonstrating the setup of a link:advanced/ImageBuilder/openshift/README.adoc[chained build] on OpenShift and using link:advanced/ImageBuilder/knative/README.adoc[Knative build] for performing builds within the cluster. **[*]**
+link:advanced/Operator/README.adoc[Operator] **[*]**::
+  Explore an operator based on the ConfigMap watch link:advanced/Controller/README.adoc[controller], introducing a CRD ConfigWatcher that connects a ConfigMap with a set of Pods to restart in case of a config change.
+link:advanced/ElasticScale/README.adoc[Elastic Scale] **[*]**::
+  Investigate horizontal and vertical scaling examples with the random-generator service.
+link:advanced/ImageBuilder/README.adoc[Image Builder] **[*]**::
+  Examine examples demonstrating the setup of a link:advanced/ImageBuilder/openshift/README.adoc[chained build] on OpenShift and using link:advanced/ImageBuilder/knative/README.adoc[Knative build] for performing builds within the cluster.
 
 This work is licensed under a https://creativecommons.org/licenses/by/4.0/[Creative Commons Attribution 4.0 International License]
 
