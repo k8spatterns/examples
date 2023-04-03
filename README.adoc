@@ -93,7 +93,7 @@ link:security/AccessControl/README.adoc[Access Control] **[*]**::
 
 === Advanced Patterns
 
-link:advanced/Controller/README.adoc[Controller] **[*]**::
+link:advanced/Controller/README.adoc[Controller]::
   A simple shell-based controller watches ConfigMap resources for changes and restarts Pods using a label selector provided as an annotation. An additional link:advanced/Controller/expose-controller/README.adoc[example controller] exposes an Ingress route when it detects an `exposeService` label attached to the service.
 link:advanced/Operator/README.adoc[Operator] **[*]**::
   Explore an operator based on the ConfigMap watch link:advanced/Controller/README.adoc[controller], introducing a CRD ConfigWatcher that connects a ConfigMap with a set of Pods to restart in case of a config change.
