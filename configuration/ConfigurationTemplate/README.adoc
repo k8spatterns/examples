@@ -1,12 +1,12 @@
 == Configuration Template
 
-This example demonstrates the usage of the **Configuration Template** pattern. As described in detail in our book this pattern is useful for dynamically creating configuration during application startup by processing templates on the fly. Please check out the pros and cons of this approach from the book.
+This example demonstrates the usage of the **Configuration Template** pattern. As described in detail in our book, this pattern is helpful for dynamically creating configuration during application startup by processing templates on the fly. Again, please refer to the book for the pros and cons of this approach.
 
-=== Wildfly configured with templates and configmaps
+=== Wildfly configured with templates and ConfigMaps
 
-In this example we will configure a Wildfly application server. As you probably know, Wildlfy uses an XML syntax for its configuration which can be quite lengthy. We will use a configuration template where we want to configure only a small part differently for different environments. In our example we use a `standalone.xml` template which is filled with values from a `ConfigMap` before the server starts.
+In this example, we will configure a Wildfly application server. As you may know, Wildfly uses an XML syntax for its configuration, which can be lengthy. Therefore, we will use a configuration template to configure only a tiny part differently for different environments. In our example, we use a `standalone.xml` template filled with values from a `ConfigMap` before the server starts.
 
-The only datum we are want to adapt in this simple example is the log format. The format is adapted so that each log line is prefixed with the environment it is running (`prod` or `dev`). We parameterise `standalone.xml` for this with the link:init-container/in/standalone.xml#L122[single line]:
+The only data we want to adopt in this simple example is the log format. The format is adjusted so that each log line is prefixed with the environment it is running in (`prod` or `dev`). We parameterize `standalone.xml` for this with a single line:
 
 [source, xml]
 ----
@@ -15,20 +15,19 @@ The only datum we are want to adapt in this simple example is the log format. Th
 </formatter>
 ----
 
-As a template processor https://github.com/hairyhenderson/gomplate[gomplate] is used which has the notion of "datasources". The template syntax please refer to https://gohugo.io/templates/go-templates/[Go Templates].
-Actually its an slightly adapted gomplate so that it fits our use case better. You found the changed version in the https://github.com/rhuss/gomplate[rhuss/gomplate] repo.
+We use https://github.com/hairyhenderson/gomplate[gomplate] as a template processor with the notion of "datasources". For template syntax, please refer to https://gohugo.io/templates/go-templates/[Go Templates].
 
-As described in the pattern's description an Kubernetes init container that contains the templates is also used for processing the templates. The docker build files for this container are in link:init-container[init-container].
+As described in the pattern's description, a Kubernetes init container containing the templates is used for processing the templates. The Docker build files for this container are in link:init-container[init-container].
 
-Please check its link:init-container/README.md[README] how to re-create the image, but we already pushed it to Docker hub for your convenience.
+Please check its link:init-container/README.md[README] on how to re-create the image, but we have already pushed it to Docker Hub for your convenience.
 
 === Running the example
 
-The value to fill into the template come from config map which needs to be created first.
+The values to fill into the template come from a ConfigMap, which needs to be created first.
 
-We create two configmaps with name `dev-params` and `prod-params` from the directories link:dev[dev] and link:prod[prod]. Both contain sample configurations in a file "config.yml" that can be used in the link:init-container/in/standalone.xml#L122[standalone.xml] template.
+We create two ConfigMaps named `dev-params` and `prod-params` from the directories link:dev[dev] and link:prod[prod]. Both contain sample configurations in a file "config.yml" that can be used in the link:init-container/in/standalone.xml#L122[standalone.xml] template.
 
-To create the config maps that we use (assuming the current working directory is the directory of this README), for both, a development and a production environment:
+To create the ConfigMaps that we use (assuming the current working directory is the directory of this README) for both a development and a production environment:
 
 [source, bash]
 ----
@@ -40,7 +39,6 @@ kubectl create configmap dev-params --from-file=dev
 kubectl create configmap prod-params --from-file=prod
 ----
 
-
 Then start the service and deployment as specified in link:wildfly.yml[wildfly.yml]:
 
 [source, bash]
@@ -48,7 +46,7 @@ Then start the service and deployment as specified in link:wildfly.yml[wildfly.y
 kubectl apply -f https://k8spatterns.io/ConfigurationTemplate/wildfly.yml
 ----
 
-In order to check that the configuration was processed properly check now the logs:
+To check that the configuration was correctly processed, examine the logs:
 
 [source, bash]
 ----
@@ -59,13 +57,12 @@ kubectl logs -f $(kubectl get pod -l app=wildfly -o name) server
 ....
 DEVELOPMENT: 14:52:14,049 INFO  [org.jboss.ws.common.management] (MSC service thread 1-4) JBWS022052: Starting JBossWS 6.1.0.Final (Apache CXF 3.5.2.jbossorg-3)
 DEVELOPMENT: 14:52:14,094 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0212: Resuming server
-DEVELOPMENT: 14:52:14,096 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: WildFly Full 27.0.0.Final (WildFly Core 19.0.0.Final) started in 2135ms - Started 290 of 563 services (357 services are lazy, passive or on-demand) - Server configuration file in use: standalone.xml
+DEVELOPMENT: 14:52:14,096 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: WildFly Full 27.0.0.Final (Wild
 DEVELOPMENT: 14:52:14,097 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:9990/management
 DEVELOPMENT: 14:52:14,098 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://127.0.0.1:9990
-.... 
-----
+....
 
-Note the added prefix `DEVELOPMENT` which comes from the config map.
+Note the added prefix `DEVELOPMENT`, which comes from the ConfigMap.
 
 Now let's switch over to the `prod-params` by patching the deployment:
 
@@ -75,7 +72,7 @@ kubectl patch deployment wildfly \
   -p '{"spec": {"template": {"spec": {"volumes": [{"name": "wildfly-params", "configMap": {"name": "prod-params"}}]}}}}'
 ----
 
-and then check the log again with
+And then recheck the log with
 
 [source, bash]
 ----
@@ -91,12 +88,10 @@ PRODUCTION: 14:49:04,786 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV00
 PRODUCTION: 14:49:04,787 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:9990/management
 PRODUCTION: 14:49:04,788 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://127.0.0.1:9990
 ....
-----
 
-That concludes our demo and how you can easily parameterise big configuration files with values that you store in a configmap.
+That concludes our demo on how to easily parameterize large configuration files with values you store in a ConfigMap.
 
-Please also have a look to the comments within link:wildfly.yml[wildfly.yml] which explain this examples in even more details.
-
+Please also look at the comments within link:wildfly.yml[wildfly.yml], which explain this example in more detail.
 
 === More Information
 
