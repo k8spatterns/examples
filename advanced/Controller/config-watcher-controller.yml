@@ -25,6 +25,7 @@ metadata:
   labels:
     project: k8spatterns
     pattern: Controller
+    role: contoller
   name: config-watcher-controller
 spec:
   replicas: 1
@@ -37,6 +38,7 @@ spec:
         project: k8spatterns
         pattern: Controller
         app: config-watcher-controller
+        role: controller
     spec:
       # A serviceaccount is needed to watch events
       # and to allow for restarting pods. For now its

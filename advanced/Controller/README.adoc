@@ -41,8 +41,7 @@ To create this deployment in the current namespace, call:
 
 [source,bash]
 ----
-# Create the controller Deployment
-kubectl create -f config-watcher-controller.yml
+kubectl apply -f https://k8spatterns.io/Controller/config-watcher-controller.yml
 ----
 
 You might want to have a look at the descriptor file; it contains some useful comments along the way and also the security setup to allow the controller to watch resources and to restart `Pods`.
@@ -57,16 +56,14 @@ Before we deploy this app, we should tail on the log of our controller (e.g. `ku
 
 [source,bash]
 ----
-controller_pod=$(kubectl get pod -o name | grep config-watcher-controller | sed -e "s/^pods\///")
-kubectl logs -f $controller_pod config-watcher
+kubectl logs -f $(kubectl get pods -l role=controller -o name) config-watcher
 ----
 
 Then create the web application itself:
 
 [source,bash]
 ----
-# Create a sample web application with an 'expose' annotation:
-kubectl create -f web-app.yml
+kubectl apply -f https://k8spatterns.io/Controller/web-app.yml
 ----
 
 If you look into this descriptor, you will find a `Deployment` using our dumb HTTP server which references the content environment variable via a `ConfigMap`.
@@ -74,12 +71,22 @@ The `ConfigMap` itself is annotated with a pod selector `k8spatterns.io/podDelet
 
 This resource file also includes the definition of a Service and an Ingress object so that we can access the server from the outside.
 
+Before accessing the web-app we need to path the Ingress object to point to our minikube installation:
+
+[source, bash]
+----
+kubectl patch ingress webapp --type=json \
+   -p "[{op: replace, \
+         path: /spec/rules/0/host, \
+         value: webapp.$(minikube ip).nip.io}]"
+----
+
+NOTE: `nip.io` is a nice DNS reflector service, that as result of a DNS lookup just returns the IP address that is added before as subdomain just before the `.nip.io` part.
 
 You can access our web app directly
 
 [source,bash]
 ----
-# Access webapp via the included Ingress obect
 curl -sk https://webapp.$(minikube ip).nip.io
 ----
 
@@ -87,15 +94,14 @@ Now change the content of `ConfigMap` and watch the log of your controller:
 
 [source,bash]
 ----
-# Patch config-map to update the web content
-kubectl patch configmap webapp-config -p '{"data":{"message":"Take this update!"}}'
+kubectl patch configmap webapp-config \
+    -p '{"data":{"message":"Take this update!"}}'
 ----
 
 and then finally call the URL again to check that the content has been updated to
 
 [source,bash]
 ----
-# Access webapp via the included Ingress obect
 curl -sk https://webapp.$(minikube ip).nip.io
 ----
 
