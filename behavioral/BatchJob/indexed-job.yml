@@ -25,14 +25,14 @@ spec:
         name: split
         # Split up based on the JOB_COMPLETION_INDEX which is set for this
         # particular job. Note that this scripts assumes that there
-        # are 50000 entries in /logs/random.log
+        # are 50000 entries in /tmp/logs/random.log
         command:
         - "sh"
         - "-c"
         - |
           start=$(expr $JOB_COMPLETION_INDEX \* 10000)
           end=$(expr $JOB_COMPLETION_INDEX \* 10000 + 10000)
-          awk "NR>=$start && NR<$end" /logs/random.log \
+          awk "NR>=$start && NR<$end" /tmp/logs/random.log \
               > /tmp/logs/random-$JOB_COMPLETION_INDEX.txt
         volumeMounts:
         - mountPath: /tmp/logs
