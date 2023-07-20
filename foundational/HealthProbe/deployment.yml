@@ -34,4 +34,4 @@ spec:
         readinessProbe:
           # We are checking for a file created by our app when its ready
           exec:
-            command: [ "stat", "/opt/random-generator-ready" ]
+            command: [ "stat", "/tmp/random-generator-ready" ]

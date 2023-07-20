@@ -25,7 +25,7 @@ spec:
           # We are checking for a file created by our app when its ready
           initialDelaySeconds: 20
           exec:
-            command: [ "stat", "/opt/random-generator-ready" ]
+            command: [ "stat", "/tmp/random-generator-ready" ]
       readinessGates:
       - conditionType: "k8spatterns.io/RandomReady"
        
