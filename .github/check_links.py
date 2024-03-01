@@ -1,6 +1,7 @@
 import os
 import requests
 import sys
+from urllib3.util import Retry
 import yaml
 
 errors = []
@@ -9,10 +10,16 @@ error_occurred = False
 def check_links(links, index_yml_path):
     global error_occurred
     directory = os.path.dirname(index_yml_path)
+    session = requests.Session()
+    # Protect agaings transient errors by setting up retries
+    retries = Retry(total=3, backoff_factor=0.5)
+    session.mount('https://', requests.adapters.HTTPAdapter(max_retries=retries))
+    # Need to set a user agent different from requests' default to avoid 403 errors from some sites
+    headers = {'User-Agent': 'k8spatterns Link Checker 1.0' }
     for link in links:
         url = link['url']
         try:
-            response = requests.get(url, allow_redirects=True, timeout=10)
+            response = session.get(url, headers=headers, allow_redirects=True, timeout=10)
             print(f"{directory}: Checking {url} ... {response.status_code}")
             if response.status_code != 200:
                 errors.append((index_yml_path, url, link['title'], response.status_code))
