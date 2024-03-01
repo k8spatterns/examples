@@ -19,7 +19,7 @@ def check_links(links, index_yml_path):
     for link in links:
         url = link['url']
         try:
-            response = session.get(url, headers=headers, allow_redirects=True, timeout=10)
+            response = session.head(url, headers=headers, allow_redirects=True, timeout=10)
             print(f"{directory}: Checking {url} ... {response.status_code}")
             if response.status_code != 200:
                 errors.append((index_yml_path, url, link['title'], response.status_code))
