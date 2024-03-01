@@ -19,7 +19,7 @@ def check_links(links, index_yml_path):
                 error_occurred = True
         except requests.exceptions.RequestException as e:
             print(f"{directory}: Checking {url} ... ERROR")
-            errors.append((index_yml_path, url, str(e)))
+            errors.append((index_yml_path, url, link['title'], str(e)))
             error_occurred = True
 
 def process_directory(root, filenames):
