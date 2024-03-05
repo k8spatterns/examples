@@ -31,7 +31,7 @@ links:
   title: 'Why You Should Test Your Kubernetes Network Policies'
 - url: https://oreil.ly/_5cWc
   title: 'Using the eBPF Superpowers to Generate Kubernetes Security Policies'
-- url: https://oreil.ly/5VbP4
+- url: https://www.inspektor-gadget.io/docs/latest/builtin-gadgets/advise/network-policy/
   title: 'Using Advise Network-Policy with Inspector Gadget'
 - url: https://oreil.ly/-jKvO
   title: 'You and Your Security Profiles; Generating Security Policies with the Help of eBPF'
@@ -43,5 +43,5 @@ links:
   title: 'Istio: Authorization Policy'
 - url: https://oreil.ly/bLq35
   title: 'Istio: Authentication Policies'
-- url: https://oreil.ly/X00FG
-  title: 'SIG Multitenancy Working Group'
+- url: https://github.com/kubernetes/community/blob/c65ae86405f60f6b4f914a0f20fb66b3a151092c/archive/wg-multitenancy/README.md
+  title: 'SIG Multitenancy Working Group (shutdown)'
