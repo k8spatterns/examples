@@ -11,7 +11,7 @@ To access the PersistentVolume used in this demo, let's mount a local directory 
 
 [source, bash]
 ----
-minikube start --mount --mount-string="$(pwd)/logs:/example"
+minikube start --mount --mount-string="$(pwd)/logs:/tmp/example"
 ----
 
 Alternatively, you can mount the directory on the fly in the background.
