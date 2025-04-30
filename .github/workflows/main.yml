@@ -11,13 +11,17 @@ jobs:
     container:
       image: golang:latest
 
+    permissions:
+      contents: write
+
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Update Website
       run: go run update_website.go -pattern-source ..
       working-directory: ./.github
       env:
-        GITHUB_TOKEN: ${{ secrets.K8SPATTERN_GITHUB_TOKEN }}
-
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
