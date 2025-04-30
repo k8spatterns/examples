@@ -24,7 +24,7 @@ First, create a ReplicaSet for your stateless service:
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/StatelessService/replicaset.yml
+kubectl apply -f https://k8spatterns.com/StatelessService/replicaset.yml
 ----
 
 Verify the ReplicaSet is working correctly:
@@ -86,7 +86,7 @@ To access the ReplicaSet from within the cluster, we create a Service of type `c
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/StatelessService/service.yml
+kubectl apply -f https://k8spatterns.com/StatelessService/service.yml
 ----
 
 Let's test the service by calling the Pod from within the cluster:
@@ -105,14 +105,14 @@ Create a PersistentVolume and a PersistentVolumeClaim:
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/StatelessService/pv-and-pvc.yml
+kubectl apply -f https://k8spatterns.com/StatelessService/pv-and-pvc.yml
 ----
 
 Update the ReplicaSet to use the PersistentVolumeClaim:
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/StatelessService/replicaset-with-pv.yml
+kubectl apply -f https://k8spatterns.com/StatelessService/replicaset-with-pv.yml
 ----
 
 Delete all Pods so that they are recreated with the new configuration:

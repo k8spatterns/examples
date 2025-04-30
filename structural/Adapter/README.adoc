@@ -20,14 +20,14 @@ The Pod can be created with
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/Adapter/pod.yml
+kubectl create -f https://k8spatterns.com/Adapter/pod.yml
 ----
 
 For easy access to the random generator, let's create a Service:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/Adapter/service.yml
+kubectl create -f https://k8spatterns.com/Adapter/service.yml
 ----
 
 This service uses `nodePort` to expose two ports on every cluster node.

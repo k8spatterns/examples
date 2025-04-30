@@ -26,7 +26,7 @@ So, first, we are exposing this service with four replicas:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ServiceDiscovery/deployment.yml
+kubectl apply -f https://k8spatterns.com/ServiceDiscovery/deployment.yml
 ----
 
 Now let's create a simple service that dispatches to these four pods dynamically:
@@ -35,7 +35,7 @@ Now let's create a simple service that dispatches to these four pods dynamically
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ServiceDiscovery/service.yml
+kubectl apply -f https://k8spatterns.com/ServiceDiscovery/service.yml
 ----
 
 This service is called ClusterIP, so only reachable from within the cluster.
@@ -87,7 +87,7 @@ After you leave the Pod, let's switch to `NodePort` as the service type.
 [source, bash]
 ----
 # Update service to type NodePort
-kubectl apply -f https://k8spatterns.io/ServiceDiscovery/service-with-nodeport.yml
+kubectl apply -f https://k8spatterns.com/ServiceDiscovery/service-with-nodeport.yml
 ----
 
 You can check the assigned node port with
@@ -119,7 +119,7 @@ Stop the tunnel by bringing it back to the foreground with `fg` and then stop wi
 [source, bash]
 ----
 # Update service to type LoadBalancer
-kubectl apply -f https://k8spatterns.io/ServiceDiscovery/service-with-loadbalancer.yml
+kubectl apply -f https://k8spatterns.com/ServiceDiscovery/service-with-loadbalancer.yml
 ----
 
 If your cluster provides a load balancer, you will get the load balancer's IP when looking at it with `kubectl get service`. Otherwise, the field `EXTERNAL IP` will stay in status _<pending>_.
@@ -144,14 +144,14 @@ First, we reset our service back to type `ClusterIP`:
 [source, bash]
 ----
 kubectl delete service random-generator
-kubectl apply -f https://k8spatterns.io/ServiceDiscovery/service.yml
+kubectl apply -f https://k8spatterns.com/ServiceDiscovery/service.yml
 ----
 
 Next, let's create the `Ingress` object with
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ServiceDiscovery/ingress.yml
+kubectl apply -f https://k8spatterns.com/ServiceDiscovery/ingress.yml
 ----
 
 As usual, you can check the create Ingress object with `kubectl get ingress`. Note that you should now have an `ADDRESS` assigned if your cluster has an ingress controller running.

@@ -3,7 +3,7 @@
 # namespace.
 ---
 kind: ConfigWatcher
-apiVersion: k8spatterns.io/v1
+apiVersion: k8spatterns.com/v1
 metadata:
   name: webapp-config-watcher
 spec:

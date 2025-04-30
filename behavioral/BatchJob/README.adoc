@@ -27,14 +27,14 @@ Let's now create the PersistentVolume along with a PVC, which can be mounted int
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/BatchJob/pv-and-pvc.yml
+kubectl apply -f https://k8spatterns.com/BatchJob/pv-and-pvc.yml
 ----
 
 The Job can be started with
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/BatchJob/job.yml
+kubectl create -f https://k8spatterns.com/BatchJob/job.yml
 ----
 
 This Job will create multiple Pods to create the numbers.
@@ -70,7 +70,7 @@ To run this split Job, run the following:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/BatchJob/indexed-job.yml
+kubectl create -f https://k8spatterns.com/BatchJob/indexed-job.yml
 ----
 
 When the Job is finished, you will find files `logs/random-0.txt`, ..., and `logs/random-4.txt` with the parts out of `logs/random.log`.

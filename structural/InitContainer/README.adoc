@@ -13,7 +13,7 @@ Let's create this bare Pod into the current namespace with the following:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/InitContainer/pod.yml
+kubectl create -f https://k8spatterns.com/InitContainer/pod.yml
 ----
 
 Check the startup of the Pod by watching the Pod by executing the following command right after the creation of your Pod:
@@ -37,7 +37,7 @@ For this, we create a `nodePort` Service with
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/InitContainer/service.yml
+kubectl apply -f https://k8spatterns.com/InitContainer/service.yml
 ----
 
 This service will open a port on every node so that we can access the static HTTP server from there.

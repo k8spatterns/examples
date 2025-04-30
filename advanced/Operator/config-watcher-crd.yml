@@ -3,10 +3,10 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: configwatchers.k8spatterns.io
+  name: configwatchers.k8spatterns.com
 spec:
   scope: Namespaced
-  group: k8spatterns.io
+  group: k8spatterns.com
   names:
     # Kind of this CRD
     kind: ConfigWatcher
@@ -71,7 +71,7 @@ metadata:
   name: config-watcher-crd
 rules:
 - apiGroups:
-  - k8spatterns.io
+  - k8spatterns.com
   resources:
   - configwatchers
   - configwatchers/finalizers

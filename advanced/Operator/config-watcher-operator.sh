@@ -46,7 +46,7 @@ get_config_watcher_for_cm() {
   local config_map=${1}
 
   # Fetch all resources "ConfigWatcher" which are stored in the given namespace
-  local watcher_list=$(curl -s $base/apis/k8spatterns.io/v1/${ns}/configwatchers | \
+  local watcher_list=$(curl -s $base/apis/k8spatterns.com/v1/${ns}/configwatchers | \
                        jq -r '.items[]')
   # Now extract all ConfigWatcher's name whose spec says 'configMap=$config_map'
   echo $watcher_list | jq -r "select(.spec.configMap == \"$config_map\") | .metadata.name"
@@ -57,7 +57,7 @@ extract_label_selector_from_watcher() {
   local watcher=${1}
 
   # Get the pod selector for the given ConfigWatcher
-  local pod_selector=$(curl -s $base/apis/k8spatterns.io/v1/${ns}/configwatchers/${watcher} | \
+  local pod_selector=$(curl -s $base/apis/k8spatterns.com/v1/${ns}/configwatchers/${watcher} | \
                        jq .spec.podSelector)
 
   # Convert from JSON to 'label=value,label2=value2' as used as query parameter

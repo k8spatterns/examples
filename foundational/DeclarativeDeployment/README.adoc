@@ -10,7 +10,7 @@ First, install the application in version 1 using the given deployment descripto
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/DeclarativeDeployment/rolling-update.yml
+kubectl apply -f https://k8spatterns.com/DeclarativeDeployment/rolling-update.yml
 ----
 
 This deployment will start three replicas of the `random-generator` and configures a `RollingUpdate` update strategy (which would also be the default).
@@ -19,7 +19,7 @@ To be able to access our application, let's create a Service that is exposed wit
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/DeclarativeDeployment/service.yml
+kubectl apply -f https://k8spatterns.com/DeclarativeDeployment/service.yml
 ----
 
 The service is of type `LoadBalancer`, so to access this service, you need to tell minikube to expose this at a random port. To do this, run the following command in the background, storing the URL that is printed out in a temporary file:
@@ -74,7 +74,7 @@ Finally, let's switch the update strategy to `Recreate`:
 
 [source, bash]
 ----
-kubectl replace -f https://k8spatterns.io/DeclarativeDeployment/recreate.yml
+kubectl replace -f https://k8spatterns.com/DeclarativeDeployment/recreate.yml
 
 # Update to version 2.0 (or change to 1.0 when you have 2.0 running)
 kubectl set image deployment random-generator random-generator=k8spatterns/random-generator:2.0

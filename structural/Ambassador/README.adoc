@@ -10,14 +10,14 @@ Let's create a bare Pod with `k8spatterns/random-generator` as the main containe
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/Ambassador/pod.yml
+kubectl create -f https://k8spatterns.com/Ambassador/pod.yml
 ----
 
 To enable external access to the random generator, we use a `nodePort` service:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/Ambassador/service.yml
+kubectl create -f https://k8spatterns.com/Ambassador/service.yml
 ----
 
 This service leverages `nodePort` to expose its port on every cluster node. For simple testing, this approach works well. Alternatively, you can use a full ingress or load-balancer exposed route as described in the _Service Discovery_ pattern.

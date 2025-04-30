@@ -14,7 +14,7 @@ For this, create the Pod from `non-root-pod.yml` with
 
 [source,bash]
 ----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/non-root-pod.yml
+kubectl apply -f https://k8spatterns.com/ProcessContainment/non-root-pod.yml
 ----
 
 If you apply this, you will see an error like this:
@@ -43,7 +43,7 @@ This error happens because `k8spatterns/random-generator:1.0` is set up to run w
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/non-root-with-uid-pod.yml
+kubectl apply -f https://k8spatterns.com/ProcessContainment/non-root-with-uid-pod.yml
 ----
 
 Let's check the UID under which the container is running:
@@ -61,7 +61,7 @@ Let's apply the following example to check how we can limit container capabiliti
 
 [source,bash]
 ----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/drop-caps-pod.yml
+kubectl apply -f https://k8spatterns.com/ProcessContainment/drop-caps-pod.yml
 ----
 
 Verify that the container has only the 'NET_BIND_SERVICE' capability that allows a process to bind to TCP/UDP sockets below 1024, usually reserved for system services.
@@ -79,7 +79,7 @@ We apply the following example to make the containers' root filesystem read-only
 
 [source,bash]
 ----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/read-only-fs-pod.yml
+kubectl apply -f https://k8spatterns.com/ProcessContainment/read-only-fs-pod.yml
 ----
 
 You will see that the Pod won't start.
@@ -116,7 +116,7 @@ We need to mount an empty directory volume at `/tmp` to fix this issue. To do so
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/read-only-fs-tmp-mount-pod.yml
+kubectl apply -f https://k8spatterns.com/ProcessContainment/read-only-fs-tmp-mount-pod.yml
 ----
 
 
@@ -136,14 +136,14 @@ Now, let's check how we can enforce security policies using Kubernetes Pod Secur
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ProcessContainment/baseline-namespace.yml
+kubectl apply -f https://k8spatterns.com/ProcessContainment/baseline-namespace.yml
 ----
 
 Now deploy a Pod to the namespace that meets the baseline and restricted policies. Let's use a well-behaved Pod which satisfies all the baseline and restricted standards:
 
 [source, bash]
 ----
-kubectl apply -n baseline-namespace -f https://k8spatterns.io/ProcessContainment/restricted-pod.yml
+kubectl apply -n baseline-namespace -f https://k8spatterns.com/ProcessContainment/restricted-pod.yml
 ----
 
 The Pod should be successfully created in the baseline-namespace without any warnings.
@@ -152,7 +152,7 @@ Now, let's attempt to deploy a Pod that violates the baseline standard (e.g., by
 
 [source, bash]
 ----
-kubectl apply -n baseline-namespace -f https://k8spatterns.io/ProcessContainment/privileged-pod.yml
+kubectl apply -n baseline-namespace -f https://k8spatterns.com/ProcessContainment/privileged-pod.yml
 ----
 
 The PSA controller should reject the Pod due to violating the baseline standard.
@@ -162,7 +162,7 @@ Finally, let's deploy a Pod to the namespace that doesn't meet the restricted st
 
 [source, bash]
 ----
-kubectl apply -n baseline-namespace -f https://k8spatterns.io/ProcessContainment/restricted-warning-pod.yml
+kubectl apply -n baseline-namespace -f https://k8spatterns.com/ProcessContainment/restricted-warning-pod.yml
 ----
 
 The Pod should be created in the baseline-namespace with a warning for violating the restricted standard.

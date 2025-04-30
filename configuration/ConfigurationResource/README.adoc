@@ -8,25 +8,25 @@ First, create the ConfigMap with the following command:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ConfigurationResource/configmap.yml
+kubectl apply -f https://k8spatterns.com/ConfigurationResource/configmap.yml
 ----
 
 Next, the following Pod declaration will use this ConfigMap as environment variables and mount the `application.properties` entry as `random-generator.properties` in the `/config/app` directory.
 
-For additional explanations, please review the comments at https://k8spatterns.io/ConfigurationResource/pod.yml[pod.yml].
+For additional explanations, please review the comments at https://k8spatterns.com/ConfigurationResource/pod.yml[pod.yml].
 
 Create the Pod with this command:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/ConfigurationResource/pod.yml
+kubectl create -f https://k8spatterns.com/ConfigurationResource/pod.yml
 ----
 
 As in previous examples, we'll expose a nodePort service for accessing our service:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/ConfigurationResource/service.yml
+kubectl apply -f https://k8spatterns.com/ConfigurationResource/service.yml
 ----
 
 Now, access the service, assuming your cluster node has an external IP address that can be directly contacted from your desktop.

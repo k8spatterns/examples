@@ -25,7 +25,7 @@ Now lets try to create the Pod
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/PredictableDemands/pod.yml
+kubectl create -f https://k8spatterns.com/PredictableDemands/pod.yml
 ----
 
 The Pod will not start immediately because the PersistentVolumeClaim (PVC) is missing. Check the status with:
@@ -57,7 +57,7 @@ Let's now create the PersistentVolume and PVC:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/PredictableDemands/pv-and-pvc.yml
+kubectl apply -f https://k8spatterns.com/PredictableDemands/pv-and-pvc.yml
 ----
 
 When we create the PV and PVC we are already one step further:
@@ -84,7 +84,7 @@ Now you can create the ConfigMap:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/PredictableDemands/configmap.yml
+kubectl apply -f https://k8spatterns.com/PredictableDemands/configmap.yml
 ----
 
 and the pod will be finally up:
@@ -142,7 +142,7 @@ kubectl delete pod/random-generator
 
 [source, bash]
 ----
-kubectl delete -f https://k8spatterns.io/PredictableDemands/pv-and-pvc.yml
+kubectl delete -f https://k8spatterns.com/PredictableDemands/pv-and-pvc.yml
 ----
 
 === Resource limits
@@ -151,7 +151,7 @@ Let's create now a real Deployment with resource limits
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/PredictableDemands/deployment.yml
+kubectl create -f https://k8spatterns.com/PredictableDemands/deployment.yml
 ----
 
 This will use 200M as upper limit for our application.

@@ -2,7 +2,7 @@
 
 This example demonstrates a simple controller that evaluates `ConfigMaps` and restarts associated pods if a `ConfigMap` changes.
 
-The controller is inspired by https://github.com/fabric8io/configmapcontroller[configmap-controller] but is more limited. It watches all `ConfigMaps` in the namespace where it's deployed and reacts to the annotation `k8spatterns.io/podDeleteSelector`. If this annotation is present on a `ConfigMap` that has changed, the value of the annotation is used as a label selector to find `Pods` to kill. Assuming these pods are managed by a backend controller like `Deployment`, the `Pods` will be respawned, potentially picking up the changed configuration.
+The controller is inspired by https://github.com/fabric8io/configmapcontroller[configmap-controller] but is more limited. It watches all `ConfigMaps` in the namespace where it's deployed and reacts to the annotation `k8spatterns.com/podDeleteSelector`. If this annotation is present on a `ConfigMap` that has changed, the value of the annotation is used as a label selector to find `Pods` to kill. Assuming these pods are managed by a backend controller like `Deployment`, the `Pods` will be respawned, potentially picking up the changed configuration.
 
 Refer to the "Controller" pattern in our book for a full explanation of how this controller works.
 
@@ -28,7 +28,7 @@ Create the deployment in the current namespace:
 
 [source,bash]
 ----
-kubectl apply -f https://k8spatterns.io/Controller/config-watcher-controller.yml
+kubectl apply -f https://k8spatterns.com/Controller/config-watcher-controller.yml
 ----
 
 Examine the descriptor file for useful comments and security setup information.
@@ -50,10 +50,10 @@ Create the web application:
 
 [source,bash]
 ----
-kubectl apply -f https://k8spatterns.io/Controller/web-app.yml
+kubectl apply -f https://k8spatterns.com/Controller/web-app.yml
 ----
 
-The descriptor includes a `Deployment` using the HTTP server, which references the content environment variable via a `ConfigMap`. The `ConfigMap` is annotated with a pod selector `k8spatterns.io/podDeleteSelector: "app=webapp"` that directly selects the webapp `Pod`.
+The descriptor includes a `Deployment` using the HTTP server, which references the content environment variable via a `ConfigMap`. The `ConfigMap` is annotated with a pod selector `k8spatterns.com/podDeleteSelector: "app=webapp"` that directly selects the webapp `Pod`.
 
 The resource file also defines a Service that exposes the Pod via a `nodePort`.
 

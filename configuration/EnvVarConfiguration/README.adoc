@@ -20,7 +20,7 @@ These resources will be used to define environment variables in a simple Pod dec
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/EnvVarConfiguration/pod.yml
+kubectl create -f https://k8spatterns.com/EnvVarConfiguration/pod.yml
 ----
 
 Inspecting the resource description reveals how the ConfigMap and Secret are used to set two environment variables, `PATTERN` and `SEED`, which are then exposed via the random-generator REST service.
@@ -29,7 +29,7 @@ To access the REST service, expose the Pod using the following command:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/EnvVarConfiguration/service.yml
+kubectl apply -f https://k8spatterns.com/EnvVarConfiguration/service.yml
 ----
 
 For simplicity, this service exposes the service port via a `nodePort`. Assuming you are using Minikube, you can access the service from your desktop with the following:

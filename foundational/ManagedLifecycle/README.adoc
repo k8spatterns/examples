@@ -9,7 +9,7 @@ But let's create the Pod first:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/ManagedLifecycle/pod.yml
+kubectl create -f https://k8spatterns.com/ManagedLifecycle/pod.yml
 ----
 
 And verify its status with

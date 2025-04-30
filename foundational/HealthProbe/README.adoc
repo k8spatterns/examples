@@ -10,7 +10,7 @@ To apply a Deployment with liveness and readiness check enabled, use
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/HealthProbe/deployment.yml
+kubectl apply -f https://k8spatterns.com/HealthProbe/deployment.yml
 ----
 
 This deployment introduces an artificial pause of 20 seconds before the application becomes ready.
@@ -103,7 +103,7 @@ To update the deployment with the startup probe enabled, use the following comma
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/HealthProbe/startup-deployment.yml
+kubectl apply -f https://k8spatterns.com/HealthProbe/startup-deployment.yml
 ----
 
 This deployment introduces an artificial startup delay of 60 seconds before the application becomes ready.
@@ -133,10 +133,10 @@ To demonstrate the usage of readiness gates, let's modify the existing deploymen
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/HealthProbe/readiness-gate-deployment.yml
+kubectl apply -f https://k8spatterns.com/HealthProbe/readiness-gate-deployment.yml
 ----
 
-The custom readiness gate `k8spatterns.io/RandomReady` is added to the pod spec. This readiness gate must be satisfied in addition to the existing readiness probe for the Pod to be considered ready.
+The custom readiness gate `k8spatterns.com/RandomReady` is added to the pod spec. This readiness gate must be satisfied in addition to the existing readiness probe for the Pod to be considered ready.
 
 To check the status of the readiness gates use
 
@@ -152,7 +152,7 @@ NAME                               READY   STATUS    RESTARTS   AGE   IP        
 random-generator-bf8cb84b4-n98l7   1/1     Running   0          9s    10.244.0.11   minikube   <none>           0/1
 ----
 
-You can see, that wile all containers ready, the overall Pod is not because of a failing readiness gate becaue nobody added the condition `k8spatterns.io/ready` with a value `True` to the Pod's status.
+You can see, that wile all containers ready, the overall Pod is not because of a failing readiness gate becaue nobody added the condition `k8spatterns.com/ready` with a value `True` to the Pod's status.
 
 Let's do this now. We are using `kubectl` here, but this would usually be done with a controller that monitors the Pod and its dependencies.
 
@@ -170,7 +170,7 @@ Then let's patch the Pod's status and add the readiness condition:
 kubectl patch $pod --type='json' --subresource=status \
  -p='[{"op": "add",
        "path": "/status/conditions/-",
-       "value": {"type": "k8spatterns.io/RandomReady", "status": "True"}}]'
+       "value": {"type": "k8spatterns.com/RandomReady", "status": "True"}}]'
 ----
 
 Finally, let's check again if the Pod gets ready with the readiness gate fulfilled:

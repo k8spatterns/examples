@@ -9,7 +9,7 @@ You can start a three-node kind cluster with
 
 [source,shell]
 ----
-curl -s https://k8spatterns.io/SingletonService/kind-multinode.yml | \
+curl -s https://k8spatterns.com/SingletonService/kind-multinode.yml | \
 kind create cluster --config -
 ----
 
@@ -24,7 +24,7 @@ Now let's create a Deployment with six Pods:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/SingletonService/deployment.yml
+kubectl apply -f https://k8spatterns.com/SingletonService/deployment.yml
 ----
 
 We can check on which nodes the Pods are running with
@@ -38,7 +38,7 @@ For being sure that always four Pods are running, we create a PodDisruptionBudge
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/SingletonService/pdb.yml
+kubectl create -f https://k8spatterns.com/SingletonService/pdb.yml
 ----
 
 Now let's drain a node and see how the Pods are relocated.

@@ -27,5 +27,5 @@ spec:
           exec:
             command: [ "stat", "/tmp/random-generator-ready" ]
       readinessGates:
-      - conditionType: "k8spatterns.io/RandomReady"
+      - conditionType: "k8spatterns.com/RandomReady"
        

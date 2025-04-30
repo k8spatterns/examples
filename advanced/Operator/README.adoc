@@ -16,7 +16,7 @@ First, install the CRD and create a role that allows the modification of custom 
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/Operator/config-watcher-crd.yml
+kubectl apply -f https://k8spatterns.com/Operator/config-watcher-crd.yml
 ----
 
 Verify that the CRD has been registered:
@@ -44,7 +44,7 @@ To create this deployment in the current namespace, run the following:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/Operator/config-watcher-operator.yml
+kubectl apply -f https://k8spatterns.com/Operator/config-watcher-operator.yml
 ----
 
 To see our Operator in action, we will reuse the same simple web application as in the `Controller` example. This image exposes an environment variable as HTTP content on any request. The link:../images/mini-http-server.dockerfile[image] uses `nc` to deliver the content and is available on Docker Hub as https://cloud.docker.com/u/k8spatterns/repository/docker/k8spatterns/mini-http-server[k8spatterns/mini-http-server].
@@ -60,7 +60,7 @@ Now, create the web application:
 
 [source, bash]
 ----
-kubectl apply -f https://k8spatterns.io/Operator/web-app.yml
+kubectl apply -f https://k8spatterns.com/Operator/web-app.yml
 ----
 
 In the web-app.yml file, you will find a `Deployment` using our HTTP server that references the content environment variable via a `ConfigMap`. Unlike the other controller example, this `ConfigMap` does *not* contain a reference to the pods to restart.
@@ -80,7 +80,7 @@ To trigger the Operator on a config change, install a custom resource of the `Co
 
 [source,bash]
 ----
-kubectl apply -f https://k8spatterns.io/Operator/config-watcher-sample.yml
+kubectl apply -f https://k8spatterns.com/Operator/config-watcher-sample.yml
 ----
 
 Check that the resource has been created:

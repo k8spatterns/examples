@@ -30,7 +30,7 @@ start_event_loop() {
     # the format "label1=value1,label2=value2,.."
     local annotations=$(echo "$event" | jq -r '.object.metadata.annotations')
     if [ "$annotations" != "null" ]; then
-      local pod_selector=$(echo $annotations | jq -r 'to_entries | .[] | select(.key == "k8spatterns.io/podDeleteSelector") | .value | @uri')
+      local pod_selector=$(echo $annotations | jq -r 'to_entries | .[] | select(.key == "k8spatterns.com/podDeleteSelector") | .value | @uri')
     fi
     echo "::: $type -- $config_map -- $pod_selector"
 

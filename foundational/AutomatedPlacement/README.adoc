@@ -11,7 +11,7 @@ Apply our simple example https://github.com/k8spatterns/random-generator[random-
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/AutomatedPlacement/node-selector.yml
+kubectl create -f https://k8spatterns.com/AutomatedPlacement/node-selector.yml
 ----
 
 You will notice that this Pod does not get scheduled because the `nodeSelector` can't find any node with the label `disktype=ssd`:
@@ -51,7 +51,7 @@ Let's now use Node affinity rules for scheduling our Pod:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/AutomatedPlacement/node-affinity.yml
+kubectl create -f https://k8spatterns.com/AutomatedPlacement/node-affinity.yml
 ----
 
 Again, our Pod will only schedule as no node fulfills the affinity rules.
@@ -71,7 +71,7 @@ We are trying to create both Pods with
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/AutomatedPlacement/pod-affinity.yml
+kubectl create -f https://k8spatterns.com/AutomatedPlacement/pod-affinity.yml
 ----
 
 [source, bash]
@@ -116,8 +116,8 @@ You can check that this taint works by reapplying the previous `pod-affinity.yml
 
 [source, bash]
 ----
-kubectl delete -f https://k8spatterns.io/AutomatedPlacement/pod-affinity.yml
-kubectl create -f https://k8spatterns.io/AutomatedPlacement/pod-affinity.yml
+kubectl delete -f https://k8spatterns.com/AutomatedPlacement/pod-affinity.yml
+kubectl create -f https://k8spatterns.com/AutomatedPlacement/pod-affinity.yml
 ----
 
 [source, bash]
@@ -134,7 +134,7 @@ But our Pod in `tolerations.yml` can be scheduled as it tolerates this new taint
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/AutomatedPlacement/tolerations.yml
+kubectl create -f https://k8spatterns.com/AutomatedPlacement/tolerations.yml
 ----
 
 [source, bash]

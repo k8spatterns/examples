@@ -1,5 +1,5 @@
 //pass:[<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="display: block; border-width:0; float: right" align="right" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>]
-pass:[<a rel="license" href="https://k8spatterns.io"><img alt="Kubernetes Patterns" style="display: block; border-width:0; float: right; width: 150px;" align="right" src="https://github.com/k8spatterns/k8spatterns.io/raw/master/static/images/cover-small.png" /></a>]
+pass:[<a rel="license" href="https://k8spatterns.com"><img alt="Kubernetes Patterns" style="display: block; border-width:0; float: right; width: 150px;" align="right" src="https://github.com/k8spatterns/k8spatterns.com/raw/master/static/images/cover-small.png" /></a>]
 
 = Kubernetes Patterns - Examples
 

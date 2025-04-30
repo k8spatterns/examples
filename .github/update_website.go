@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-var k8spatternsIoGitUrl = "https://github.com/k8spatterns/k8spatterns.io.git"
+var k8spatternsIoGitUrl = "https://github.com/k8spatterns/k8spatterns.com.git"
 
 var patternTarget string
 var patternSource string
@@ -43,7 +43,7 @@ func main() {
 
 	// Creating working dir
 	var err error
-	websiteDir, err = ioutil.TempDir(".", "k8spatterns.io.")
+	websiteDir, err = ioutil.TempDir(".", "k8spatterns.com.")
 	checkError(err)
 	defer os.RemoveAll(websiteDir)
 
@@ -88,7 +88,7 @@ func main() {
 	_, err = workTree.Commit("update_website: Update pattern resources files", &git.CommitOptions{
 		Author: &object.Signature{
 			Name: "Kubernetes Patterns - WebSite update",
-			Email: "update_website@k8spatterns.io",
+			Email: "update_website@k8spatterns.com",
 			When: time.Now(),
 		},
 	})

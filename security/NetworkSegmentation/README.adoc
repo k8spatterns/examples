@@ -24,7 +24,7 @@ First, create a deployment of the random generator application with the followin
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-deployment.yml
+kubectl apply -f https://k8spatterns.com/NetworkSegmentation/random-generator-deployment.yml
 ----
 
 Deploy a curl container to test if the random generator service is reachable:
@@ -55,7 +55,7 @@ Next, let's create the NetworkPolicy for denying all incoming traffic by applyin
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/NetworkSegmentation/deny-all-networkpolicy.yml
+kubectl apply -f https://k8spatterns.com/NetworkSegmentation/deny-all-networkpolicy.yml
 ----
 
 Let's now attempt to access the random generator service from the curl container
@@ -75,7 +75,7 @@ For this, create a NetworkPolicy that label-matches our Deployment and allows ac
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/NetworkSegmentation/allow-access-networkpolicy.yml
+kubectl apply -f https://k8spatterns.com/NetworkSegmentation/allow-access-networkpolicy.yml
 ----
 
 You still should not be able to access the Pod from our original `curl` Pod. Check it out by using again this command, that should return with a timeout:
@@ -110,7 +110,7 @@ For this, apply the following resource file that will only allows cluster-intern
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/NetworkSegmentation/allow-internal-egress-only.yml
+kubectl apply -f https://k8spatterns.com/NetworkSegmentation/allow-internal-egress-only.yml
 ----
 
 To verify, whether our egress policies work, let's try the following three curl:
@@ -164,27 +164,27 @@ First, ensure that our random generator application is deployed:
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-deployment.yml
+kubectl apply -f https://k8spatterns.com/NetworkSegmentation/random-generator-deployment.yml
 ----
 
 This creates a Deployment with one Pod. In addition add a Service "random-generator" in front of the Pods and map the Pod port 8080 to port 80 for the Service
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/NetworkSegmentation/random-generator-service.yml
+kubectl apply -f https://k8spatterns.com/NetworkSegmentation/random-generator-service.yml
 ----
 Now, create an `AuthorizationPolicy` resource that denies all traffic in all namespaces by default:
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/NetworkSegmentation/authorization-policy-deny-all.yml
+kubectl apply -f https://k8spatterns.com/NetworkSegmentation/authorization-policy-deny-all.yml
 ----
 
 Next, create another `AuthorizationPolicy` that allows traffic to the `/metrics` endpoint for the `random-generator` application. Save the content below in a file called `allow-metrics.yaml`:
 
 [source,shell]
 ----
-kubectl apply -f https://k8spatterns.io/NetworkSegmentation/authorization-policy-allow-metrics.yml
+kubectl apply -f https://k8spatterns.com/NetworkSegmentation/authorization-policy-allow-metrics.yml
 ----
 
 In order to veriy our setup, fire up a `curl` container that waits for ever so that we can exec into it later on:

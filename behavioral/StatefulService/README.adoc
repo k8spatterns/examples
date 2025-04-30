@@ -19,7 +19,7 @@ Let's create now two PersistentVolumes for the replicas of our StatefulSet later
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/StatefulService/pvs.yml
+kubectl create -f https://k8spatterns.com/StatefulService/pvs.yml
 ----
 
 These persistent volumes are the local directories  `logs/1` and `logs/2`.
@@ -29,21 +29,21 @@ Let's create one with the following:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/StatefulService/service.yml
+kubectl create -f https://k8spatterns.com/StatefulService/service.yml
 ----
 
 Now its time to create the StatefulSet with
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/StatefulService/statefulset.yml
+kubectl create -f https://k8spatterns.com/StatefulService/statefulset.yml
 ----
 
 To access the service, we are creating a regular Service exposed via `nodePort`:
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/StatefulService/service-nodeport.yml
+kubectl create -f https://k8spatterns.com/StatefulService/service-nodeport.yml
 ----
 
 To access the service on Minikube, we need to start a tunnel to the VM and store the URL to the service in a text file that we pick up later.

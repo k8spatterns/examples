@@ -6,7 +6,7 @@ To focus on the usage of the _Downward API_, we create just a Pod which referenc
 
 [source, bash]
 ----
-kubectl create -f https://k8spatterns.io/SelfAwareness/pod.yml
+kubectl create -f https://k8spatterns.com/SelfAwareness/pod.yml
 ----
 
 The sample https://github.com/k8spatterns/random-generator[random-generator] REST service exposes an endpoint `/info`, which picks up this info and returns it in the response.
