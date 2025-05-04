@@ -147,7 +147,7 @@ confidential-high   0/1     Pending   0          2m51s
 pod-affinity        0/1     Pending   0          2m51s
 tolerations         1/1     Running   0          4s
 ----
-
+# Replace 'minikube' with 'node01'
 === More Information
 
 * https://oreil.ly/N-iAz[Automated Placement Example]
